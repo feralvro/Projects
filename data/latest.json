@@ -1,71 +1,64 @@
 {
  "altas_por_estado": {
   "AL": 1,
-  "AZ": 3,
-  "CA": 2,
-  "FL": 9,
-  "GA": 12,
-  "IN": 4,
-  "KS": 2,
-  "MA": 1,
-  "MI": 1,
-  "MO": 1,
-  "NC": 7,
-  "NM": 1,
-  "NV": 1,
-  "OK": 1,
-  "SC": 5,
-  "TN": 3,
-  "TX": 10,
-  "VA": 2,
-  "WA": 1
+  "AZ": 4,
+  "CA": 3,
+  "CO": 3,
+  "FL": 6,
+  "GA": 3,
+  "LA": 1,
+  "MN": 1,
+  "NC": 6,
+  "NJ": 1,
+  "SC": 4,
+  "TX": 5,
+  "WA": 2
  },
  "aviso": "Conteo propio sobre el sitemap publico de Opendoor. Solo ve lo que esta anunciado a la venta: no ve lo comprado y aun sin listar ni lo que esta bajo contrato. Una casa que desaparece puede haberse vendido, retirado o vuelto a listar con otra direccion: NO afirmar que se ha vendido. La antiguedad se cuenta desde que empezamos a medir, salvo los campos '_real_', que usan la fecha de publicacion de la propia ficha. Las casas de la primera foto no cuentan para edades ni cohortes.",
  "bajas_por_estado": {
-  "AZ": 4,
+  "AL": 2,
   "CA": 1,
-  "CO": 5,
-  "FL": 5,
-  "GA": 8,
-  "IN": 1,
-  "MI": 2,
-  "MN": 3,
-  "MO": 1,
-  "NC": 3,
+  "FL": 4,
+  "GA": 5,
+  "IN": 4,
+  "MI": 1,
+  "NC": 5,
   "NV": 1,
-  "OH": 4,
-  "TN": 2,
-  "TX": 8
+  "OH": 3,
+  "SC": 2,
+  "TN": 1,
+  "TX": 2,
+  "VA": 1
  },
  "clasificacion": {
-  "a_venta_30d": 1165,
-  "a_venta_hoy": 57,
-  "clasificadas": 5424,
+  "a_venta_30d": 1208,
+  "a_venta_hoy": 43,
+  "clasificadas": 5432,
   "cobertura_pct": 100.0,
-  "dias_proximamente_mediana": 15,
-  "en_venta": 4290,
-  "en_venta_estimadas": 4290,
+  "dias_proximamente_mediana": 15.0,
+  "en_venta": 4309,
+  "en_venta_estimadas": 4309,
   "nota": "'Available soon': casas que ya son de Opendoor (lo dice la propia ficha) pero aun sin precio ni a la venta, normalmente en reforma. Estan en el sitemap. Las estimadas extrapolan la proporcion de las fichas ya leidas al total.",
   "pendiente": 0,
-  "precio_previsto_mediana": 376438,
-  "proximamente": 1134,
-  "proximamente_estimadas": 1134,
-  "proximamente_pct": 20.9,
+  "precio_previsto_mediana": 379150.0,
+  "proximamente": 1123,
+  "proximamente_estimadas": 1123,
+  "proximamente_pct": 20.7,
   "proximamente_por_estado": {
    "AL": 30,
    "AZ": 48,
-   "CA": 46,
-   "FL": 69,
-   "GA": 146,
-   "IN": 31,
-   "NC": 131,
-   "OH": 39,
-   "SC": 67,
-   "TN": 33,
-   "TX": 167,
+   "CA": 47,
+   "FL": 71,
+   "GA": 141,
+   "IN": 30,
+   "NC": 128,
+   "OH": 37,
+   "SC": 69,
+   "TN": 32,
+   "TX": 168,
    "VA": 29
   },
-  "vistas_hoy": 420
+  "vistas_hoy": 316
  },
  "cohortes": [
   {
@@ -101,7 +94,7 @@
    "semana": "2026-10-19"
   },
   {
-   "n": 222,
+   "n": 254,
    "s30": null,
    "s60": null,
    "s7": null,
@@ -109,23 +102,22 @@
    "semana": "2026-10-26"
   }
  ],
- "cp_distintos": 2773,
+ "cp_distintos": 2772,
  "cp_top_25": {
   "27587": 12,
   "27610": 13,
-  "27703": 11,
+  "27703": 12,
   "28025": 12,
   "28027": 13,
   "28215": 15,
   "28269": 12,
   "28277": 10,
-  "29229": 16,
+  "29229": 17,
   "29485": 16,
-  "29715": 13,
+  "29715": 12,
   "29720": 11,
-  "30024": 10,
   "30052": 17,
-  "30127": 12,
+  "30127": 11,
   "30135": 12,
   "30157": 15,
   "30253": 12,
@@ -135,42 +127,42 @@
   "85143": 11,
   "85326": 11,
   "85338": 10,
-  "85396": 12
+  "85396": 12,
+  "87144": 10
  },
- "dias_hasta_salir_mediana": 24.0,
- "dias_listadas_mediana": 33.0,
- "dias_mercado_real_mediana": 63,
+ "dias_hasta_salir_mediana": 28,
+ "dias_listadas_mediana": 34.0,
+ "dias_mercado_real_mediana": 49.0,
  "edad_listadas": {
-  "0-7": 294,
+  "0-7": 287,
   "120+": 0,
-  "31-60": 4174,
+  "31-60": 4214,
   "61-90": 0,
-  "8-30": 956,
+  "8-30": 931,
   "91-120": 0
  },
- "edad_real_base": 3848,
+ "edad_real_base": 3883,
  "edad_real_listadas": {
-  "0-7": 180,
-  "120+": 717,
-  "31-60": 897,
+  "0-7": 160,
+  "120+": 719,
+  "31-60": 915,
   "61-90": 778,
-  "8-30": 749,
+  "8-30": 784,
   "91-120": 527
  },
- "edad_real_listadas_mediana": 64.0,
+ "edad_real_listadas_mediana": 65,
  "edad_salidas_30d": {
-  "0-7": 23,
+  "0-7": 21,
   "120+": 0,
-  "31-60": 4,
+  "31-60": 6,
   "61-90": 0,
-  "8-30": 66,
+  "8-30": 68,
   "91-120": 0
  },
  "empleo": {
   "claves": {
    "escrow_title": 2,
    "hipoteca": 1,
-   "operaciones_casas": 1,
    "pricing": 5
   },
   "metodo": "enlaces",
@@ -179,10 +171,9 @@
    "Growth & Marketing": 2,
    "Legal": 3,
    "Open Services": 1,
-   "Operations": 1,
    "Pricing": 2,
    "Research & Development": 26,
-   "Sales & Partnership": 6
+   "Sales & Partnership": 13
   },
   "puestos": [
    {
@@ -203,12 +194,12 @@
    {
     "d": "Finance",
     "l": null,
-    "t": "Procurement Specialist – Indirect Spend & Commercial Contracting Miami, FL"
+    "t": "Procurement Specialist – Indirect Spend & Commercial Contracting Toronto, Canada"
    },
    {
     "d": "Finance",
     "l": null,
-    "t": "Procurement Specialist – Indirect Spend & Commercial Contracting Toronto, Canada"
+    "t": "Procurement Specialist – Indirect Spend & Commercial Contracting Miami, FL"
    },
    {
     "d": "Finance",
@@ -246,11 +237,6 @@
     "t": "Title Curative - Consumer Title OS National Remote (United States)"
    },
    {
-    "d": "Operations",
-    "l": null,
-    "t": "Homes Project Manager - Central Renovations Team Miami, FL"
-   },
-   {
     "d": "Pricing",
     "l": null,
     "t": "Portfolio Manager Tempe, AZ"
@@ -263,12 +249,12 @@
    {
     "d": "Research & Development",
     "l": null,
-    "t": "Agentic Analytics Engineer Miami, FL"
+    "t": "Agentic Analytics Engineer Toronto, Canada"
    },
    {
     "d": "Research & Development",
     "l": null,
-    "t": "Agentic Analytics Engineer Toronto, Canada"
+    "t": "Agentic Analytics Engineer Miami, FL"
    },
    {
     "d": "Research & Development",
@@ -293,12 +279,12 @@
    {
     "d": "Research & Development",
     "l": null,
-    "t": "Applied Scientist AI/ML Toronto, Canada"
+    "t": "Applied Scientist AI/ML Miami, FL"
    },
    {
     "d": "Research & Development",
     "l": null,
-    "t": "Applied Scientist AI/ML Miami, FL"
+    "t": "Applied Scientist AI/ML Toronto, Canada"
    },
    {
     "d": "Research & Development",
@@ -313,12 +299,12 @@
    {
     "d": "Research & Development",
     "l": null,
-    "t": "Applied Scientist- Pricing Miami, FL"
+    "t": "Applied Scientist- Pricing Toronto, Canada"
    },
    {
     "d": "Research & Development",
     "l": null,
-    "t": "Applied Scientist- Pricing Toronto, Canada"
+    "t": "Applied Scientist- Pricing Miami, FL"
    },
    {
     "d": "Research & Development",
@@ -338,12 +324,12 @@
    {
     "d": "Research & Development",
     "l": null,
-    "t": "Enterprise Security Engineer Toronto, Canada"
+    "t": "Enterprise Security Engineer Miami, FL"
    },
    {
     "d": "Research & Development",
     "l": null,
-    "t": "Enterprise Security Engineer Miami, FL"
+    "t": "Enterprise Security Engineer Toronto, Canada"
    },
    {
     "d": "Research & Development",
@@ -403,7 +389,42 @@
    {
     "d": "Sales & Partnership",
     "l": null,
+    "t": "Listing Partner Remote (United States)"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
     "t": "Listing Partner Miami, FL · Phoenix, AZ"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — Georgia Real Estate License Required Atlanta, GA"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — Illinois Real Estate License Required Chicago, IL"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — Massachusetts Real Estate License Required Boston, MA"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — New Jersey Real Estate License Required Jersey City, NJ"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — New York Real Estate License Required New York, NY"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — Texas Real Estate License Required Austin, TX"
    },
    {
     "d": "Sales & Partnership",
@@ -421,143 +442,143 @@
     "t": "Transaction Coordinator Tempe, AZ"
    }
   ],
-  "total": 47
+  "total": 53
  },
  "estados_distintos": 43,
- "fecha": "2026-10-30",
+ "fecha": "2026-10-31",
  "fuente": "https://www.opendoor.com/sitemaps/listings.xml",
  "inicio_medicion": "2026-09-27",
- "lastmod_hoy": 44,
- "nuevos": 67,
- "obtenido_utc": "2026-10-30T19:37:57+00:00",
+ "lastmod_hoy": 25,
+ "nuevos": 40,
+ "obtenido_utc": "2026-10-31T18:43:15+00:00",
  "por_estado": {
-  "AL": 108,
+  "AL": 107,
   "AR": 1,
-  "AZ": 321,
-  "CA": 264,
-  "CO": 168,
+  "AZ": 325,
+  "CA": 266,
+  "CO": 171,
   "CT": 2,
   "DC": 5,
   "DE": 12,
-  "FL": 427,
-  "GA": 676,
+  "FL": 429,
+  "GA": 674,
   "IA": 1,
   "ID": 13,
   "IL": 54,
-  "IN": 147,
+  "IN": 143,
   "KS": 24,
   "KY": 22,
-  "LA": 25,
+  "LA": 26,
   "MA": 23,
   "MD": 59,
   "ME": 1,
-  "MI": 63,
-  "MN": 91,
+  "MI": 62,
+  "MN": 92,
   "MO": 96,
   "MS": 3,
-  "NC": 685,
+  "NC": 686,
   "NH": 2,
-  "NJ": 29,
+  "NJ": 30,
   "NM": 34,
-  "NV": 93,
+  "NV": 92,
   "NY": 14,
-  "OH": 155,
+  "OH": 152,
   "OK": 58,
   "OR": 83,
   "PA": 33,
-  "SC": 327,
-  "TN": 238,
-  "TX": 827,
+  "SC": 329,
+  "TN": 237,
+  "TX": 830,
   "UT": 25,
-  "VA": 128,
+  "VA": 127,
   "VT": 1,
-  "WA": 64,
+  "WA": 66,
   "WI": 15,
   "WV": 7
  },
  "precios": {
   "ano_construccion_mediana": 1996,
   "bloqueado": false,
-  "cobertura": 4290,
-  "cobertura_pct": 79.1,
+  "cobertura": 4309,
+  "cobertura_pct": 79.3,
   "codigos_http": {
    "200": 600
   },
-  "con_concesion_pct": 29.1,
-  "con_precio_hoy": 179,
-  "con_recorte_pct": 25.9,
-  "concesion_media": 5929,
+  "con_concesion_pct": 29.0,
+  "con_precio_hoy": 284,
+  "con_recorte_pct": 29.1,
+  "concesion_media": 5928,
   "consultadas_hoy": 600,
-  "errores_hoy": 1,
+  "errores_hoy": 0,
   "estado_ficha": {
-   "en_venta": 4290
+   "en_venta": 4309
   },
   "habitaciones_mediana": 3.0,
   "listada_por_top": {},
   "nota": "Cobertura parcial y creciente: se comprueban hasta 600 fichas de propiedad al dia. El precio de venta que ensena Opendoor ya lleva su descuento estandar del 1% sobre el precio de lista; aqui se deshace ese descuento para dar el precio de lista real. Ese 1% NO es un recorte.",
-  "pago_estimado_medio": 1971,
-  "precio_mediana": 347500,
+  "pago_estimado_medio": 1968,
+  "precio_mediana": 347000,
   "precio_mediana_por_estado": {
-   "AL": 220500,
-   "AZ": 396000,
-   "CA": 576500,
-   "CO": 487000,
+   "AL": 221000,
+   "AZ": 395000,
+   "CA": 575000,
+   "CO": 489000,
    "FL": 320000,
    "GA": 344000,
    "IL": 292000,
-   "IN": 255500,
+   "IN": 257000,
    "KS": 296000,
    "KY": 333000,
    "LA": 210000,
-   "MA": 594000,
+   "MA": 589000,
    "MD": 430000,
-   "MI": 246500,
+   "MI": 252500,
    "MN": 340000,
    "MO": 285000,
-   "NC": 323500,
+   "NC": 321500,
    "NJ": 587000,
-   "NM": 341500,
-   "NV": 430500,
-   "OH": 302500,
-   "OK": 242000,
+   "NM": 334500,
+   "NV": 434000,
+   "OH": 305000,
+   "OK": 241000,
    "OR": 459000,
    "PA": 255000,
-   "SC": 285000,
+   "SC": 284000,
    "TN": 350000,
    "TX": 310000,
    "UT": 514000,
-   "VA": 432000,
-   "WA": 600000
+   "VA": 434000,
+   "WA": 605000
   },
-  "precio_medio": 405679,
+  "precio_medio": 405120,
   "precio_por_sqft_medio": 206,
-  "recorte_medio_hoy_pct": 2.68,
-  "recortes_hoy": 75,
+  "recorte_medio_hoy_pct": 2.52,
+  "recortes_hoy": 154,
   "reparto_precio": {
-   "200-300k": 1178,
-   "300-400k": 1169,
-   "400-500k": 649,
-   "500-750k": 661,
-   "750k+": 273,
-   "<200k": 360
+   "200-300k": 1182,
+   "300-400k": 1174,
+   "400-500k": 655,
+   "500-750k": 664,
+   "750k+": 272,
+   "<200k": 362
   },
-  "retirada_previa_base": 3903,
-  "retirada_previa_pct": 20.7,
-  "sqft_mediana": 1818,
-  "valor_listado_estimado": 2200404274,
-  "valor_listado_muestra": 1740364000
+  "retirada_previa_base": 3929,
+  "retirada_previa_pct": 20.6,
+  "sqft_mediana": 1815,
+  "valor_listado_estimado": 2200609218,
+  "valor_listado_muestra": 1745660000
  },
  "primera_pasada": false,
- "reapariciones": 12,
+ "reapariciones": 8,
  "retencion_precio_hoy": 100.0,
- "retirados": 48,
- "salidas_30d": 978,
- "salidas_7d": 278,
- "total": 5424,
- "urls_sin_patron": 165,
- "valor_salido_30d": 308487000,
- "valor_salido_30d_base": 852,
- "valor_salido_hoy": 15829000,
- "valor_salido_hoy_base": 47,
+ "retirados": 32,
+ "salidas_30d": 972,
+ "salidas_7d": 272,
+ "total": 5432,
+ "urls_sin_patron": 168,
+ "valor_salido_30d": 312663000,
+ "valor_salido_30d_base": 866,
+ "valor_salido_hoy": 12148000,
+ "valor_salido_hoy_base": 32,
  "version": 3
 }
