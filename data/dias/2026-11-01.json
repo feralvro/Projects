@@ -1,0 +1,572 @@
+{
+ "altas_por_estado": {
+  "CA": 2,
+  "FL": 1
+ },
+ "aviso": "Conteo propio sobre el sitemap publico de Opendoor. Solo ve lo que esta anunciado a la venta: no ve lo comprado y aun sin listar ni lo que esta bajo contrato. Una casa que desaparece puede haberse vendido, retirado o vuelto a listar con otra direccion: NO afirmar que se ha vendido. La antiguedad se cuenta desde que empezamos a medir, salvo los campos '_real_', que usan la fecha de publicacion de la propia ficha. Las casas de la primera foto no cuentan para edades ni cohortes.",
+ "bajas_por_estado": {
+  "AL": 1,
+  "CA": 2,
+  "CO": 1,
+  "FL": 2,
+  "GA": 1,
+  "IL": 1,
+  "MO": 1,
+  "NC": 1,
+  "OH": 1,
+  "OR": 1,
+  "SC": 1,
+  "TN": 1
+ },
+ "clasificacion": {
+  "a_venta_30d": 1244,
+  "a_venta_hoy": 36,
+  "clasificadas": 5421,
+  "cobertura_pct": 100.0,
+  "dias_proximamente_mediana": 15.0,
+  "en_venta": 4334,
+  "en_venta_estimadas": 4334,
+  "nota": "'Available soon': casas que ya son de Opendoor (lo dice la propia ficha) pero aun sin precio ni a la venta, normalmente en reforma. Estan en el sitemap. Las estimadas extrapolan la proporcion de las fichas ya leidas al total.",
+  "pendiente": 0,
+  "precio_previsto_mediana": 380405.5,
+  "proximamente": 1087,
+  "proximamente_estimadas": 1087,
+  "proximamente_pct": 20.1,
+  "proximamente_por_estado": {
+   "AL": 30,
+   "AZ": 43,
+   "CA": 44,
+   "FL": 70,
+   "GA": 137,
+   "IN": 29,
+   "NC": 125,
+   "OH": 37,
+   "SC": 66,
+   "TN": 30,
+   "TX": 159,
+   "VA": 29
+  },
+  "vistas_hoy": 351
+ },
+ "cohortes": [
+  {
+   "n": 434,
+   "s30": null,
+   "s60": null,
+   "s7": 2.5,
+   "s90": null,
+   "semana": "2026-09-28"
+  },
+  {
+   "n": 297,
+   "s30": null,
+   "s60": null,
+   "s7": 1.0,
+   "s90": null,
+   "semana": "2026-10-05"
+  },
+  {
+   "n": 263,
+   "s30": null,
+   "s60": null,
+   "s7": 1.9,
+   "s90": null,
+   "semana": "2026-10-12"
+  },
+  {
+   "n": 249,
+   "s30": null,
+   "s60": null,
+   "s7": 0.8,
+   "s90": null,
+   "semana": "2026-10-19"
+  },
+  {
+   "n": 255,
+   "s30": null,
+   "s60": null,
+   "s7": null,
+   "s90": null,
+   "semana": "2026-10-26"
+  }
+ ],
+ "cp_distintos": 2767,
+ "cp_top_25": {
+  "27587": 12,
+  "27610": 13,
+  "27703": 12,
+  "28025": 12,
+  "28027": 13,
+  "28215": 15,
+  "28269": 12,
+  "28277": 10,
+  "29229": 17,
+  "29485": 16,
+  "29715": 12,
+  "29720": 11,
+  "30052": 17,
+  "30127": 11,
+  "30135": 12,
+  "30157": 15,
+  "30253": 12,
+  "37042": 12,
+  "76502": 11,
+  "76522": 11,
+  "85143": 11,
+  "85326": 11,
+  "85338": 10,
+  "85396": 12,
+  "87144": 10
+ },
+ "dias_hasta_salir_mediana": 26.5,
+ "dias_listadas_mediana": 35,
+ "dias_mercado_real_mediana": 91.5,
+ "edad_listadas": {
+  "0-7": 255,
+  "120+": 0,
+  "31-60": 4285,
+  "61-90": 0,
+  "8-30": 881,
+  "91-120": 0
+ },
+ "edad_real_base": 3922,
+ "edad_real_listadas": {
+  "0-7": 190,
+  "120+": 723,
+  "31-60": 950,
+  "61-90": 781,
+  "8-30": 753,
+  "91-120": 525
+ },
+ "edad_real_listadas_mediana": 65.5,
+ "edad_salidas_30d": {
+  "0-7": 20,
+  "120+": 0,
+  "31-60": 7,
+  "61-90": 0,
+  "8-30": 71,
+  "91-120": 0
+ },
+ "empleo": {
+  "claves": {
+   "escrow_title": 2,
+   "hipoteca": 1,
+   "pricing": 5
+  },
+  "metodo": "enlaces",
+  "por_departamento": {
+   "Finance": 6,
+   "Growth & Marketing": 2,
+   "Legal": 3,
+   "Open Services": 1,
+   "Pricing": 2,
+   "Research & Development": 26,
+   "Sales & Partnership": 13
+  },
+  "puestos": [
+   {
+    "d": "Finance",
+    "l": null,
+    "t": "Finance Systems & Automation Specialist Toronto, Canada"
+   },
+   {
+    "d": "Finance",
+    "l": null,
+    "t": "Payroll Systems & Automation Specialist Toronto, Canada"
+   },
+   {
+    "d": "Finance",
+    "l": null,
+    "t": "Payroll Systems & Automation Specialist Phoenix, AZ"
+   },
+   {
+    "d": "Finance",
+    "l": null,
+    "t": "Procurement Specialist – Indirect Spend & Commercial Contracting Toronto, Canada"
+   },
+   {
+    "d": "Finance",
+    "l": null,
+    "t": "Procurement Specialist – Indirect Spend & Commercial Contracting Miami, FL"
+   },
+   {
+    "d": "Finance",
+    "l": null,
+    "t": "Senior Tax Analyst San Francisco, CA"
+   },
+   {
+    "d": "Growth & Marketing",
+    "l": null,
+    "t": "Marketing Manager, Lifecycle Miami, FL · Phoenix, AZ · Toronto, Canada"
+   },
+   {
+    "d": "Growth & Marketing",
+    "l": null,
+    "t": "Sr. Manager, SEO Miami, FL · Tempe, AZ · Toronto, Canada"
+   },
+   {
+    "d": "Legal",
+    "l": null,
+    "t": "Compliance Manager, Mortgage San Francisco, CA · Tempe, AZ"
+   },
+   {
+    "d": "Legal",
+    "l": null,
+    "t": "Counsel, Commercial San Francisco, CA · Tempe, AZ"
+   },
+   {
+    "d": "Legal",
+    "l": null,
+    "t": "Title & Escrow Compliance Lead Miami, FL · Tempe, AZ"
+   },
+   {
+    "d": "Open Services",
+    "l": null,
+    "t": "Title Curative - Consumer Title OS National Remote (United States)"
+   },
+   {
+    "d": "Pricing",
+    "l": null,
+    "t": "Portfolio Manager Tempe, AZ"
+   },
+   {
+    "d": "Pricing",
+    "l": null,
+    "t": "Pricing Analyst Phoenix, AZ"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Agentic Analytics Engineer Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Agentic Analytics Engineer Miami, FL"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Application Security Engineer Miami, FL"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Application Security Engineer Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Applied Science- Growth Miami, FL · Seattle, WA"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Applied Science- Growth Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Applied Scientist AI/ML Miami, FL"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Applied Scientist AI/ML Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Applied Scientist AI/ML Seattle, WA"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Applied Scientist- Pricing Seattle, WA"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Applied Scientist- Pricing Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Applied Scientist- Pricing Miami, FL"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Data Scientist Miami, FL · Seattle, WA · Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Enterprise IAM Security Engineer Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Enterprise IAM Security Engineer Miami, FL"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Enterprise Security Engineer Miami, FL"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Enterprise Security Engineer Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Information Systems Engineer Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Infrastructure Security Engineer Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Infrastructure Security Engineer Miami, FL"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "IT Support Technician Miami, FL"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "IT Systems Specialist Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Machine Learning Engineer Miami, FL · Seattle, WA · Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Senior Operations Manager, Home Safety Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Software Engineer Toronto, Canada"
+   },
+   {
+    "d": "Research & Development",
+    "l": null,
+    "t": "Software Engineer Miami, FL"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Account Executive - Home Sales Advisor Miami, FL"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Customer Experience Specialist Tempe, AZ"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner Remote (United States)"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner Miami, FL · Phoenix, AZ"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — Georgia Real Estate License Required Atlanta, GA"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — Illinois Real Estate License Required Chicago, IL"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — Massachusetts Real Estate License Required Boston, MA"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — New Jersey Real Estate License Required Jersey City, NJ"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — New York Real Estate License Required New York, NY"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Listing Partner — Texas Real Estate License Required Austin, TX"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Manager, Listing Partner Tempe, AZ"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Sales Support Specialist Tempe, AZ"
+   },
+   {
+    "d": "Sales & Partnership",
+    "l": null,
+    "t": "Transaction Coordinator Tempe, AZ"
+   }
+  ],
+  "total": 53
+ },
+ "estados_distintos": 43,
+ "fecha": "2026-11-01",
+ "fuente": "https://www.opendoor.com/sitemaps/listings.xml",
+ "inicio_medicion": "2026-09-27",
+ "lastmod_hoy": 3,
+ "nuevos": 3,
+ "obtenido_utc": "2026-11-01T19:09:34+00:00",
+ "por_estado": {
+  "AL": 106,
+  "AR": 1,
+  "AZ": 325,
+  "CA": 266,
+  "CO": 170,
+  "CT": 2,
+  "DC": 5,
+  "DE": 12,
+  "FL": 428,
+  "GA": 673,
+  "IA": 1,
+  "ID": 13,
+  "IL": 53,
+  "IN": 143,
+  "KS": 24,
+  "KY": 22,
+  "LA": 26,
+  "MA": 23,
+  "MD": 59,
+  "ME": 1,
+  "MI": 62,
+  "MN": 92,
+  "MO": 95,
+  "MS": 3,
+  "NC": 685,
+  "NH": 2,
+  "NJ": 30,
+  "NM": 34,
+  "NV": 92,
+  "NY": 14,
+  "OH": 151,
+  "OK": 58,
+  "OR": 82,
+  "PA": 33,
+  "SC": 328,
+  "TN": 236,
+  "TX": 830,
+  "UT": 25,
+  "VA": 127,
+  "VT": 1,
+  "WA": 66,
+  "WI": 15,
+  "WV": 7
+ },
+ "precios": {
+  "ano_construccion_mediana": 1996,
+  "bloqueado": false,
+  "cobertura": 4334,
+  "cobertura_pct": 79.9,
+  "codigos_http": {
+   "200": 600
+  },
+  "con_concesion_pct": 29.0,
+  "con_precio_hoy": 249,
+  "con_recorte_pct": 31.8,
+  "concesion_media": 5920,
+  "consultadas_hoy": 600,
+  "errores_hoy": 0,
+  "estado_ficha": {
+   "en_venta": 4334
+  },
+  "habitaciones_mediana": 3.0,
+  "listada_por_top": {},
+  "nota": "Cobertura parcial y creciente: se comprueban hasta 600 fichas de propiedad al dia. El precio de venta que ensena Opendoor ya lleva su descuento estandar del 1% sobre el precio de lista; aqui se deshace ese descuento para dar el precio de lista real. Ese 1% NO es un recorte.",
+  "pago_estimado_medio": 1964,
+  "precio_mediana": 347000,
+  "precio_mediana_por_estado": {
+   "AL": 220500,
+   "AZ": 395000,
+   "CA": 579000,
+   "CO": 489000,
+   "FL": 320000,
+   "GA": 342000,
+   "IL": 300000,
+   "IN": 257500,
+   "KS": 296000,
+   "KY": 333000,
+   "LA": 210000,
+   "MA": 589000,
+   "MD": 430000,
+   "MI": 250000,
+   "MN": 340000,
+   "MO": 285000,
+   "NC": 322000,
+   "NJ": 587000,
+   "NM": 334500,
+   "NV": 434000,
+   "OH": 305000,
+   "OK": 240000,
+   "OR": 448000,
+   "PA": 292000,
+   "SC": 285000,
+   "TN": 350000,
+   "TX": 310000,
+   "UT": 514000,
+   "VA": 434000,
+   "WA": 605000
+  },
+  "precio_medio": 404807,
+  "precio_por_sqft_medio": 206,
+  "recorte_medio_hoy_pct": 2.43,
+  "recortes_hoy": 129,
+  "reparto_precio": {
+   "200-300k": 1188,
+   "300-400k": 1187,
+   "400-500k": 654,
+   "500-750k": 667,
+   "750k+": 273,
+   "<200k": 365
+  },
+  "retirada_previa_base": 3968,
+  "retirada_previa_pct": 20.6,
+  "sqft_mediana": 1813,
+  "valor_listado_estimado": 2194456823,
+  "valor_listado_muestra": 1754432000
+ },
+ "primera_pasada": false,
+ "reapariciones": 2,
+ "retencion_precio_hoy": 100.0,
+ "retirados": 14,
+ "salidas_30d": 912,
+ "salidas_7d": 265,
+ "total": 5421,
+ "urls_sin_patron": 169,
+ "valor_salido_30d": 312829000,
+ "valor_salido_30d_base": 868,
+ "valor_salido_hoy": 5162000,
+ "valor_salido_hoy_base": 14,
+ "version": 3
+}
