@@ -1,0 +1,40 @@
+name: Publicar web (Inventory Watch)
+
+# Se publica sola cada vez que el contador diario termina, y cuando cambia algo en web/.
+on:
+  workflow_run:
+    workflows: ["Contador diario de inventario $OPEN"]
+    types: [completed]
+  push:
+    branches: [main]
+    paths: ["web/**", "scripts/exportar_web.py", ".github/workflows/web.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regenerar los datos de la web desde data/ (panel y días)
+        run: python scripts/exportar_web.py --datos data --salida web/data
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - id: deployment
+        uses: actions/deploy-pages@v4
