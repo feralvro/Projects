@@ -247,10 +247,13 @@
   "cp": "85215",
   "detectada": "2026-10-10",
   "dias": 190,
+  "margen_bruto": 7500,
+  "margen_bruto_pct": 1.82,
+  "precio_visto": "2026-11-03",
   "sqft": 1446,
   "venta_escritura": "20260575604",
   "venta_f": "2026-10-02",
-  "venta_p": null
+  "venta_p": 420700
  },
  {
   "apn": "20739420",
@@ -436,10 +439,13 @@
   "cp": "85339",
   "detectada": "2026-10-19",
   "dias": 140,
+  "margen_bruto": -53000,
+  "margen_bruto_pct": -12.47,
+  "precio_visto": "2026-11-03",
   "sqft": 2598,
   "venta_escritura": "20260576691",
   "venta_f": "2026-10-02",
-  "venta_p": null
+  "venta_p": 372000
  },
  {
   "apn": "13723100E",
@@ -480,10 +486,13 @@
   "cp": "85382",
   "detectada": "2026-10-19",
   "dias": 105,
+  "margen_bruto": 9500,
+  "margen_bruto_pct": 1.88,
+  "precio_visto": "2026-11-03",
   "sqft": 1903,
   "venta_escritura": "20260574129",
   "venta_f": "2026-10-01",
-  "venta_p": null
+  "venta_p": 515000
  },
  {
   "apn": "31311544",
@@ -493,10 +502,13 @@
   "cp": "85295",
   "detectada": "2026-10-19",
   "dias": 122,
+  "margen_bruto": 37500,
+  "margen_bruto_pct": 8.38,
+  "precio_visto": "2026-11-03",
   "sqft": 1956,
   "venta_escritura": "20260576204",
   "venta_f": "2026-10-02",
-  "venta_p": null
+  "venta_p": 485000
  },
  {
   "apn": "31318082",
@@ -730,6 +742,45 @@
   "sqft": 3338,
   "venta_escritura": "20260598388",
   "venta_f": "2026-10-15",
+  "venta_p": null
+ },
+ {
+  "apn": "22036097",
+  "ciudad": "Mesa",
+  "compra_f": "2026-05-18",
+  "compra_p": 354500,
+  "cp": "85208",
+  "detectada": "2026-11-03",
+  "dias": 155,
+  "sqft": 1756,
+  "venta_escritura": "20260607281",
+  "venta_f": "2026-10-20",
+  "venta_p": null
+ },
+ {
+  "apn": "30378953",
+  "ciudad": "Sun Lakes",
+  "compra_f": "2026-03-23",
+  "compra_p": 275700,
+  "cp": "85248",
+  "detectada": "2026-11-03",
+  "dias": 207,
+  "sqft": 970,
+  "venta_escritura": "20260601938",
+  "venta_f": "2026-10-16",
+  "venta_p": null
+ },
+ {
+  "apn": "30504155",
+  "ciudad": "Mesa",
+  "compra_f": "2026-04-01",
+  "compra_p": 496100,
+  "cp": "85202",
+  "detectada": "2026-11-03",
+  "dias": 202,
+  "sqft": 1943,
+  "venta_escritura": "20260606818",
+  "venta_f": "2026-10-20",
   "venta_p": null
  }
 ]
