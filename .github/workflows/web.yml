@@ -1,7 +1,7 @@
 name: Publicar web (Inventory Watch)
 
 # Repositorio nuevo, solo para la web. Los datos los escribe el contador del repositorio
-# fernandoalvaropastor/Projects (público); aquí se leen cada día y se publica la web.
+# feralvro/Projects (público); aquí se leen cada día y se publica la web.
 on:
   schedule:
     - cron: "55 14 * * *"   # el contador corre a las 14:37 UTC; esto va justo después
@@ -30,7 +30,7 @@ jobs:
       - name: Traer los datos del contador (repositorio público Projects)
         uses: actions/checkout@v4
         with:
-          repository: fernandoalvaropastor/Projects
+          repository: feralvro/Projects
           ref: main
           path: datos_src
       - uses: actions/setup-python@v5
