@@ -1,0 +1,1733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Opendoor Inventory Watch — The Rabbit Hole</title>
+<meta name="description" content="A daily, independent count of every home Opendoor ($OPEN) lists, how fast they sell and at what price, plus what Phoenix county records say about its margins. Built from public data.">
+<link rel="canonical" href="https://feralvro.github.io/Projects/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Opendoor Inventory Watch — The Rabbit Hole">
+<meta property="og:description" content="A daily, independent count of every home Opendoor ($OPEN) lists, how fast they sell and at what price, plus what Phoenix county records say about its margins. Built from public data.">
+<meta property="og:url" content="https://feralvro.github.io/Projects/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@feralvro">
+<meta name="theme-color" content="#F2F5F3">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%90%87%3C/text%3E%3C/svg%3E">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#F2F5F3; --surface:#FFFFFF; --surface-2:#E9EFEC; --border:#D6DED9;
+    --ink:#152420; --ink-2:#48584F; --muted:#5C6B60;
+    --accent:#1D5F8A; --accent-ink:#FFFFFF; --accent-wash:#E4EEF3;
+    --s-a:#1F6FA8; --s-b:#D4772A; --s-n:#9AA8A0;
+    --good:#2E7D4F; --bad:#B3402E; --tick:#C9D2CC; --grid:#E3E9E5;
+    --warn-wash:#FBF1E6;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#101715; --surface:#171F1C; --surface-2:#1D2723; --border:#2B3733;
+      --ink:#EAF2ED; --ink-2:#B4C4BC; --muted:#82918A;
+      --accent:#6FB3DC; --accent-ink:#0A1A22; --accent-wash:#1B2E38;
+      --s-a:#3F8FC6; --s-b:#C8742E; --s-n:#5E6C66;
+      --good:#5FC585; --bad:#E2796A; --tick:#34413C; --grid:#232D29;
+      --warn-wash:#2A2118;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101715; --surface:#171F1C; --surface-2:#1D2723; --border:#2B3733;
+    --ink:#EAF2ED; --ink-2:#B4C4BC; --muted:#82918A;
+    --accent:#6FB3DC; --accent-ink:#0A1A22; --accent-wash:#1B2E38;
+    --s-a:#3F8FC6; --s-b:#C8742E; --s-n:#5E6C66;
+    --good:#5FC585; --bad:#E2796A; --tick:#34413C; --grid:#232D29;
+    --warn-wash:#2A2118;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:"Work Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+       padding-inline:16px;padding-block:24px 56px;line-height:1.45}
+  .wrap{max-width:820px;margin-inline:auto;display:flex;flex-direction:column;gap:20px}
+  h1,h2,h3{font-family:"Archivo",sans-serif;text-wrap:balance;margin:0}
+  .num{font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums}
+
+  header{display:flex;flex-direction:column;gap:8px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  h1{font-size:1.8rem;font-weight:800;line-height:1.1}
+  .sub{color:var(--ink-2);font-size:.95rem;max-width:62ch;margin:0}
+  nav.jump{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  nav.jump a{font-size:.78rem;font-weight:600;color:var(--ink-2);text-decoration:none;background:var(--surface);border:1px solid var(--border);
+             border-radius:999px;padding:5px 11px}
+  nav.jump a:hover{color:var(--ink);border-color:var(--accent)}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .fg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.1fr);gap:8px}
+  .fg.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .fg .fh{font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);line-height:1.25;align-self:end}
+  .fg .fh small{display:block;text-transform:none;letter-spacing:0;color:var(--muted);font-size:.66rem}
+  .fg .stat{padding:9px 9px;gap:2px}
+  .fg .stat .v{font-size:1.15rem}
+  .fg .stat .l{font-size:.72rem}
+  .fg .stat .d{font-size:.66rem}
+  .fg .fine{grid-column:1/-1;margin:2px 0 0}
+  .mstep{display:block;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+  .mstep .ml{display:block;font-size:.68rem;color:var(--muted);margin-bottom:5px}
+  .mstep .mrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .mstep .mrow b{font-size:1rem;color:var(--ink);min-width:3.6em;text-align:center}
+  .mstep button{font:inherit;font-size:1rem;line-height:1;min-width:34px;height:34px;padding:0 9px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer}
+  .mstep button:hover{border-color:var(--accent)}
+  .mstep button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  .mstep button.rs{font-size:.72rem;color:var(--ink-2)}
+  .sub2{display:block;margin-top:7px;padding-top:7px;border-top:1px solid var(--border)}
+  .sub2 b{display:block;font-family:"JetBrains Mono",monospace;font-size:1.05rem;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 15px;display:flex;flex-direction:column;gap:3px;min-width:0}
+  section .stat{background:var(--surface-2);border-color:transparent}
+  .stat .v{font-family:"JetBrains Mono",monospace;font-weight:600;font-size:1.42rem;font-variant-numeric:tabular-nums;line-height:1.15;overflow-wrap:anywhere}
+  .stat .l{font-size:.76rem;color:var(--ink-2)}
+  .stat .d{font-size:.72rem;color:var(--muted)}
+
+  section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 18px 20px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:12px}
+  section > header{gap:3px}
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  section h2{font-size:1.12rem;font-weight:700}
+  section h3{font-size:.92rem;font-weight:700;margin-top:6px}
+  .note{color:var(--ink-2);font-size:.85rem;max-width:64ch;margin:0}
+  .fine{color:var(--muted);font-size:.76rem;margin:0;max-width:70ch}
+  .band{border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+  .records-hero{background:linear-gradient(180deg,var(--accent-wash),var(--surface) 140px)}
+
+  /* barras horizontales */
+  .hb{display:flex;flex-direction:column;gap:6px}
+  .hb{--lab:62px;--val:92px}
+  .hb-row{display:grid;grid-template-columns:var(--lab) minmax(0,1fr) var(--val);align-items:center;gap:8px}
+  .hb.narrow{--lab:40px;--val:120px}
+  .hb.wide-lab{--lab:120px;--val:36px}
+  .hb.short-val{--val:44px}
+  .hb-lab{overflow:hidden;text-overflow:ellipsis}
+  .hb-lab{font-family:"JetBrains Mono",monospace;font-size:.76rem;font-weight:600;color:var(--ink-2);white-space:nowrap}
+  .hb-track{position:relative;height:16px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+  section .hb-track{background:var(--grid)}
+  .hb-fill{position:absolute;inset:0 auto 0 0;background:var(--s-a);border-radius:0 4px 4px 0}
+  .hb-row.other .hb-fill{background:var(--s-n)}
+  .hb-val{font-family:"JetBrains Mono",monospace;font-size:.76rem;color:var(--ink-2);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  .chip{font-family:"JetBrains Mono",monospace;font-size:.68rem;margin-left:6px}
+  .chip.up{color:var(--s-a)} .chip.dn{color:var(--s-b)}
+
+  /* graficos svg */
+  .chart{position:relative;width:100%}
+  .chart svg{display:block;width:100%;height:auto;overflow:visible}
+  .chart text{font-family:"JetBrains Mono",monospace;font-size:10px;fill:var(--muted)}
+  .chart .lbl{fill:var(--ink-2);font-weight:600}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.76rem;color:var(--ink-2)}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:.74rem;line-height:1.35;
+       padding:7px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-110%);opacity:0;transition:opacity .1s;z-index:3}
+  .tip.on{opacity:1}
+  .tip b{font-family:"JetBrains Mono",monospace;font-weight:600}
+
+  .empty{display:flex;gap:12px;align-items:flex-start;background:var(--surface-2);border-radius:10px;padding:12px 14px}
+  .empty .mark{font-family:"Archivo",sans-serif;font-weight:800;color:var(--muted)}
+  .empty p{margin:0;font-size:.84rem;color:var(--ink-2)}
+  .callout{display:flex;gap:12px;align-items:flex-start;background:var(--accent-wash);border-radius:10px;padding:12px 14px}
+  .callout.warn{background:var(--warn-wash)}
+  .callout .mark{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.05rem;color:var(--accent)}
+  .callout.warn .mark{color:var(--s-b)}
+  .callout p{margin:0;font-size:.85rem;color:var(--ink-2)}
+  .callout strong{color:var(--ink);font-weight:600}
+
+  .tbl-wrap{overflow-x:auto;margin-inline:-4px}
+  table{border-collapse:collapse;width:100%;font-size:.8rem}
+  table.wide{min-width:440px}
+  #md-assume table.wide{min-width:400px}
+  th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+  th{font-weight:600;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em}
+  th:first-child,td:first-child{text-align:left}
+  td{font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+  td.t{font-family:"Work Sans",sans-serif;color:var(--ink)}
+  td .pos{color:var(--good)} td .neg{color:var(--bad)}
+  .heat{display:inline-block;min-width:44px;padding:2px 6px;border-radius:4px}
+
+  .stack{display:flex;height:22px;border-radius:5px;overflow:hidden;background:var(--surface-2);gap:2px}
+  .stack span{display:block;height:100%}
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;color:var(--ink-2)}
+  .pill i{width:9px;height:9px;border-radius:2px;display:inline-block}
+  .src{font-size:.7rem;color:var(--muted);font-family:"JetBrains Mono",monospace}
+  .tag{display:inline-block;font-size:.66rem;font-family:"JetBrains Mono",monospace;padding:1px 6px;border-radius:4px;background:var(--surface-2);color:var(--muted);margin-left:6px;vertical-align:1px}
+  .tag.live{background:var(--accent-wash);color:var(--accent)}
+  ul.roles{margin:0;padding-left:18px;font-size:.84rem;color:var(--ink-2);display:flex;flex-direction:column;gap:3px}
+  dl.method{display:flex;flex-direction:column;gap:12px;margin:0}
+  dl.method dt{font-weight:600;font-size:.86rem}
+  dl.method dd{margin:3px 0 0;font-size:.84rem;color:var(--ink-2)}
+  footer{display:flex;flex-direction:column;gap:6px}
+  footer p{margin:0;font-size:.76rem;color:var(--muted)}
+  footer a{color:var(--ink-2)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  /* v6: sales pace, survival, model */
+  .inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 12px}
+  .fld{display:flex;flex-direction:column;gap:3px;font-size:.78rem;color:var(--ink-2);min-width:0}
+  .fld .lab{display:flex;justify-content:space-between;gap:6px;align-items:baseline}
+  .fld .lab .tag{margin-left:0;flex:none}
+  .fld input{font:inherit;font-family:"JetBrains Mono",monospace;font-size:.86rem;font-variant-numeric:tabular-nums;padding:7px 9px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--ink);width:100%;min-width:0}
+  .fld input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  .fld small{color:var(--muted);font-size:.7rem;line-height:1.3}
+  .btnrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .btn{font:inherit;font-size:.78rem;font-weight:600;border:1px solid var(--border);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:5px 12px;cursor:pointer}
+  .btn:hover{border-color:var(--accent);color:var(--ink)}
+  .btn.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .grp{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:6px 0 -2px}
+  td.neg2{color:var(--bad)} td.pos2{color:var(--good)}
+  tr.tot td{border-top:2px solid var(--border);font-weight:600;color:var(--ink)}
+  /* v7: tabs */
+  .tabwrap{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:6px;margin-block:-6px}
+  .tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{font:inherit;font-size:.86rem;font-weight:600;flex:none;border:1px solid var(--border);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:7px 15px;cursor:pointer}
+  .tab:hover{border-color:var(--accent);color:var(--ink)}
+  .tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .tab:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .panel{display:flex;flex-direction:column;gap:20px}
+  td.grp{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--surface-2);padding-block:5px}
+  #md-assume td.t{white-space:normal;min-width:190px}
+  .grid2>*{min-width:0}
+  @media (max-width:640px){.grid2{grid-template-columns:1fr}}
+  @media (max-width:420px){h1{font-size:1.5rem}.stat .v{font-size:1.2rem}section{padding:15px 14px 17px}}
+  /* v8: dashboard, trading */
+  .tag.review{background:var(--warn-wash);color:var(--s-b);font-weight:600}
+  .stat .l .tag{margin-left:5px}
+  .ideas{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+  .idea{display:flex;flex-direction:column;gap:4px;background:var(--surface-2);border-radius:10px;padding:12px 14px}
+  .idea b{font-family:"Archivo",sans-serif;font-size:.9rem}
+  .idea p{margin:0;font-size:.82rem;color:var(--ink-2)}
+  .disc{background:var(--warn-wash)}
+  .rd{border-bottom:1px solid var(--border);padding:9px 0;display:flex;flex-direction:column;gap:3px}
+  .rh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:600;font-size:.86rem}
+  .rh b{font-weight:500;font-size:.8rem;color:var(--ink-2)}
+  .rd p{margin:0;font-size:.82rem;color:var(--ink-2)}
+
+  /* ---- web pública ---- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .brand{font-family:"Archivo",sans-serif;font-weight:800;font-size:.95rem;color:var(--ink);text-decoration:none;letter-spacing:.01em}
+  .topnav{display:flex;gap:8px;align-items:center}
+  .btn-cta,.btn-ghost{font:inherit;font-size:.82rem;font-weight:600;border-radius:999px;padding:7px 14px;text-decoration:none;border:1px solid var(--accent)}
+  .btn-cta{background:var(--accent);color:var(--accent-ink)}
+  .btn-ghost{background:transparent;color:var(--accent)}
+  .btn-cta:hover,.btn-ghost:hover{filter:brightness(1.08)}
+  .btn-cta:focus-visible,.btn-ghost:focus-visible,.brand:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .loaderr{margin:0;padding:10px 14px;border-radius:10px;background:var(--warn-wash);color:var(--ink);font-size:.84rem}
+  .noscript{margin:0;padding:10px 14px;border-radius:10px;background:var(--warn-wash);font-size:.84rem}
+  .legal{border-top:1px solid var(--border);padding-top:12px;display:flex;flex-direction:column;gap:6px}
+  .legal p{margin:0;font-size:.74rem;color:var(--muted);line-height:1.5}
+  .legal b{color:var(--ink-2);font-weight:600}
+</style>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="brand" href="https://x.com/feralvro" rel="noopener"><span aria-hidden="true">🐇</span> The Rabbit Hole</a>
+    <nav class="topnav" aria-label="Links"><a class="btn-cta" href="https://feralvro.substack.com" rel="noopener">Subscribe</a><a class="btn-ghost" href="https://x.com/feralvro" rel="noopener">Follow @feralvro</a></nav>
+  </div>
+  <noscript><p class="noscript">This dashboard needs JavaScript to draw the charts.</p></noscript>
+  <p class="loaderr" id="loaderr" hidden>The latest data could not be loaded, so what you see may be out of date. Try reloading in a minute.</p>
+
+  <header>
+    <span class="eyebrow" id="asof">Loading…</span>
+    <h1>$OPEN Inventory Watch</h1>
+    <p class="sub">See Opendoor's housing business the way its results will eventually show it: every home it lists, how fast they sell, at what price, and what that adds up to in revenue and profit for the quarter. Counted daily from public data, weeks before the company reports. An independent tracker for $OPEN investors, not official Opendoor data.</p>
+  </header>
+
+  <div class="tabwrap">
+    <nav class="tabs" role="tablist" aria-label="Topics">
+      <button type="button" role="tab" class="tab" id="tab-dashboard" data-t="dashboard" aria-controls="p-dashboard" aria-selected="false">Main dashboard</button>
+      <button type="button" role="tab" class="tab" id="tab-sales" data-t="sales" aria-controls="p-sales" aria-selected="false">Sales</button>
+      <button type="button" role="tab" class="tab" id="tab-inventory" data-t="inventory" aria-controls="p-inventory" aria-selected="false">Inventory</button>
+      <button type="button" role="tab" class="tab" id="tab-prices" data-t="prices" aria-controls="p-prices" aria-selected="false">Prices</button>
+      <button type="button" role="tab" class="tab" id="tab-profit" data-t="profit" aria-controls="p-profit" aria-selected="false">Profit</button>
+      <button type="button" role="tab" class="tab" id="tab-company" data-t="company" aria-controls="p-company" aria-selected="false">Company</button>
+      <button type="button" role="tab" class="tab" id="tab-records" data-t="records" aria-controls="p-records" aria-selected="false">Records</button>
+      <button type="button" role="tab" class="tab" id="tab-trading" data-t="trading" aria-controls="p-trading" aria-selected="false">Trading</button>
+      <button type="button" role="tab" class="tab" id="tab-method" data-t="method" aria-controls="p-method" aria-selected="false">Method</button>
+    </nav>
+  </div>
+
+  <div class="panel" id="p-dashboard" role="tabpanel" aria-labelledby="tab-dashboard" hidden>
+  <section id="dash">
+    <header><span class="kicker">The quarter at a glance</span><h2>Opendoor's housing book, in numbers</h2>
+      <p class="note" id="dash-note"></p></header>
+    <h3>Inventory</h3>
+    <div class="stats" id="dash-inv"></div>
+    <h3>Sales</h3>
+    <div class="stats" id="dash-sales"></div>
+    <h3>Revenue and price cuts</h3>
+    <div class="stats" id="dash-money"></div>
+    <h3>Pipeline and market</h3>
+    <div class="stats" id="dash-pipe"></div>
+    <p class="fine" id="dash-fine"></p>
+  </section>
+  </div>
+
+  <div class="panel" id="p-sales" role="tabpanel" aria-labelledby="tab-sales" hidden>
+  <section id="exits">
+    <header><span class="kicker">Sales · what leaves the market</span><h2>Homes sold per day and per week</h2>
+      <p class="note">A home that disappears from Opendoor's public listings is counted as <strong>sold</strong> on the day it goes: every departed page opened so far shows <strong>"In contract"</strong> (6 of 6 read by hand, a full check is being built). If the same home later <strong>comes back</strong>, it was only delisted and that departure is cancelled. A closing follows a contract by weeks, so this is the sales pace, not reported closings.</p></header>
+    <div class="stats" id="ex-stats"></div>
+    <h3>Per day <span class="tag">homes sold · 7-day average</span></h3>
+    <div class="legend"><span><i style="background:var(--s-b)"></i>Sold per day</span><span><i style="background:var(--ink-2)"></i>7-day average</span></div>
+    <div class="chart" id="ex-day"></div>
+    <h3>Per week <span class="tag">Monday to Sunday, dated by its Sunday · net of relists</span></h3>
+    <div class="legend"><span><i style="background:var(--s-b)"></i>Full week</span><span><i style="background:var(--s-b);opacity:.5"></i>Dashed: the week in progress, scaled to 7 days</span></div>
+    <div class="chart" id="ex-week"></div>
+    <p class="fine" id="ex-note"></p>
+  </section>
+  <section id="survival">
+    <header><span class="kicker">Sales · by time on market</span><h2>What share of homes is gone by day N</h2>
+      <p class="note" id="sv-note"></p></header>
+    <div class="stats" id="sv-stats"></div>
+    <div class="legend"><span><i style="background:var(--s-b)"></i>Estimate, all departures</span><span><i style="background:var(--s-a)"></i>Lower bound, homes with a known list date only</span></div>
+    <div class="chart" id="sv-chart"></div>
+    <p class="fine" id="sv-fine"></p>
+  </section>
+  </div>
+
+  <div class="panel" id="p-inventory" role="tabpanel" aria-labelledby="tab-inventory" hidden>
+  <section id="listings">
+    <header><span class="kicker">What it advertises</span><h2>Listing flow</h2>
+      <p class="note">Homes on Opendoor's public sitemap each day, and how many of them are new. Homes that leave are counted as sales in the Sales tab, so they are not repeated here. A home that comes back is a relisting, not a new listing.</p></header>
+    <h3>Homes listed <span class="tag">total, each day</span></h3>
+    <div class="chart" id="flow"></div>
+    <h3>Listed and delisted per day</h3>
+    <div class="legend"><span><i style="background:var(--s-a)"></i>New listings (relisted homes not counted)</span><span><i style="background:var(--s-b)"></i>Delisted (left the sitemap)</span></div>
+    <div class="chart" id="flow2"></div>
+    <h3>Running totals <span class="tag">since the first daily count</span></h3>
+    <div class="legend"><span><i style="background:var(--s-a)"></i>New listings</span><span><i style="background:var(--s-b)"></i>Delisted</span></div>
+    <div class="chart" id="flow3"></div>
+    <div id="flow-empty" class="empty" hidden><span class="mark">…</span><p id="flow-empty-t"></p></div>
+    <div class="stats" id="flow-stats"></div>
+  </section>
+  <section id="states">
+    <header><span class="kicker">What it advertises</span><h2>Where the listings are</h2>
+      <p class="note">Homes for sale by state today. Twelve states shown on their own; the rest grouped. Small figures to the right are today's arrivals and departures.</p></header>
+    <div class="hb narrow" id="state-bars"></div>
+    <div class="callout" id="conc" hidden><span class="mark">＃</span><p id="conc-t"></p></div>
+  </section>
+  <section id="soon" hidden>
+    <header><span class="kicker">What it advertises · and what's behind it</span><h2>For sale vs. "Available soon"</h2>
+      <p class="note">Not every home on the sitemap is for sale. Many listing pages say <strong>"Price pending · Available soon"</strong>, with Opendoor's own note that these homes are <strong>owned by Opendoor</strong> and not yet on the market, typically still being renovated. That pipeline is invisible in trackers that count only priced listings.</p></header>
+    <div class="stats" id="soon-stats"></div>
+    <div id="soon-stack"></div>
+    <div class="grid2"><div><h3>Available soon, by state <span class="tag">pages read so far</span></h3><div class="hb narrow" id="soon-states" style="--val:44px"></div></div>
+      <div><h3>From renovation to market</h3><div class="stats" id="soon-flow"></div></div></div>
+    <p class="fine" id="soon-note"></p>
+  </section>
+  <section id="age">
+    <header><span class="kicker">Time on market</span><h2>How long the homes for sale have been listed</h2>
+      <p class="note" id="age-note"></p></header>
+    <div class="stats" id="age-stats"></div>
+    <h3>Share of homes listed, by days listed <span class="tag">% · homes</span></h3>
+    <div class="hb" id="age-chart"></div>
+    <p class="fine">Homes that have left are not shown here; their time on market is in the Sales tab, as the share gone by day N.</p>
+  </section>
+  </div>
+
+  <div class="panel" id="p-prices" role="tabpanel" aria-labelledby="tab-prices" hidden>
+  <section id="prices">
+    <header><span class="kicker">Prices</span><h2>Average list price and average price of the homes that leave</h2>
+      <p class="note">The line for homes on the market is the average list price read from listing pages. The line for departures is the <strong>last asking price</strong> of homes that left, 7-day rolling. The price they finally sell at is not public until a deed is recorded; a third line appears once the exit check reads the contract price from the departed pages.</p></header>
+    <div class="stats" id="pr-stats"></div>
+    <div class="legend" id="pr-legend"></div>
+    <div class="chart" id="pr-chart"></div>
+    <p class="fine" id="pr-note"></p>
+  </section>
+  <section id="pricing">
+    <header><span class="kicker">What it advertises</span><h2>Pricing &amp; unit economics</h2>
+      <p class="note" id="pricing-note">Read from each home's listing page, a few hundred a day. Appears once the first pages have been read.</p></header>
+    <div id="pricing-body" hidden>
+      <div class="stats" id="price-stats"></div>
+      <div class="grid2" style="margin-top:14px">
+        <div><h3>List price distribution</h3><div class="hb short-val" id="price-bars"></div></div>
+        <div><h3>Median list price by state</h3><div class="hb" id="price-state" style="--lab:40px;--val:56px"></div></div>
+      </div>
+      <div class="callout" style="margin-top:14px"><span class="mark">%</span><p>The price Opendoor displays is always <strong>1% below its own list price</strong>. That is standard presentation, not a discount, and it's undone here. A <strong>price cut</strong> means a list price lower than one we recorded earlier for the same home.</p></div>
+    </div>
+    <div class="empty" id="pricing-empty"><span class="mark">…</span><p>No listing pages read yet. The daily job reads up to 300 a day, new listings first, so this fills in within days.</p></div>
+  </section>
+  </div>
+
+  <div class="panel" id="p-profit" role="tabpanel" aria-labelledby="tab-profit" hidden>
+  <section id="model">
+    <header><span class="kicker">What it earns · estimate, not a forecast</span><h2>Quarterly profit from homes sold and price</h2>
+      <p class="note">Homes sold per day × price × margin, then the company's own costs from its Q2 release. Pick the sales pace below; every other assumption is listed, with where it comes from. <span class="tag">observed</span> comes from this tracker, <span class="tag">reported</span> from Opendoor, <span class="tag">assumption</span> is mine and should be argued with.</p></header>
+    <div class="btnrow" id="md-scen" role="group" aria-label="Sales pace"></div>
+    <div class="stats" id="md-out"></div>
+    <div class="tbl-wrap" id="md-break"></div>
+    <h3>Contribution profit by quarter <span class="tag">$M · dashed = estimate</span></h3>
+    <div class="chart" id="md-chart"></div>
+    <h3>Reference points</h3>
+    <div class="tbl-wrap" id="md-ref"></div>
+    <div class="band">
+      <h3>Assumptions behind the estimate</h3>
+      <div class="tbl-wrap" id="md-assume"></div>
+    </div>
+    <p class="fine" id="md-fine"></p>
+  </section>
+  </div>
+
+  <div class="panel" id="p-company" role="tabpanel" aria-labelledby="tab-company" hidden>
+  <section id="signals">
+    <header><span class="kicker">What it says · company disclosures</span><h2>Straight from Opendoor</h2>
+      <p class="note">Figures Opendoor publishes itself: its weekly dashboard at accountable.opendoor.com (a designated Reg FD channel), the weekly mortgage-rate "Drop" and the counter on its homepage. Read and logged by hand-checked daily passes; directions are only recorded when the page prints the sign.</p></header>
+    <div class="stats" id="sig-stats"></div>
+    <p class="fine" id="sig-fine"></p>
+    <div class="grid2">
+      <div><h3>Relative clearance <span class="tag">% better than MLS</span></h3><div class="chart" id="sig-clear"></div><p class="fine">Share of supply going under contract, Opendoor ÷ MLS, trailing 7 days, 7-day lag, revisable.</p></div>
+      <div><h3>Acquisition contracts <span class="tag" id="sig-contr-tag">index, first week = 100</span></h3><div class="chart" id="sig-contr"></div><p class="fine" id="sig-contr-fine">Includes Cash Now, More Later; excludes later cancellations (company's own caveat).</p></div>
+    </div>
+    <div class="band">
+      <h3>The weekly Drop <span class="tag">incentive rate vs. benchmark, one point per weekly window</span></h3>
+      <div class="legend" id="sig-drop-leg"></div>
+      <div class="chart" id="sig-drop"></div>
+      <p class="fine" id="sig-drop-fine"></p>
+    </div>
+    <div class="band">
+      <h3>Contribution margin by quarter <span class="tag">reported · Q3 2026 = guidance midpoint</span></h3>
+      <div class="chart" id="sig-margin"></div>
+    </div>
+    <div class="band">
+      <h3>$OPEN share price <span class="tag">daily close</span></h3>
+      <div class="chart" id="sig-price"></div>
+    </div>
+  </section>
+  <section id="gap">
+    <header><span class="kicker">Reconciling the counts</span><h2>Two counts, one gap</h2>
+      <p class="note">Our sitemap count includes Opendoor-owned homes still marked "Available soon", which are not for sale yet. The difference between the two lines is that pipeline.</p></header>
+    <div class="legend"><span><i style="background:var(--ink-2)"></i>Our sitemap count</span><span><i style="background:var(--s-a)"></i>Our estimate, for sale only</span></div>
+    <div class="chart" id="gap-chart"></div>
+    <p class="fine">"For sale only" appears once enough listing pages are classified.</p>
+  </section>
+  <section id="markets" hidden>
+    <header><span class="kicker">Where it sells · market context</span><h2>The markets it sells in</h2>
+      <p class="note">Realtor.com monthly data for the metros where Opendoor has the most homes. More supply, longer days on market and more price cuts make it harder to clear inventory at a margin.</p></header>
+    <div class="tbl-wrap" id="mkt-table"></div>
+    <div class="band">
+      <h3>30-year mortgage rate <span class="tag">Freddie Mac PMMS · weekly</span></h3>
+      <div class="chart" id="mkt-rate"></div>
+    </div>
+    <p class="fine" id="mkt-src"></p>
+  </section>
+  <section id="hiring" hidden>
+    <header><span class="kicker">What it's building</span><h2>Hiring</h2>
+      <p class="note" id="hiring-note"></p></header>
+    <div class="stats" id="hiring-stats"></div>
+    <div class="grid2"><div><h3>By department</h3><div class="hb wide-lab" id="hiring-dept"></div></div>
+      <div><h3>Mortgage, title &amp; escrow roles</h3><ul class="roles" id="hiring-roles"></ul></div></div>
+  </section>
+  </div>
+
+  <div class="panel" id="p-records" role="tabpanel" aria-labelledby="tab-records" hidden>
+  <section id="pulse">
+    <header><span class="kicker">The operation · public records</span><h2>How the machine runs in Phoenix</h2>
+      <p class="note">What Opendoor pays, how long it holds and how fast it turns homes in Maricopa County, read straight from the deed and assessor records, then what those homes earned once sold and what it adds up to. A window onto one market, roughly one home in twenty of the company's sales.</p></header>
+    <div class="band" style="border-top:0;padding-top:0">
+      <h3>Observed <span class="tag">from deeds and assessor roll</span></h3>
+      <div class="stats" id="pulse-obs"></div>
+      <p class="fine" id="pulse-obs-note"></p>
+    </div>
+    <div class="band" id="pulse-real-band" hidden>
+      <h3>Realized, house by house <span class="tag">purchase deed vs sale deed</span></h3>
+      <p class="fine">Each home Opendoor has bought and sold in Maricopa, paired by parcel: price on the purchase deed against price on the sale deed, with the days between. Costs the deeds do not show are the company's own Q2 2026 figures. Renovation is not in any public number (the company reports only total cost of revenue, $797M, and adjusted gross profit, $91M), so the top figures are before renovation and the table shows what different amounts would do.</p>
+      <div class="stats" id="pulse-real"></div>
+      <h4 class="fine" style="margin:6px 0 0;font-weight:600;color:var(--ink-2)">What renovation would do to it <span class="tag">assumption, not a reported figure</span></h4>
+      <div class="tbl-wrap" id="pulse-real-tbl"></div>
+      <p class="fine" id="pulse-real-note"></p>
+    </div>
+  </section>
+  <section id="records" class="records-hero">
+    <header><span class="kicker">What it owns · public records</span><h2>On the record: Maricopa County, Arizona</h2>
+      <p class="note">Phoenix is where Opendoor started and remains one of its largest markets. Maricopa publishes its deed index and assessor roll openly, so every home Opendoor holds title to, and every deed it signs there, is visible. This is a <strong>window</strong> onto the company, not the whole company.</p></header>
+    <div class="stats" id="rec-kpis"></div>
+    <div class="grid2">
+      <div><h3>How long it has owned them <span class="tag">days since purchase deed</span></h3><div class="chart" id="hold-age"></div></div>
+      <div><h3>What it paid</h3><div class="hb short-val" id="buy-price"></div></div>
+    </div>
+    <p class="fine" id="lag-note"></p>
+
+    <div class="band">
+      <h3>Recorded deeds, week by week</h3>
+      <p class="fine">Warranty deeds where an Opendoor entity is a party. Each is matched to the parcel it moved: if Opendoor holds that parcel now it was a purchase; if someone else does, it was a sale. Deeds the assessor hasn't caught up with yet show as pending.</p>
+      <div class="legend"><span><i style="background:var(--s-a)"></i>Bought</span><span><i style="background:var(--s-b)"></i>Sold</span><span><i style="background:var(--s-n)"></i>Pending match</span></div>
+      <div class="chart" id="weekly"></div>
+      <div class="empty" id="weekly-empty"><span class="mark">…</span><p>The deed history (from January 2026) is assembled by the daily job on its first run.</p></div>
+      <div class="stats" id="deed-stats"></div>
+    </div>
+
+    <div class="band">
+      <h3>Resales, bought price vs sold price</h3>
+      <p class="fine">When a parcel leaves Opendoor's ownership we pair its purchase deed with its sale deed. Gross spread is sale minus purchase price: it does not subtract renovation, commissions, taxes or holding costs, so it is not a margin.</p>
+      <div class="stats" id="pair-stats"></div>
+      <div class="tbl-wrap" id="pairs"></div>
+      <div class="empty" id="pairs-empty"><span class="mark">…</span><p>Pairs appear as homes Opendoor owns today are sold and the assessor records the new owner, usually within two to three weeks of the sale.</p></div>
+    </div>
+
+    <div class="band">
+      <h3>Listed vs titled</h3>
+      <p class="fine">Opendoor's Phoenix-area listings, each checked against the assessor roll. Does Opendoor actually hold title to what it advertises?</p>
+      <div id="xwalk"></div>
+      <div class="empty" id="xwalk-empty"><span class="mark">…</span><p>The cross-check runs once the daily job has read both the sitemap and the assessor roll.</p></div>
+    </div>
+  </section>
+  <section id="loans">
+    <header><span class="kicker">What it finances · public records</span><h2>Opendoor Home Loans, deed by deed</h2>
+      <p class="note">Opendoor's mortgage arm (Opendoor Home Loans LLC, NMLS #2810193) returned in February 2026 and left beta on September 4. A new mortgage leaves a <strong>deed of trust</strong> in the county records naming the lender; paying off an old loan leaves a <strong>release</strong>. Counted here in Maricopa only.</p></header>
+    <div class="stats" id="ohl-kpis"></div>
+    <div class="legend"><span><i style="background:var(--s-a)"></i>New deeds of trust (new loans)</span><span><i style="background:var(--s-n)"></i>Releases (old 2019–22 loans paid off)</span></div>
+    <div class="chart" id="ohl-monthly"></div>
+    <div class="band">
+      <h3>Each new loan recorded</h3>
+      <p class="fine">Recording number and date only. Borrowers are private individuals and are never stored or shown. "Opendoor home" means the borrower bought the house from Opendoor that same week.</p>
+      <div class="tbl-wrap" id="ohl-list"></div>
+    </div>
+    <div class="band">
+      <h3>Title &amp; escrow: OS National</h3>
+      <p class="fine">OS National LLC is Opendoor's title and escrow company. In Arizona the closing company is often named trustee on the buyer's deed of trust, so its name on a new deed of trust is a footprint of a closing it handled.</p>
+      <div class="stats" id="osn-stats"></div>
+    </div>
+  </section>
+  <section id="counties">
+    <header><span class="kicker">What it owns · public records</span><h2>Homes Opendoor holds title to, by county</h2>
+      <p class="note">Parcels whose owner of record is an Opendoor entity, in counties whose assessor publishes ownership openly. Texas does not disclose sale prices, so only counts are shown there.</p></header>
+    <div class="tbl-wrap" id="county-table"></div>
+    <p class="fine">Each assessor updates on its own schedule; "latest deed" is the most recent transfer date that county's roll reflects, a direct read of how stale it is.</p>
+  </section>
+  </div>
+
+  <div class="panel" id="p-trading" role="tabpanel" aria-labelledby="tab-trading" hidden>
+  <section id="trade">
+    <header><span class="kicker">Technical analysis · $OPEN</span><h2>The chart, read like a trader</h2>
+      <p class="note" id="tr-note"></p></header>
+    <div class="empty" id="tr-empty" hidden><span class="mark">…</span><p>Needs at least 30 daily bars of $OPEN; the daily job adds one per session.</p></div>
+    <div id="tr-body" style="display:flex;flex-direction:column;gap:12px">
+      <div class="stats" id="tr-stats"></div>
+      <h3>Price and volume <span class="tag">daily candles</span></h3>
+      <div class="legend" id="tr-legend"></div>
+      <div class="chart" id="tr-candle"></div>
+      <h3>RSI (14) <span class="tag">momentum · 30 and 70 lines</span></h3>
+      <div class="chart" id="tr-rsi"></div>
+      <h3>MACD (12, 26, 9) <span class="tag">bars = histogram · solid = MACD · dashed = signal</span></h3>
+      <div class="chart" id="tr-macd"></div>
+    </div>
+  </section>
+  <section id="trade2">
+    <header><span class="kicker">What the indicators say</span><h2>Reads, levels and setups</h2>
+      <p class="note">Every line below is computed from the chart above and rewrites itself with each new session.</p></header>
+    <h3>Indicator reads</h3>
+    <div class="tbl-wrap" id="tr-reads"></div>
+    <h3>Levels around the last close <span class="tag">swing points, window extremes</span></h3>
+    <div class="tbl-wrap" id="tr-levels"></div>
+    <h3>Setups to watch <span class="tag">conditions, not instructions</span></h3>
+    <div class="ideas" id="tr-ideas"></div>
+    <div class="callout" id="tr-fund-wrap"><span class="mark">＋</span><p id="tr-fund"></p></div>
+    <div class="callout warn disc"><span class="mark">!</span><p><strong>Not investment advice.</strong> This is a reading of public price data. The setups describe what would change the picture; none of them is a recommendation to buy or sell, and none is a price target. A small stock that moves 15% in a day can also gap through any level.</p></div>
+  </section>
+  <section id="trade3" hidden>
+    <header><span class="kicker">Short interest and options · $OPEN</span><h2>Who is short, and what options price in</h2>
+      <p class="note" id="op-note"></p></header>
+    <div class="stats" id="op-stats"></div>
+    <h3>Shares sold short <span class="tag">millions, FINRA settlement dates</span></h3>
+    <div class="chart" id="op-si"></div>
+    <h3>Days to cover <span class="tag">shares short ÷ average daily volume</span></h3>
+    <div class="chart" id="op-dtc"></div>
+    <h3>Reads</h3>
+    <div class="tbl-wrap" id="op-reads"></div>
+    <div class="callout warn"><span class="mark">!</span><p id="op-fine"></p></div>
+  </section>
+  </div>
+
+  <div class="panel" id="p-method" role="tabpanel" aria-labelledby="tab-method" hidden>
+  <section id="method">
+    <header><span class="kicker">Read this before quoting</span><h2>What this is, and isn't</h2></header>
+    <dl class="method">
+      <div><dt>Listings only see the "for sale" slice</dt><dd>The sitemap shows homes currently advertised. It misses homes bought but not yet listed and homes under contract, so it tracks the trend, not the level Opendoor reports each quarter.</dd></div>
+      <div><dt>How a sale is counted</dt><dd>A home that leaves the listing counts as sold on that day, because the departed pages read so far show "In contract". If it comes back on the listing later, it was delisted: that departure is cancelled, and it is taken off the day the home LEFT, not the day it returned. So every day and week is dynamic: a day only settles when no more of its homes are relisted, and the latest 7 days are provisional (they tend to go down as homes return). Where a home left, came back and left again, the first departure is also attributed to its own day. Cancelled contracts tend to come back the same way.</dd></div>
+      <div><dt>A contract is not a closing</dt><dd>A closing follows a contract by weeks, and a small share of contracts never close. Reported closings and revenue will lag these numbers.</dd></div>
+      <div><dt>Days listed come from the home's own list date</dt><dd>Listing pages show the date a home first went on the market for about two thirds of listed homes; percentages in the time-on-market chart are of those. Where a page does not show it, we cannot date the listing.</dd></div>
+      <div><dt>County records are a window, not a census</dt><dd>Maricopa is one county. Home Loans figures are loans recorded there, not national volume. The assessor roll lags the deed index by around two weeks, so the newest purchases appear late.</dd></div>
+      <div><dt>The "% gone by day N" curve is an estimate on a few weeks of departures</dt><dd>It needs each home's list date. Listing pages give it for about two thirds of homes, so the estimate rescales to all departures and the lower bound uses only dated ones. Few events per age band: shape, not decimals.</dd></div>
+      <div><dt>The profit estimate is a what-if</dt><dd>Pace and price are observed; margin, fixed costs and interest are Opendoor's reported figures; the share of sales that reach a closing, the sale-to-ask ratio and every non-home revenue line are assumptions, listed in the table under the estimate. It is not company guidance and not a forecast.</dd></div>
+      <div><dt>Gross spread is not profit</dt><dd>Sale price minus purchase price, before renovation, commissions, concessions, taxes, insurance and financing.</dd></div>
+      <div><dt>Main dashboard figures</dt><dd>Homes sold yesterday and last week are net of relists, counted on the day the home left, and stay provisional: a home that comes back to the listing was not a sale, and that return is subtracted from its departure day. Revenue realized multiplies the homes sold this quarter by their last asking price, so it is revenue at contract, not the closed revenue Opendoor reports. Estimated revenue is the profit model's base-pace case. Price cuts and the amount cut are counted by our own counter when it re-reads a listing page and finds a lower price (detection began on Oct 10, so the quarter total is a floor). Opendoor's own accountable page prints percentages only, never counts of contracts or sales. Acquisition contract counts come from the owner for the weeks to Oct 10 (525) and Oct 17 (428); any other week is chained from the percentages Opendoor prints, so it is approximate. The average list price of the last 7 days uses the first list price we recorded for homes that went on sale in that window.</dd></div>
+      <div><dt>Short interest and options are third-party snapshots</dt><dd>Short interest comes from FINRA's twice-monthly reports (about a week old when published) as relayed by Equibles; options data comes from one site and is dated. Where two of its totals disagree, the page says so. Days to cover is shares short divided by average daily volume; it describes how crowded the short side is and says nothing about direction.</dd></div>
+      <div><dt>Technical analysis is a reading, not advice</dt><dd>The Trading tab computes standard indicators (moving averages, RSI, MACD, Bollinger bands, ATR) from the daily closing series kept by the job. The window is short, so there are no 50- or 200-day averages. Setups are conditions that would change the read, with no targets and no recommendation.</dd></div>
+      <div><dt>Privacy</dt><dd>Only Opendoor entities are named. Buyers, sellers and borrowers are private people: their names are never stored in readable form or displayed.</dd></div>
+    </dl>
+  </section>
+  </div>
+
+  <footer>
+    <p id="foot-sources">Sources: opendoor.com/sitemaps/listings.xml and listing pages; opendoor.com/careers; Maricopa County Recorder public API; Maricopa County Assessor parcel service; assessor parcel services of Pima, Harris, Collin, Denton, Williamson and Fort Bend counties. Q2 2026 results and Q3 outlook from investor.opendoor.com. Collected once a day by an independent script. Not official Opendoor data.</p>
+    <p id="foot-gen"></p>
+    <div class="legal">
+      <p><b>Not investment advice.</b> This is independent research by one person, built only from public data: Opendoor's public listings and sitemap, county recorder and assessor records, and company filings. It is not a recommendation to buy or sell any security. The author owns shares of $OPEN and may buy or sell at any time without notice. Every figure is an estimate and may contain errors; a home that leaves the listing is not necessarily a sale. Do your own research.</p>
+      <p>Not affiliated with, endorsed by or sponsored by Opendoor Technologies Inc. Opendoor and $OPEN are the property of their owners. Only Opendoor entities are named; no buyers, sellers or borrowers are identified.</p>
+      <p>Built by <a href="https://x.com/feralvro" rel="noopener">@feralvro</a> · The Rabbit Hole 🐇 — one interesting idea, one rabbit hole, let's see how far it goes.</p>
+    </div>
+  </footer>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Snapshot to render before (or without) the live database.
+   Listing figures: our own sitemap count of 2026-09-27.
+   County figures: read by hand from the Maricopa recorder and assessor
+   services and six other assessors on 2026-09-28. The daily job replaces
+   all of this with its own complete pass. ---------- */
+var SEED = {
+  semilla: true,
+  generado: "2026-09-28T16:30:00+00:00",
+  inventario: {
+    fecha:"2026-09-27", obtenido_utc:"2026-09-27T18:21:12+00:00", total:5098, nuevos:5098, retirados:0,
+    primera_pasada:true, estados_distintos:43, cp_distintos:2674, urls_sin_patron:158, inicio_medicion:"2026-09-27",
+    por_estado:{"AL":104,"AR":1,"AZ":287,"CA":247,"CO":156,"CT":2,"DC":6,"DE":9,"FL":404,"GA":642,"ID":11,"IL":49,"IN":131,"KS":21,"KY":27,"LA":23,"MA":18,"MD":56,"ME":1,"MI":54,"MN":84,"MO":90,"MS":3,"NC":606,"NH":3,"NJ":32,"NM":36,"NV":63,"NY":13,"OH":182,"OK":61,"OR":95,"PA":31,"RI":1,"SC":301,"TN":219,"TX":815,"UT":28,"VA":114,"VT":1,"WA":52,"WI":13,"WV":6}
+  },
+  serie:[{f:"2026-09-27",total:5098,altas:5098,bajas:0,primera:true}],
+  registros:{
+    fecha:"2026-09-28",
+    maricopa:{
+      cartera:{casas:286, precio_compra_mediana:413200, precio_aprox:true, coste_base:265,
+        mas_de_90_dias_pct:49.3,
+        reparto_dias_en_cartera:{"0-30":24,"31-60":70,"61-90":51,"91-180":111,"181-365":18,"365+":12},
+        reparto_precio:{"<250k":8,"250-300k":16,"300-400k":85,"400-500k":76,"500-750k":59,"750k+":21},
+        ultima_escritura_catastro:"2026-09-15", retraso_catastro_dias:13},
+      registro:null,
+      hipotecas_ohl:{total_desde_relanzamiento:9, primera:"2026-07-15", ultimos_30d:2, liberaciones_cartera_antigua:12,
+        attach_pct:null,
+        lista:[{f:"2026-09-04",rn:"20260523636"},{f:"2026-08-31",rn:"20260514670"},{f:"2026-08-21",rn:"20260497090"},
+               {f:"2026-08-20",rn:"20260494091"},{f:"2026-08-13",rn:"20260480332"},{f:"2026-08-11",rn:"20260473238"},
+               {f:"2026-08-07",rn:"20260469762"},{f:"2026-07-29",rn:"20260448453"},{f:"2026-07-15",rn:"20260422607"}],
+        meses:[{m:"2026-01",n:0,r:2},{m:"2026-02",n:0,r:0},{m:"2026-03",n:0,r:2},{m:"2026-04",n:0,r:2},{m:"2026-05",n:0,r:2},
+               {m:"2026-06",n:0,r:0},{m:"2026-07",n:2,r:0},{m:"2026-08",n:6,r:2},{m:"2026-09",n:1,r:2}]},
+      osn:{semilla_12m:{fiduciario:4, sustitucion:14, otros:17}},
+      ventas_emparejadas:{n:0,lista:[]},
+      anuncios_vs_titulo:null
+    },
+    condados:[
+      {id:"maricopa_az",nombre:"Maricopa",ciudad:"Phoenix",estado:"AZ",casas:286,ok:true,ultima_fecha:"2026-09-15"},
+      {id:"harris_tx",nombre:"Harris",ciudad:"Houston",estado:"TX",casas:164,ok:true},
+      {id:"collin_tx",nombre:"Collin",ciudad:"Dallas north",estado:"TX",casas:96,ok:true},
+      {id:"pima_az",nombre:"Pima",ciudad:"Tucson",estado:"AZ",casas:65,ok:true},
+      {id:"denton_tx",nombre:"Denton",ciudad:"Dallas north",estado:"TX",casas:62,ok:true},
+      {id:"williamson_tx",nombre:"Williamson",ciudad:"Austin north",estado:"TX",casas:32,ok:true},
+      {id:"fortbend_tx",nombre:"Fort Bend",ciudad:"Houston south",estado:"TX",casas:17,ok:true}
+    ]
+  }
+};
+
+var SENALES_SEED={"clearance_relativo":{"puntos":[{"f":"2026-09-05","v":22},{"f":"2026-09-12","v":11}]},"contratos_adquisicion":{"puntos":[{"f":"2026-09-12","v":-14},{"f":"2026-09-19","v":17}]},"drop_semanal":{"puntos":[{"apor":7.05,"apr":6.385,"casas":870,"estados":"AZ,TX,GA,TN,AL,OK","f":"2026-09-26","v":6.375}]},"propietarios_atendidos":{"puntos":[{"f":"2026-09-24","v":309750},{"f":"2026-09-25","v":309810},{"f":"2026-09-27","v":310005}]},"open_cierre":{"puntos":[{"f":"2026-08-21","max":3.55,"min":3.43,"o":3.51,"v":3.53,"vol":21651395},{"f":"2026-08-24","max":3.57,"min":3.41,"o":3.49,"v":3.43,"vol":32793971},{"f":"2026-08-25","max":3.61,"min":3.44,"o":3.44,"v":3.6,"vol":31221292},{"f":"2026-08-26","max":3.58,"min":3.41,"o":3.58,"v":3.41,"vol":24600183},{"f":"2026-08-27","max":3.46,"min":3.36,"o":3.46,"v":3.38,"vol":21315693},{"f":"2026-08-28","max":3.43,"min":3.29,"o":3.37,"v":3.29,"vol":23635475},{"f":"2026-08-31","max":3.27,"min":3.15,"o":3.27,"v":3.2,"vol":32141983},{"f":"2026-09-01","max":3.14,"min":3.03,"o":3.08,"v":3.04,"vol":29648558},{"f":"2026-09-02","max":3.13,"min":3.01,"o":3.05,"v":3.09,"vol":22509594},{"f":"2026-09-03","max":3.25,"min":3.1,"o":3.21,"v":3.13,"vol":21867479},{"f":"2026-09-04","max":3.18,"min":3.08,"o":3.11,"v":3.15,"vol":18556863},{"f":"2026-09-08","max":3.15,"min":3.06,"o":3.13,"v":3.07,"vol":26086550},{"f":"2026-09-09","max":3.08,"min":2.96,"o":3.02,"v":3,"vol":31145610},{"f":"2026-09-10","max":2.9,"min":2.79,"o":2.87,"v":2.8,"vol":43856828},{"f":"2026-09-11","max":2.87,"min":2.74,"o":2.85,"v":2.79,"vol":28860421},{"f":"2026-09-14","max":2.89,"min":2.73,"o":2.74,"v":2.79,"vol":38862829},{"f":"2026-09-15","max":2.77,"min":2.62,"o":2.77,"v":2.65,"vol":42422335},{"f":"2026-09-16","max":2.71,"min":2.53,"o":2.7,"v":2.59,"vol":40949335},{"f":"2026-09-17","max":2.7,"min":2.54,"o":2.69,"v":2.56,"vol":34553030},{"f":"2026-09-18","max":2.63,"min":2.52,"o":2.57,"v":2.56,"vol":40537981},{"f":"2026-09-21","max":2.73,"min":2.61,"o":2.65,"v":2.68,"vol":29183294},{"f":"2026-09-22","max":2.81,"min":2.71,"o":2.77,"v":2.76,"vol":29042822},{"f":"2026-09-23","max":2.75,"min":2.56,"o":2.75,"v":2.58,"vol":34899876},{"f":"2026-09-24","max":2.62,"min":2.52,"o":2.57,"v":2.53,"vol":24786557},{"f":"2026-09-25","max":2.65,"min":2.53,"o":2.54,"v":2.57,"vol":21723723},{"f":"2026-09-28","max":2.54,"min":2.43,"o":2.54,"v":2.43,"vol":27071886}]},"open_listados":{"puntos":[{"f":"2026-09-06","v":3086},{"f":"2026-09-16","precio_medio":401135,"v":3421},{"f":"2026-09-26","precio_medio":400717,"v":3581,"valor_mm":1430},{"f":"2026-09-27","precio_medio":400527,"v":3554,"valor_mm":1420},{"f":"2026-09-28","precio_medio":401292,"v":3546,"valor_mm":1420}]},"margen_contribucion":{"puntos":[{"contribucion_musd":-90,"f":"2023-06-30","ingresos_musd":1976,"t":"Q2 2023","v":-4.6},{"contribucion_musd":43,"f":"2023-09-30","ingresos_musd":980,"t":"Q3 2023","v":4.4},{"contribucion_musd":95,"f":"2024-06-30","t":"Q2 2024","v":6.3},{"contribucion_musd":52,"f":"2024-09-30","t":"Q3 2024","v":3.8},{"contribucion_musd":69,"f":"2025-06-30","ingresos_musd":1567,"t":"Q2 2025","v":4.4},{"contribucion_musd":20,"f":"2025-09-30","ingresos_musd":915,"t":"Q3 2025","v":2.2},{"contribucion_musd":51,"f":"2026-06-30","ingresos_musd":883,"t":"Q2 2026","v":5.8},{"f":"2026-09-30","t":"Q3 2026 guiado","v":4.25}]},"hipoteca30":{"puntos":[{"f":"2026-09-17","v":6.95},{"f":"2026-09-24","v":7.03}]}};
+var senales=SENALES_SEED;
+var STATE_NAMES={AL:"Alabama",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"D.C.",FL:"Florida",GA:"Georgia",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin"};
+var CITY_EN={"Dallas norte":"Dallas north","Austin norte":"Austin north","Houston sur":"Houston south"};
+
+var $=function(id){return document.getElementById(id);};
+var nf=function(n){return n==null?"—":Number(n).toLocaleString("en-US");};
+var money=function(n){ if(n==null) return "—"; n=Number(n);
+  if(Math.abs(n)>=1e9) return "$"+(n/1e9).toFixed(2)+"B";
+  if(Math.abs(n)>=1e6) return "$"+(n/1e6).toFixed(n>=1e8?0:1)+"M";
+  if(Math.abs(n)>=1e4) return "$"+Math.round(n/1e3)+"K";
+  return "$"+nf(Math.round(n)); };
+var pct=function(n,d){return n==null?"—":Number(n).toFixed(d==null?1:d)+"%";};
+var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
+var dfmt=function(iso,opt){ if(!iso) return "—"; var d=new Date(iso.length<=10?iso+"T12:00:00Z":iso);
+  return d.toLocaleDateString("en-US",Object.assign({month:"short",day:"numeric",timeZone:"UTC"},opt||{})); };
+var cssv=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();};
+
+function stat(v,l,d){ return '<div class="stat"><span class="v num">'+v+'</span><span class="l">'+l+'</span>'+(d?'<span class="d">'+d+'</span>':'')+'</div>'; }
+function showEmpty(id,on,text){ var el=$(id); if(!el) return; el.hidden=!on; if(text&&on){ var p=el.querySelector("p"); if(p) p.textContent=text; } }
+
+/* ---------- tooltip ---------- */
+var tip=$("tip");
+function tipShow(host,x,y,html){ var r=host.getBoundingClientRect(); var w=document.documentElement.clientWidth;
+  tip.innerHTML=html; tip.classList.add("on");
+  var px=r.left+window.scrollX+x, py=r.top+window.scrollY+y;
+  var half=tip.offsetWidth/2; px=Math.max(half+8,Math.min(w-half-8,px));
+  tip.style.left=px+"px"; tip.style.top=py+"px"; }
+function tipHide(){ tip.classList.remove("on"); }
+document.addEventListener("scroll",tipHide,{passive:true});
+
+/* ---------- horizontal bars ---------- */
+function hbars(id,rows,opt){
+  opt=opt||{}; var el=$(id); if(!el) return;
+  var max=Math.max.apply(null,rows.map(function(r){return r.v||0;}).concat([1]));
+  el.innerHTML=rows.map(function(r){
+    var w=((r.v||0)/max*100).toFixed(2);
+    return '<div class="hb-row'+(r.other?' other':'')+'"><span class="hb-lab" title="'+esc(r.title||r.l)+'">'+esc(r.l)+'</span>'+
+      '<span class="hb-track"><span class="hb-fill" style="width:'+w+'%;'+(r.color?'background:'+r.color:'')+'"></span></span>'+
+      '<span class="hb-val">'+(opt.fmt?opt.fmt(r):nf(r.v))+(r.extra||'')+'</span></div>';
+  }).join("");
+}
+
+/* ---------- column chart (histogram / monthly) ---------- */
+function columns(id,cats,series,opt){
+  opt=opt||{}; var host=$(id); if(!host) return;
+  var W=Math.max(300,Math.round(host.clientWidth||560)),H=opt.h||170,pl=34,pr=8,pt=14,pb=26;
+  var n=cats.length, stackMax=0;
+  cats.forEach(function(_,i){ var s=0; series.forEach(function(se){ s+=se.v[i]||0; }); stackMax=Math.max(stackMax,s); });
+  var max=niceMax(stackMax||1), iw=W-pl-pr, ih=H-pt-pb, bw=iw/n, gap=Math.min(10,bw*.22);
+  var g='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(opt.label||"chart")+'">';
+  ticks(max).forEach(function(t){ var y=pt+ih-(t/max)*ih;
+    g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'" stroke="var(--grid)"/>';
+    g+='<text x="'+(pl-6)+'" y="'+(y+3)+'" text-anchor="end">'+(opt.tfmt?opt.tfmt(t):short(t))+'</text>'; });
+  cats.forEach(function(c,i){
+    var x=pl+i*bw+gap/2, base=pt+ih, acc=0, tot=0;
+    series.forEach(function(se){ tot+=se.v[i]||0; });
+    series.forEach(function(se,k){ var v=se.v[i]||0; if(!v) return;
+      var h=v/max*ih, y=base-acc-h; acc+=h+ (k<series.length-1?1.5:0);
+      var top=(acc>=tot/max*ih-0.01);
+      g+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+(bw-gap).toFixed(1)+'" height="'+Math.max(1,h-(k<series.length-1?1.5:0)).toFixed(1)+'" rx="3" fill="'+se.c+'"/>'; });
+    if(opt.valLabels && tot) g+='<text class="lbl" x="'+(x+(bw-gap)/2)+'" y="'+(base-tot/max*ih-5)+'" text-anchor="middle">'+(opt.vfmt||nf)(tot)+'</text>';
+    g+='<text x="'+(x+(bw-gap)/2)+'" y="'+(H-8)+'" text-anchor="middle">'+esc(c)+'</text>';
+    g+='<rect class="hit" data-i="'+i+'" x="'+(pl+i*bw)+'" y="'+pt+'" width="'+bw+'" height="'+ih+'" fill="transparent"/>';
+  });
+  g+='</svg>'; host.innerHTML=g;
+  host.querySelectorAll(".hit").forEach(function(r){
+    var i=+r.getAttribute("data-i");
+    var fn=function(){ var html='<b>'+esc(opt.tipTitle?opt.tipTitle(i):cats[i])+'</b>';
+      series.forEach(function(se){ html+='<br>'+esc(se.n)+': <b>'+(opt.vfmt||nf)(se.v[i]||0)+'</b>'; });
+      var bx=(pl+i*bw+bw/2)/W*host.clientWidth; tipShow(host,bx,8,html); };
+    r.addEventListener("mouseenter",fn); r.addEventListener("click",fn); r.addEventListener("mouseleave",tipHide);
+  });
+}
+function niceMax(m){ var p=Math.pow(10,Math.floor(Math.log10(m))); var f=m/p; var s=f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10; return s*p; }
+function ticks(max){ var out=[0,max/2,max]; if(max>=4) out=[0,max/4,max/2,max*3/4,max]; return out.filter(function(v,i,a){return a.indexOf(v)===i;}); }
+function short(v){ if(v>=1e6) return (v/1e6)+"M"; if(v>=1e3) return (v/1e3)+"K"; return Math.round(v*10)/10; }
+
+/* ---------- signed bars (values can be negative) ---------- */
+function signedBars(id,cats,vals,opt){
+  opt=opt||{}; var host=$(id); if(!host) return;
+  var W=Math.max(260,Math.round(host.clientWidth||400)),H=opt.h||150,pl=8,pr=8,pt=18,pb=22,n=cats.length;
+  var mx=Math.max.apply(null,vals.map(function(v){return Math.abs(v||0);}).concat([1]));
+  var hasNeg=vals.some(function(v){return v<0;});
+  var ih=H-pt-pb, zero=hasNeg?pt+ih/2:pt+ih, scale=(hasNeg?ih/2:ih)/mx;
+  var bw=(W-pl-pr)/n, w=Math.min(46,bw*.6);
+  var g='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(opt.label||"")+'">';
+  g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+zero+'" y2="'+zero+'" stroke="var(--tick)"/>';
+  vals.forEach(function(v,i){ if(v==null) return; var x=pl+bw*i+bw/2, h=Math.abs(v)*scale;
+    var col=opt.colorFn?opt.colorFn(v,i):(v<0?"var(--s-b)":"var(--s-a)");
+    var y=v<0?zero+1:zero-h;
+    g+='<rect x="'+(x-w/2)+'" y="'+y+'" width="'+w+'" height="'+Math.max(1,h)+'" rx="3" fill="'+col+'"'+(opt.fadeFn&&opt.fadeFn(i)?' opacity=".45"':'')+'/>';
+    g+='<text class="lbl" x="'+x+'" y="'+(v<0?y+h+11:y-5)+'" text-anchor="middle">'+(opt.fmt?opt.fmt(v):v)+'</text>';
+    g+='<text x="'+x+'" y="'+(H-6)+'" text-anchor="middle">'+esc(cats[i])+'</text>'; });
+  g+='</svg>'; host.innerHTML=g;
+}
+/* ---------- multi-line chart over dates ---------- */
+function lineChart(id,series,opt){
+  opt=opt||{}; var host=$(id); if(!host) return;
+  series=series.filter(function(s){return s.pts&&s.pts.length;});
+  if(!series.length){ host.innerHTML='<p class="fine">No data yet.</p>'; return; }
+  var TX=function(v){return opt.xnum?+v:Date.parse(v+"T12:00:00Z");};
+  var W=Math.max(300,Math.round(host.clientWidth||560)),H=opt.h||200,pl=opt.pl||44,pr=14,pt=14,pb=24;
+  var xs=[],ys=[]; series.forEach(function(s){ s.pts.forEach(function(p){ xs.push(TX(p[0])); ys.push(p[1]); }); });
+  var x0=Math.min.apply(null,xs),x1=Math.max.apply(null,xs); if(x1===x0){var dx=opt.xnum?1:864e5*3;x0-=dx;x1+=dx;}
+  if(opt.xmin!=null) x0=opt.xmin; if(opt.xmax!=null) x1=opt.xmax;
+  var y0=Math.min.apply(null,ys),y1=Math.max.apply(null,ys),pad=(y1-y0)*.15||Math.abs(y1)*.05||1; y0-=pad;y1+=pad;
+  if(opt.zero) y0=Math.min(0,Math.min.apply(null,ys));
+  if(opt.ymin!=null) y0=opt.ymin; if(opt.ymax!=null) y1=opt.ymax;
+  var X=function(v){return pl+(W-pl-pr)*(TX(v)-x0)/(x1-x0);}, Y=function(v){return pt+(H-pt-pb)*(1-(v-y0)/(y1-y0));};
+  var g='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(opt.label||"")+'">';
+  var yt=opt.yticks||[0,.5,1].map(function(f){return y0+(y1-y0)*f;});
+  yt.forEach(function(v){ var yy=Y(v);
+    g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--grid)"/><text x="'+(pl-6)+'" y="'+(yy+3)+'" text-anchor="end">'+(opt.yfmt?opt.yfmt(v):nf(Math.round(v)))+'</text>'; });
+  if(opt.xnum){
+    (opt.xticks||[x0,(x0+x1)/2,x1]).forEach(function(t,k,a){ g+='<text x="'+X(t)+'" y="'+(H-6)+'" text-anchor="'+(k===0?"start":k===a.length-1?"end":"middle")+'">'+(opt.xlab?opt.xlab(t):t)+'</text>'; });
+  } else {
+    var uq=[]; series.forEach(function(s0){ s0.pts.forEach(function(p){ if(uq.indexOf(p[0])<0) uq.push(p[0]); }); }); uq.sort();
+    var tk=uq.length<=6?uq.map(function(d){return Date.parse(d+"T12:00:00Z");}):[x0,(x0+x1)/2,x1];
+    var lastTx=-1e9; tk=tk.filter(function(t,k){ var xx=X(new Date(t).toISOString().slice(0,10)); if(k===tk.length-1||xx-lastTx>=64){ lastTx=xx; return true; } return false; });
+    tk.forEach(function(t,k){ var d=new Date(t).toISOString().slice(0,10); g+='<text x="'+X(d)+'" y="'+(H-6)+'" text-anchor="'+(k===0?"start":k===tk.length-1?"end":"middle")+'">'+dfmt(d,opt.monthly?{month:"short",year:"2-digit",day:undefined}:null)+'</text>'; });
+  }
+  series.forEach(function(s){ var d=s.pts.map(function(p,i){return (i?"L":"M")+X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1);}).join("");
+    g+='<path d="'+d+'" fill="none" stroke="'+s.c+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"'+(s.dash?' stroke-dasharray="4 3"':'')+'/>';
+    s.pts.forEach(function(p){ if(s.pts.length<=12) g+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="3" fill="'+s.c+'"/>'; });
+    var L=s.pts[s.pts.length-1]; g+='<text class="lbl" x="'+Math.min(W-pr,X(L[0]))+'" y="'+(Y(L[1])-7)+'" text-anchor="end">'+(opt.yfmt?opt.yfmt(L[1]):nf(L[1]))+'</text>'; });
+  g+='<rect class="hit" x="'+pl+'" y="'+pt+'" width="'+(W-pl-pr)+'" height="'+(H-pt-pb)+'" fill="transparent"/></svg>';
+  host.innerHTML=g;
+  var hit=host.querySelector(".hit");
+  var fn=function(ev){ var r=host.getBoundingClientRect(); var px=(ev.clientX-r.left)/r.width*W;
+    var t=x0+(px-pl)/(W-pl-pr)*(x1-x0), html='';
+    series.forEach(function(s){ var best=null,bd=1e20; s.pts.forEach(function(p){ var dd=Math.abs(TX(p[0])-t); if(dd<bd){bd=dd;best=p;} });
+      if(best) html+=(html?'<br>':'')+esc(s.n)+': <b>'+(opt.yfmt?opt.yfmt(best[1]):nf(best[1]))+'</b> <span style="opacity:.7">'+
+        (opt.xnum?(opt.xlab?opt.xlab(best[0]):best[0]):dfmt(best[0],opt.monthly?{month:"short",year:"numeric",day:undefined}:null))+'</span>'+(best[2]?'<br><span style="opacity:.8">'+esc(best[2])+'</span>':''); });
+    tipShow(host,px/W*r.width,12,html); };
+  hit.addEventListener("mousemove",fn); hit.addEventListener("click",fn); hit.addEventListener("mouseleave",tipHide);
+}
+function spark(vals,w,h,col){ if(!vals||vals.length<2) return ""; var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),r=(mx-mn)||1;
+  var d=vals.map(function(v,i){return (i?"L":"M")+(i/(vals.length-1)*w).toFixed(1)+","+(h-2-(v-mn)/r*(h-4)).toFixed(1);}).join("");
+  return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" style="vertical-align:middle"><path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="1.6"/></svg>'; }
+
+/* ---------- flow: totals, per-day listed and delisted, running totals ---------- */
+function flowChart(serie){
+  var host=$("flow"), h2=$("flow2"), h3=$("flow3");
+  var pts=serie.filter(function(d){return d.total!=null;});
+  if(pts.length<2){ host.innerHTML=""; if(h2) h2.innerHTML=""; if(h3) h3.innerHTML=""; showEmpty("flow-empty",true,
+      "Day one: "+nf(pts.length?pts[0].total:null)+" homes listed on "+dfmt(pts.length?pts[0].f:null,{year:"numeric"})+". Arrivals, departures and a trend line appear from the second daily count."); return; }
+  showEmpty("flow-empty",false);
+  lineChart("flow",[{n:"Homes listed",c:cssv("--ink-2"),pts:pts.map(function(d){return [d.f,d.total,d.primera?"First count":null];})}],{h:190,label:"Homes listed per day"});
+  var mv=pts.filter(function(d){return !d.primera;});
+  lineChart("flow2",[
+    {n:"New listings",c:cssv("--s-a"),pts:mv.map(function(d){var r=d.reap||0; return [d.f,Math.max(0,(d.altas||0)-r),r?nf(r)+" relisted, not counted":null];})},
+    {n:"Delisted",c:cssv("--s-b"),pts:mv.map(function(d){return [d.f,d.bajas||0];})}],
+    {h:180,zero:true,label:"New listings and delisted homes per day"});
+  var cn=0, cd=0;
+  lineChart("flow3",[
+    {n:"New listings, running total",c:cssv("--s-a"),pts:mv.map(function(d){ cn+=Math.max(0,(d.altas||0)-(d.reap||0)); return [d.f,cn];})},
+    {n:"Delisted, running total",c:cssv("--s-b"),pts:mv.map(function(d){ cd+=d.bajas||0; return [d.f,cd];})}],
+    {h:190,zero:true,label:"Running totals of new listings and delisted homes"});
+}
+/* ---------- diverging weekly bars (bought up / sold down) ---------- */
+function weeklyChart(semanas){
+  var host=$("weekly");
+  if(!semanas||!semanas.length){ host.innerHTML=""; showEmpty("weekly-empty",true); return; }
+  showEmpty("weekly-empty",false);
+  var by={}; semanas.forEach(function(r){by[r.s]=r;});
+  var last=semanas[semanas.length-1].s, rows=[];
+  for(var k=25;k>=0;k--){ var s=addDays(last,-7*k); if(s<semanas[0].s) continue; rows.push(by[s]||{s:s}); }
+  lineChart("weekly",[
+    {n:"Bought",c:cssv("--s-a"),pts:rows.map(function(r){return [r.s,r.compras||0];})},
+    {n:"Sold",c:cssv("--s-b"),pts:rows.map(function(r){return [r.s,r.ventas||0,r.ventas_ohl?nf(r.ventas_ohl)+" with Opendoor Home Loans":null];})},
+    {n:"Pending match",c:cssv("--s-n"),dash:true,pts:rows.map(function(r){return [r.s,r.pendientes||0];})}],
+    {h:210,zero:true,label:"Weekly homes bought and sold in Maricopa"});
+}
+/* ================= v7: sales (net of relists), survival, ages, prices, profit model ================= */
+var SEED_MODELO={"version":1,"generado":"2026-10-12","ventana":["2026-09-28","2026-10-11"],"serie":[{"f":"2026-09-28","off":48,"on":65,"tot":5115,"ret":0,"net":48,"nuevas":65,"mm7":48.0,"mm7g":48.0},{"f":"2026-09-29","off":36,"on":76,"tot":5155,"ret":0,"net":36,"nuevas":76,"mm7":42.0,"mm7g":42.0},{"f":"2026-09-30","off":109,"on":74,"tot":5120,"ret":2,"net":107,"nuevas":72,"mm7":63.7,"mm7g":64.3},{"f":"2026-10-01","off":42,"on":94,"tot":5172,"ret":1,"net":41,"nuevas":93,"mm7":58.0,"mm7g":58.8},{"f":"2026-10-02","off":84,"on":99,"tot":5187,"ret":2,"net":82,"nuevas":97,"mm7":62.8,"mm7g":63.8},{"f":"2026-10-03","off":24,"on":29,"tot":5192,"ret":1,"net":23,"nuevas":28,"mm7":56.2,"mm7g":57.2},{"f":"2026-10-04","off":26,"on":4,"tot":5170,"ret":1,"net":25,"nuevas":3,"mm7":51.7,"mm7g":52.7},{"f":"2026-10-05","off":38,"on":92,"tot":5224,"ret":2,"net":36,"nuevas":90,"mm7":50.0,"mm7g":51.3},{"f":"2026-10-06","off":34,"on":37,"tot":5227,"ret":6,"net":28,"nuevas":31,"mm7":48.9,"mm7g":51.0},{"f":"2026-10-07","off":42,"on":61,"tot":5246,"ret":7,"net":35,"nuevas":54,"mm7":38.6,"mm7g":41.4},{"f":"2026-10-08","off":40,"on":48,"tot":5254,"ret":7,"net":33,"nuevas":41,"mm7":37.4,"mm7g":41.1},{"f":"2026-10-09","off":30,"on":54,"tot":5278,"ret":4,"net":26,"nuevas":50,"mm7":29.4,"mm7g":33.4},{"f":"2026-10-10","off":29,"on":34,"tot":5283,"ret":4,"net":25,"nuevas":30,"mm7":29.7,"mm7g":34.1},{"f":"2026-10-11","off":14,"on":6,"tot":5275,"ret":5,"net":9,"nuevas":1,"mm7":27.4,"mm7g":32.4}],"semanas":[{"s":"2026-09-28","off":369,"ret":7,"net":362,"dias":7},{"s":"2026-10-05","off":227,"ret":35,"net":192,"dias":7}],"supervivencia":{"edades":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180],"est":[0.32,0.63,0.94,1.26,1.57,1.88,2.19,2.5,3.44,4.36,5.28,6.19,7.09,7.99,8.87,9.51,10.14,10.77,11.4,12.02,12.63,13.24,13.85,14.45,15.05,15.65,16.24,16.82,17.41,17.99,18.56,19.06,19.56,20.05,20.54,21.03,21.52,22.0,22.48,22.96,23.43,23.9,24.37,24.84,25.3,25.76,26.21,26.67,27.12,27.57,28.01,28.46,28.9,29.33,29.77,30.2,30.63,31.06,31.48,31.9,32.32,32.99,33.65,34.3,34.95,35.59,36.23,36.86,37.48,38.1,38.71,39.31,39.91,40.51,41.09,41.67,42.25,42.82,43.38,43.94,44.49,45.04,45.58,46.12,46.65,47.18,47.7,48.22,48.73,49.23,49.73,50.1,50.45,50.81,51.16,51.51,51.86,52.21,52.55,52.89,53.23,53.57,53.9,54.23,54.56,54.89,55.21,55.53,55.85,56.17,56.48,56.79,57.1,57.41,57.72,58.02,58.32,58.62,58.92,59.21,59.51,59.77,60.02,60.28,60.53,60.78,61.03,61.28,61.53,61.78,62.02,62.26,62.5,62.74,62.98,63.22,63.45,63.68,63.92,64.15,64.37,64.6,64.83,65.05,65.28,65.5,65.72,65.94,66.15,66.37,66.58,66.8,67.01,67.22,67.43,67.64,67.84,68.05,68.25,68.46,68.66,68.86,69.06,69.25,69.45,69.64,69.84,70.03,70.22,70.41,70.6,70.79,70.97,71.16,71.34,71.53,71.71,71.89,72.07,72.25,72.42],"cota":[0.19,0.38,0.57,0.76,0.95,1.14,1.33,1.52,2.1,2.67,3.24,3.8,4.36,4.92,5.47,5.87,6.27,6.67,7.07,7.46,7.86,8.25,8.64,9.03,9.41,9.8,10.18,10.56,10.94,11.32,11.7,12.03,12.35,12.68,13.01,13.33,13.66,13.98,14.3,14.62,14.94,15.25,15.57,15.89,16.2,16.51,16.82,17.13,17.44,17.75,18.06,18.36,18.67,18.97,19.28,19.58,19.88,20.18,20.47,20.77,21.07,21.54,22.01,22.48,22.94,23.4,23.86,24.32,24.77,25.22,25.67,26.11,26.55,26.99,27.43,27.87,28.3,28.73,29.15,29.58,30.0,30.42,30.84,31.25,31.66,32.07,32.48,32.88,33.28,33.68,34.08,34.37,34.65,34.94,35.22,35.5,35.78,36.06,36.34,36.62,36.9,37.17,37.45,37.72,37.99,38.26,38.53,38.8,39.06,39.33,39.59,39.86,40.12,40.38,40.64,40.9,41.15,41.41,41.67,41.92,42.17,42.4,42.62,42.84,43.06,43.28,43.5,43.72,43.94,44.16,44.37,44.59,44.8,45.02,45.23,45.44,45.65,45.87,46.07,46.28,46.49,46.7,46.91,47.11,47.32,47.52,47.72,47.93,48.13,48.33,48.53,48.73,48.93,49.12,49.32,49.52,49.71,49.91,50.1,50.29,50.49,50.68,50.87,51.06,51.25,51.44,51.63,51.81,52.0,52.19,52.37,52.56,52.74,52.92,53.11,53.29,53.47,53.65,53.83,54.01,54.18],"hitos":{"7":{"raw":1.5,"corr":2.5},"14":{"raw":5.5,"corr":8.9},"30":{"raw":11.7,"corr":18.6},"60":{"raw":21.1,"corr":32.3},"90":{"raw":34.1,"corr":49.7},"120":{"raw":42.2,"corr":59.5},"180":{"raw":54.2,"corr":72.4}},"bins":[[0,7],[8,14],[15,30],[31,60],[61,90],[91,120],[121,180],[181,9999]],"haz":[0.316,0.961,0.7,0.615,0.987,0.718,0.638,1.077],"haz_cota":[0.192,0.583,0.425,0.373,0.599,0.436,0.387,0.653],"mediana_est":91,"mediana_cota":158,"base":{"salidas":554,"con_fecha":241,"activas_con_fecha":3629,"activas":5275}},"precios":{"activas":[{"f":"2026-09-29","medio":403483,"mediana":356500,"n":530,"conc_pct":33.0,"conc_med":6171.0},{"f":"2026-09-30","medio":400518,"mediana":347000,"n":941,"conc_pct":32.9,"conc_med":6087.0},{"f":"2026-10-01","medio":399640,"mediana":347000,"n":1329,"conc_pct":33.0,"conc_med":6034.0},{"f":"2026-10-02","medio":401328,"mediana":345000,"n":1705,"conc_pct":31.5,"conc_med":6076.0},{"f":"2026-10-03","medio":400722,"mediana":347000,"n":2147,"conc_pct":31.3,"conc_med":5994.0},{"f":"2026-10-04","medio":400812,"mediana":346000,"n":2622,"conc_pct":31.2,"conc_med":5976.0},{"f":"2026-10-05","medio":398875,"mediana":345000,"n":3008,"conc_pct":30.9,"conc_med":5920.0},{"f":"2026-10-06","medio":400875,"mediana":346500,"n":3454,"conc_pct":31.0,"conc_med":5891.0},{"f":"2026-10-07","medio":401070,"mediana":345000,"n":3729,"conc_pct":30.7,"conc_med":5906.0},{"f":"2026-10-08","medio":402056,"mediana":345000,"n":3794,"conc_pct":30.6,"conc_med":5908.0},{"f":"2026-10-09","medio":402334,"mediana":346000,"n":3885,"conc_pct":30.4,"conc_med":5948.0},{"f":"2026-10-10","medio":402131,"mediana":346000,"n":3920,"conc_pct":30.4,"conc_med":5957.0},{"f":"2026-10-11","medio":402402,"mediana":346000,"n":3954,"conc_pct":30.2,"conc_med":5971.0}],"salidas":[{"f":"2026-10-01","medio":379647,"n":17},{"f":"2026-10-02","medio":400517,"n":29},{"f":"2026-10-03","medio":431826,"n":46},{"f":"2026-10-04","medio":434855,"n":55},{"f":"2026-10-05","medio":423312,"n":77},{"f":"2026-10-06","medio":397298,"n":104},{"f":"2026-10-07","medio":384647,"n":133},{"f":"2026-10-08","medio":374108,"n":158},{"f":"2026-10-09","medio":368391,"n":174},{"f":"2026-10-10","medio":369167,"n":186},{"f":"2026-10-11","medio":360089,"n":191}],"venta":[],"salidas_total":{"media":376804.8780487805,"mediana":312000.0,"n":246},"activas_total":{"media":402402.37733940315,"mediana":346000.0,"n":3954}},"escenarios":{"low":27.4,"base":39.6,"high":51.7},"retorno_pct":7.0,"retorno_7d_pct":15.4,"vendidas_netas":554,"salidas_brutas":596,"vueltas":42,"edad":{"bins":[[0,7],[8,14],[15,30],[31,60],[61,90],[91,120],[121,180],[181,365],[366,99999]],"n":[237,243,584,892,670,329,483,186,5],"base":3629,"activas":5275},"censo":{}};
+var modeloDoc=null, mdM=null, mdVals={}, mdScen="base", mdBuilt=false, mdMargin=null, MD_GUIDE=4.25;
+var Q2={sold:2339,rev:883,contr:51,ebitda:-4,adjnet:-30};
+function hasNet(m){ return !!(m&&m.serie&&m.serie.length&&m.serie[0].net!=null); }
+function nearQ(f){ var m=+f.slice(5,7), d=+f.slice(8,10); return ((m===3||m===6||m===9||m===12)&&d>=26)||((m===1||m===4||m===7||m===10)&&d<=5); }
+function fmM(x,d){ if(x==null||isNaN(x)) return "—"; var a=Math.abs(x); return (x<0?"−":"")+"$"+(d!=null?a.toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d}):(a>=100?Math.round(a).toLocaleString("en-US"):a.toFixed(1)))+"M"; }
+function sgn(x){ return x>0?"+":x<0?"−":""; }
+function weekInfo(M){ var full=(M.semanas||[]).filter(function(w){return w.dias===7;}); return {a:full.length?full[full.length-1]:null,b:full.length>1?full[full.length-2]:null}; }
+function renderV6(P){
+  var M=pickModelo(P); mdM=M;
+  try{ renderKpis(P,M); }catch(e){ console.error(e); }
+  try{ renderExits(M,P); }catch(e){ console.error(e); }
+  try{ renderSurvival(M); }catch(e){ console.error(e); }
+  try{ renderAge(M,P.inventario||{}); }catch(e){ console.error(e); }
+  try{ renderPrices(M,P); }catch(e){ console.error(e); }
+  try{ renderModel(M); }catch(e){ console.error(e); }
+}
+
+/* A home that leaves the sitemap is counted as sold (it went under contract). If it comes back, it was only
+   delisted: that departure is cancelled. sold = left - came back. */
+function renderExits(M,P){
+  var S=M.serie||[]; if(!S.length){ $("exits").hidden=true; return; } $("exits").hidden=false;
+  var sw=M.semanas||[];
+  var SQ=salesQ(M,P)||{q:qOf(S[S.length-1].f),n:0,rev:0};
+  $("ex-stats").innerHTML=stat(nf(SQ.n),"Sold since "+dfmt(SQ.q.start),SQ.q.label+" to date")+
+    stat(money(SQ.rev),"Revenue realized, "+SQ.q.label+" to date","estimate: homes sold × their last asking price · contracts, not closings")+
+    (function(){ var cw=sw.length?sw[sw.length-1]:null, pf=null; if(!cw) return ""; for(var i=sw.length-2;i>=0;i--){ if(sw[i].dias>=7){ pf=sw[i]; break; } }
+      return stat(nf(cw.net),"Sold this week","week of "+dfmt(cw.s)+" (Mon) · "+cw.dias+(cw.dias===1?" day":" days")+" so far, provisional"+(pf?"<br>last full week: "+nf(pf.net):"")); })()+
+    stat(nf(M.vueltas),"Came back, taken off the day they left","relisted · "+M.retorno_pct+"% of departures so far"+(M.retorno_maduro_pct!=null?"; "+M.retorno_maduro_pct+"% for homes that left 7+ days ago (newer days can still rise)":", "+M.retorno_7d_pct+"% in the last 7 days"));
+  lineChart("ex-day",[{n:"Sold per day",c:cssv("--s-b"),pts:S.map(function(d){return [d.f,d.net,"left the listing "+nf(d.off)+" · of those, came back "+nf(d.ret)+(d.prov?" so far (provisional, can still go down)":"")];})},
+    {n:"7-day average",c:cssv("--ink-2"),pts:S.map(function(d){return [d.f,d.mm7];})}],{h:200,zero:true,label:"Homes sold per day"});
+  var firstW=(sw.length>1&&sw[0].dias<7)?sw[0]:null, fullW=sw.filter(function(w){return w.dias>=7;}), partW=sw.filter(function(w){return w.dias<7&&w!==firstW;}), serW=[
+    {n:"Homes sold",c:cssv("--s-b"),pts:(firstW?[[addDays(firstW.s,6),firstW.net,"short first week: "+dfmt(S[0].f)+" to "+dfmt(addDays(firstW.s,6))+" (Sun), "+firstW.dias+" days · left the listing "+nf(firstW.off)+", came back "+nf(firstW.ret)]]:[]).concat(fullW.map(function(w){return [addDays(w.s,6),w.net,"week "+dfmt(w.s)+" (Mon) to "+dfmt(addDays(w.s,6))+" (Sun) · left the listing "+nf(w.off)+", came back "+nf(w.ret)];}))}];
+  if(partW.length){ var pw=partW[partW.length-1], pace=pw.dias?Math.round(pw.net/pw.dias*7):0, bw0=fullW.length?fullW[fullW.length-1]:null;
+    serW.push({n:"Week in progress, 7-day pace",c:cssv("--s-b"),dash:true,pts:(bw0?[[addDays(bw0.s,6),bw0.net]]:[]).concat([[addDays(pw.s,6),pace,"week to "+dfmt(addDays(pw.s,6))+" (Sun) · "+pw.dias+" days so far: "+nf(pw.net)+" sold (left "+nf(pw.off)+", came back "+nf(pw.ret)+")"]])}); }
+  lineChart("ex-week",serW,{h:190,zero:true,label:"Homes sold per week, net of relists"});
+  var top=S.slice().sort(function(x,y){return y.net-x.net;}).slice(0,2), q=top.filter(function(d){return nearQ(d.f);}).length;
+  $("ex-note").textContent="Sales are counted from "+dfmt(S[0].f)+", included"+(firstW?", so the first week has only "+firstW.dias+" days and is not comparable with the full ones":"")+". Busiest days: "+top.map(function(d){return dfmt(d.f)+" ("+nf(d.net)+")";}).join(" and ")+"."+
+    (q?" They sit at a quarter boundary; whether that is a push to book contracts before the quarter closed is a hypothesis, not a finding.":"")+
+    " A home that comes back is taken off the day it LEFT, not the day it returned, so each day and week is revised as its homes return; the latest 7 days are provisional and will tend to go down.  Read the weekly line. The company reports closings, which trail contracts by weeks.";
+}
+
+function renderSurvival(M){
+  var V=M.supervivencia; if(!V||!V.est){ $("survival").hidden=true; return; } $("survival").hidden=false;
+  var H=V.hitos||{}, g=function(d,k){ return H[d]?H[d][k]:null; };
+  $("sv-note").textContent="Read left to right: for a home that has been listed N days, the share that has already left the listing (roughly: gone under contract). Built from how many homes left at each age against how many were exposed at that age, across "+
+    nf(V.base.activas)+" active and "+nf(V.base.salidas)+" departed homes.";
+  $("sv-stats").innerHTML=stat(pct(g(30,"corr"),0),"Gone by day 30","lower bound "+pct(g(30,"raw"),0))+stat(pct(g(60,"corr"),0),"Gone by day 60","lower bound "+pct(g(60,"raw"),0))+
+    stat(pct(g(90,"corr"),0),"Gone by day 90","lower bound "+pct(g(90,"raw"),0))+stat(V.mediana_est!=null?"day "+V.mediana_est:"—","Half of homes gone by","lower bound: day "+(V.mediana_cota!=null?V.mediana_cota:"—"));
+  var pts=function(arr){ return V.edades.map(function(a,i){return [a,arr[i]];}); };
+  lineChart("sv-chart",[{n:"Estimate",c:cssv("--s-b"),pts:pts(V.est)},{n:"Lower bound",c:cssv("--s-a"),dash:true,pts:pts(V.cota)}],
+    {h:230,xnum:true,xticks:[0,30,60,90,120,150,180],xlab:function(t){return ""+t;},yticks:[0,25,50,75,100],ymin:0,ymax:100,yfmt:function(v){return Math.round(v)+"%";},label:"Share of homes gone by days on market"});
+  var rest=V.haz.slice(1).filter(function(x){return x!=null;}), ra=rest.reduce(function(s,x){return s+x;},0)/(rest.length||1);
+  $("sv-fine").textContent="Estimate: rescaled to all "+nf(V.base.salidas)+" departures, because only "+nf(V.base.con_fecha)+" of them had a list date we could read. Lower bound: those with a known date only, which undercounts departures. Departures include the few that later came back. Only "+nf((M.serie||[]).length)+" days of data exist, so each age band holds a few dozen events: trust the shape, not the decimals. "+
+    "Horizontal axis: days listed. In the first week the chance of leaving is "+(V.haz[0]!=null?V.haz[0].toFixed(2):"—")+"% a day against about "+ra.toFixed(2)+"% from day 8 on.";
+}
+
+/* Homes for sale today, by days listed: counts or share of homes. */
+function renderAge(M,inv){
+  var E=M&&M.edad, lab, cnt, base;
+  if(E&&E.n&&E.base){
+    lab=E.bins.map(function(b){ return b[0]>=366?"1 yr+":b[0]+"–"+b[1]; }); cnt=E.n; base=E.base;
+  } else {
+    var ed=inv.edad_real_listadas||inv.edad_listadas, cats=["0-7","8-30","31-60","61-90","91-120","120+"];
+    if(!ed){ $("age-chart").innerHTML='<div class="empty"><span class="mark">…</span><p>Needs the second daily count.</p></div>'; $("age-stats").innerHTML=""; return; }
+    lab=cats.map(function(c){return c.replace("-","–");}); cnt=cats.map(function(c){return ed[c]||0;}); base=cnt.reduce(function(a,b){return a+b;},0);
+  }
+  var pc=cnt.map(function(c){ return base?Math.round(c/base*1000)/10:0; });
+  var real=!!(E&&E.n&&E.base)||!!inv.edad_real_listadas;
+  $("age-note").textContent=real
+    ? "Days since each home's own list date, read from its listing page ("+nf(base)+" of the "+nf(E&&E.activas?E.activas:inv.total)+" homes listed today; the rest do not show a list date). Each bar shows its share of those "+nf(base)+", then the number of homes."
+    : "Counted from the day we first saw each listing, which started "+dfmt(inv.inicio_medicion,{year:"numeric"})+". Until listing pages give real list dates, older homes pile into the first buckets.";
+  var rows=lab.map(function(l,i){ return {l:l,v:cnt[i],p:pc[i],title:l+" days listed"}; });
+  $("age-chart").style.setProperty("--lab","66px"); $("age-chart").style.setProperty("--val","104px");
+  hbars("age-chart",rows,{fmt:function(r){ return r.p.toFixed(1)+"% · "+nf(r.v); }});
+  // cumulative reads: share listed 30 days or less, share over 90 days, median
+  var upTo=function(maxd){ var s=0; if(E&&E.n){ E.bins.forEach(function(b,i){ if(b[1]<=maxd) s+=cnt[i]; }); } return s; };
+  var over90=function(){ var s=0; if(E&&E.n){ E.bins.forEach(function(b,i){ if(b[0]>90) s+=cnt[i]; }); } return s; };
+  var median=function(){ var half=base/2, acc=0; for(var i=0;i<cnt.length;i++){ if(acc+cnt[i]>=half){ var b=E.bins[i], hi=b[1]>9000?b[0]+120:b[1]; return Math.round(b[0]+(half-acc)/(cnt[i]||1)*(hi-b[0])); } acc+=cnt[i]; } return null; };
+  if(E&&E.n&&base){
+    $("age-stats").innerHTML=stat(pct(upTo(30)/base*100,0),"Listed 30 days or less",nf(upTo(30))+" homes")+stat(pct(over90()/base*100,0),"Listed more than 90 days",nf(over90())+" homes")+stat(nf(median()),"Median days listed","half the homes are newer, half older");
+  } else if(inv.edad_real_listadas&&base){
+    var o120=cnt[5], u30=cnt[0]+cnt[1];
+    $("age-stats").innerHTML=stat(pct(u30/base*100,0),"Active homes listed 30 days or less",nf(u30)+" of "+nf(base))+
+      stat(pct(o120/base*100,0),"Active homes listed more than 120 days",nf(o120)+" of "+nf(base)+"<br>homes for sale today, not the ones that left")+
+      (inv.edad_real_listadas_mediana!=null?stat(nf(inv.edad_real_listadas_mediana),"Median days listed","half the active homes are newer, half older"):"");
+  } else $("age-stats").innerHTML=inv.edad_real_listadas_mediana!=null?stat(nf(inv.edad_real_listadas_mediana),"Median days listed",""):"";
+}
+
+function renderPrices(M,P){
+  var Pr=M.precios; if(!Pr||!Pr.activas||!Pr.activas.length){ $("prices").hidden=true; return; } $("prices").hidden=false;
+  var A=Pr.activas, ex=(Pr.salidas||[]).filter(function(d){return d.n>=50;}), ven=Pr.venta||[];
+  var la=A[A.length-1], T=Pr.salidas_total||{}, gap=T.media&&Pr.activas_total?(T.media/Pr.activas_total.media-1)*100:null;
+  var inv=(P&&P.inventario)||{}, ip=inv.precios||{}, S0=M.serie||[], q=qOf(S0.length?S0[S0.length-1].f:(inv.fecha||la.f)), c=q4Model(M,q.days).c;
+  var oc=ownCuts(P||{},q);
+  var l7=lastPt("listados_7d");
+  $("pr-stats").innerHTML=stat(money(la.medio),"Average list price, homes for sale","median "+money(la.mediana)+" · "+nf(la.n)+" pages read")+
+    stat(l7?money(l7.medio):"—","Average list price, homes listed in the last 7 days",l7?"median "+money(l7.mediana)+" · "+nf(l7.n)+" homes · to "+dfmt(l7.f)+"<br>"+Math.abs((l7.medio/la.medio-1)*100).toFixed(0)+"% "+(l7.medio<la.medio?"below":"above")+" the average of all homes for sale<br>first list price recorded, relisted homes included":"not computed yet")+
+    stat(ip.con_recorte_pct!=null?pct(ip.con_recorte_pct):"—","Have had a price cut",ip.recortes_hoy?nf(ip.recortes_hoy)+" detected today, average "+pct(ip.recorte_medio_hoy_pct)+" off":"none detected today")+
+    stat(oc.n?nf(oc.n):"—","Price cuts, "+q.label+" to date","counted by us on listing pages, "+dfmt(oc.since)+" to "+dfmt(oc.last))+
+    stat(oc.usd?"$"+(oc.usd/1e6).toFixed(2)+"M":"—","Total amount cut, "+q.label+" to date",oc.n?"average "+money(oc.usd/oc.n)+" per cut":"")+
+    (function(){ var rm=lastPt("recorte_medio_casa"); if(!rm) return ""; return stat(money(rm.medio_usd),"Average price cut per home","median "+money(rm.mediana_usd)+" · "+pct(rm.medio_pct)+" off the first list price<br>"+nf(rm.casas)+" homes with a cut, "+(rm.activas?(rm.activas_con_recorte/rm.activas*100).toFixed(1)+"% of those listed":"")+" · to "+dfmt(rm.f)); })()+
+    stat(T.media?money(T.media):"—","Average last ask, homes sold","median "+money(T.mediana)+" · n="+nf(T.n))+
+    (function(){ var SQ=salesQ(M,P||{}); if(!SQ||!SQ.n) return ""; return stat(money(SQ.rev/SQ.n),"Average sale price, "+SQ.q.label+" to date","last asking price of the "+nf(SQ.n)+" homes sold since "+dfmt(SQ.q.start)+" · contract price, not closing"); })()+
+    stat(gap!=null?sgn(gap)+Math.abs(gap).toFixed(1)+"%":"—","Sold vs. what is on the market","the mix of homes that leave, not a price cut");
+  var ser=[{n:"Avg list price, homes for sale",c:cssv("--s-a"),pts:A.map(function(d){return [d.f,d.medio,"median "+money(d.mediana)];})}];
+  if(ex.length) ser.push({n:"Avg last ask, homes sold (7-day)",c:cssv("--s-b"),pts:ex.map(function(d){return [d.f,d.medio,"n="+d.n+" in the window"];})});
+  var l7s=(((senales||{}).listados_7d||{}).puntos||[]).filter(function(d){return d.medio;});
+  if(l7s.length>1) ser.push({n:"Avg list price, homes listed in the last 7 days",c:cssv("--ink-2"),pts:l7s.map(function(d){return [d.f,d.medio,"median "+money(d.mediana)+" · n="+nf(d.n)];})});
+  if(ven.length) ser.push({n:"Avg contract price, homes sold",c:cssv("--good"),pts:ven.map(function(d){return [d.f,d.medio,"n="+d.n];})});
+  $("pr-legend").innerHTML=ser.map(function(s){return '<span><i style="background:'+s.c+'"></i>'+esc(s.n)+'</span>';}).join("");
+  lineChart("pr-chart",ser,{h:220,yfmt:function(v){return money(v);},label:"Average list price versus price of homes sold"});
+  $("pr-note").textContent="List-price coverage: "+nf(A[0].n)+" pages read on "+dfmt(A[0].f)+" growing to "+nf(la.n)+" now, so early points are a smaller sample. The sold line has "+(ex.length?nf(ex[0].n):"few")+" to "+(ex.length?nf(ex[ex.length-1].n):"")+
+    " homes behind each point and moves with whichever homes happened to leave. "+(ven.length?"":"Contract prices are not read yet.")+" \"Sold vs. what is on the market\" compares the average price of the homes that left with the average of the homes still listed: cheaper homes tend to go first, so it is negative without any price being cut. A price cut is a separate event: a home whose list price was lowered.";
+}
+
+/* Read-only assumptions behind the profit estimate. u = unit shown after the value. */
+var MD_FIELDS=[
+ {g:"Sales pace and price"},
+ {k:"exits",l:"Homes sold per day",t:"observed",u:"",h:"Net of homes that came back. The pace buttons pick which."},
+ {k:"days",l:"Days in the quarter",t:"fact",u:"",h:"Q4 = Oct 1 to Dec 31."},
+ {k:"season",l:"Pace vs. the observed one",t:"assumption",u:"%",h:"100 = the pace holds all quarter. Winter is usually slower."},
+ {k:"close",l:"Sales that reach a closing",t:"assumption",u:"%",h:"Relists, which include most cancelled contracts, are already netted out."},
+ {k:"list",l:"Average last ask of homes sold",t:"observed",u:"$",h:"From listing pages of homes that left."},
+ {k:"ratio",l:"Sale price ÷ last ask",t:"assumption",u:"%",h:"Contract price is not public yet."},
+ {k:"conc",l:"Mortgage concession per home",t:"observed",u:"$",h:"Average concession × share of listings offering one. Treated as lower revenue."},
+ {g:"Margins and costs"},
+ {k:"margin",l:"Contribution margin, home sales",t:"assumption",u:"%",h:"Share of home-sale revenue left after the cost of homes, renovation and selling. We cannot observe it from outside. It starts at the Q3 guide midpoint; change it with the − and + on the Contribution margin card."},
+ {k:"fixed",l:"Fixed costs below contribution",t:"derived",u:"$M",h:"Q2: contribution $51M minus adjusted EBITDA (−$4M)."},
+ {k:"interest",l:"Interest expense",t:"reported",u:"$M",h:"Q2 2026."},
+ {k:"sbc",l:"Stock-based comp",t:"reported",u:"$M",h:"Q3 guide ≈ $110M. Non-cash."},
+ {g:"Revenue that is not a home sale"},
+ {k:"attach",l:"Closings financed by Home Loans",t:"assumption",u:"%",h:"Colorado: over half. Texas: nearly 1 in 5. Maricopa: 7.9% in deed records."},
+ {k:"loanrev",l:"Revenue per financed loan",t:"assumption",u:"$",h:"Origination plus sale of the loan."},
+ {k:"titleshare",l:"Closings handled by OS National",t:"assumption",u:"%",h:"Opendoor's title and escrow company."},
+ {k:"titlefee",l:"Title and escrow revenue per closing",t:"assumption",u:"$",h:"Fees on those closings."},
+ {k:"tpn",l:"Third-party transactions in the quarter",t:"assumption",u:"",h:"Capital-light marketplace. Zero until it shows volume."},
+ {k:"tpfee",l:"Revenue per third-party transaction",t:"assumption",u:"$",h:"Only matters if the line above is above zero."},
+ {k:"omargin",l:"Margin on non-home revenue",t:"assumption",u:"%",h:"Fee businesses carry far higher margins than reselling."}
+];
+function mdDefaults(M){
+  var Pr=M.precios||{}, A=Pr.activas||[], la=A.length?A[A.length-1]:null, sc=M.escenarios||{base:39.6};
+  var v={exits:sc[mdScen]!=null?sc[mdScen]:sc.base,days:92,season:100,close:95,list:Math.round((Pr.salidas_total||{}).media||376800),ratio:98,
+    conc:la&&la.conc_pct!=null?Math.round(la.conc_pct/100*la.conc_med):1800,margin:mdMargin!=null?mdMargin:MD_GUIDE,fixed:55,interest:29,sbc:110,
+    attach:9,loanrev:6500,titleshare:30,titlefee:1200,tpn:0,tpfee:2000,omargin:30};
+  /* Internal quarter attribution (no card, no label): contracts shifted by a lag decide which quarter a home counts in, plus a small share of sales
+     outside the listing site. Both are data documents (senales/lag_cierre.dias, senales/fuera_web.pct), default 30 days and 3%; 0 and 0 gives the old model. */
+  var LG=(senales||{}).lag_cierre||{}, FW=(senales||{}).fuera_web||{};
+  v.lag=(LG.dias!=null&&isFinite(+LG.dias))?Math.max(0,Math.min(90,Math.round(+LG.dias))):30;
+  v.offsite=(FW.pct!=null&&isFinite(+FW.pct))?Math.max(0,Math.min(20,+FW.pct)):3;
+  var tm=mdTiming(M,v.exits,v.lag); v.inflow=tm.inflow;
+  return v;
+}
+function mdTiming(M,e,lag){
+  var out={inflow:0}; if(!lag) return out;
+  var S=M.serie||[]; if(!S.length) return out;
+  var q=qOf(S[S.length-1].f), by={};
+  var vsd=(senales||{}).ventas_salida; if(vsd&&vsd.puntos) vsd.puntos.forEach(function(p){ if(p.off!=null) by[p.f]=p.off-(p.ret||0); });
+  S.forEach(function(d){ by[d.f]=d.net; });
+  for(var k=lag;k>=1;k--){ var f=addDays(q.start,-k); out.inflow+=(by[f]!=null?by[f]:e); }
+  return out;
+}
+function mdCalc(v){
+  var c={}; c.shift=(v.inflow||0)-(v.lag||0)*v.exits*(v.season/100);
+  c.homes=(v.exits*v.days*(v.season/100)+c.shift)*(v.close/100)*(1+(v.offsite||0)/100); c.price=v.list*v.ratio/100;
+  c.sales=c.homes*c.price/1e6; c.conc=-c.homes*v.conc/1e6;
+  c.ohl=c.homes*(v.attach/100)*v.loanrev/1e6; c.title=c.homes*(v.titleshare/100)*v.titlefee/1e6; c.tp=v.tpn*v.tpfee/1e6;
+  c.other=c.ohl+c.title+c.tp; c.rev=c.sales+c.conc+c.other;
+  c.contr=(c.sales+c.conc)*v.margin/100+c.other*v.omargin/100;
+  c.ebitda=c.contr-v.fixed; c.adjnet=c.ebitda-v.interest; c.net=c.adjnet-v.sbc;
+  var unit=(c.price-v.conc)*v.margin/100; c.be=unit>0?v.fixed*1e6/unit:null;
+  return c;
+}
+
+/* ===== Records summary: operation in Maricopa (observed from deeds) + realized and estimated economics ===== */
+function pulseRender(cart,R,VP){
+  var o=$("pulse-obs"); if(!o) return;
+  var med=function(a){ a=a.filter(function(x){return x!=null&&isFinite(x);}).sort(function(x,y){return x-y;}); if(!a.length) return null; var m=a.length>>1; return a.length%2?a[m]:(a[m-1]+a[m])/2; };
+  var u=(R&&R.ultimos_90d)||null, meses=((R&&R.meses)||[]).filter(function(m){return m.m>="2026-01";});
+  var L=(VP&&VP.lista)||[], st=[], notes=[];
+  /* paid vs county valuation */
+  if(cart&&cart.precio_sobre_valor_fiscal) st.push(stat((cart.precio_sobre_valor_fiscal>=1?"+":"")+pct((cart.precio_sobre_valor_fiscal-1)*100,0),"Paid over county valuation","price paid ÷ assessor's valuation"));
+  /* buy / sell balance */
+  if(u&&u.venta) st.push(stat((u.compra/u.venta).toFixed(2)+" : 1","Bought per home sold","last 90 days · "+(u.compra>=u.venta?"+":"−")+nf(Math.abs(u.compra-u.venta))+" homes net, so the stock is "+(u.compra>=u.venta?"growing":"shrinking")));
+  /* months of sales in stock: last full quarter's monthly pace */
+  var cur=meses.length?meses[meses.length-1].m:null, qm=null;
+  if(cur){ var y=+cur.slice(0,4), mo=+cur.slice(5,7), qs=Math.floor((mo-1)/3)*3+1; /* first month of the current quarter */
+    var py=y, pq=qs-3; if(pq<1){ pq+=12; py--; }
+    qm=[0,1,2].map(function(k){ return py+"-"+pad2(pq+k); }); }
+  var qSold=null, qBought=null, qLabel="";
+  if(qm){ var hit=meses.filter(function(m){return qm.indexOf(m.m)>=0;}); if(hit.length===3){ qSold=hit.reduce(function(a,m){return a+(m.ventas||0);},0); qBought=hit.reduce(function(a,m){return a+(m.compras||0);},0); qLabel="Q"+(Math.floor((+qm[0].slice(5,7)-1)/3)+1); } }
+  if(qSold&&cart&&cart.casas) st.push(stat((cart.casas/(qSold/3)).toFixed(1),"Months of sales in stock",nf(cart.casas)+" homes at "+qLabel+"'s pace of "+nf(Math.round(qSold/3))+" sold a month"));
+  /* capital at cost */
+  var mean=(cart&&cart.coste_total&&cart.coste_base)?cart.coste_total/cart.coste_base:null;
+  if(mean) st.push(stat("≈ "+fmM(mean*cart.casas/1e6,0),"Capital in homes, at cost","average paid "+money(mean)+" × "+nf(cart.casas)+" homes held"));
+  /* speed of turn */
+  var dd=L.map(function(v){return v.dias;}).filter(function(x){return x!=null;});
+  if(dd.length>=10){ var f60=dd.filter(function(x){return x<=60;}).length, f90=dd.filter(function(x){return x<=90;}).length;
+    st.push(stat(nf(f90)+" of "+nf(dd.length),"Sold within 90 days","of owning · "+nf(f60)+" within 60, "+nf(dd.length-f90)+" took longer"));
+    notes.push("Speed is measured on the "+nf(dd.length)+" homes already sold and paired to their purchase deed, so it leans toward the faster ones: homes still unsold are not in it."); }
+  /* sale price coverage */
+  var priced=L.filter(function(v){return v.venta_p&&v.compra_p;});
+  if(L.length) st.push(stat(nf(priced.length)+" of "+nf(L.length),"Sold homes with a sale price","price recorded by the assessor after the deed"));
+  /* share of the company: same quarter, reported homes */
+  var q2=meses.filter(function(m){return m.m>="2026-04"&&m.m<="2026-06";}), q2sold=q2.length===3?q2.reduce(function(a,m){return a+(m.ventas||0);},0):null, Q2H=2339, share=q2sold?q2sold/Q2H:null;
+  if(share!=null) st.push(stat(pct(share*100),"Maricopa share of company sales","Q2: "+nf(q2sold)+" deeds ÷ "+nf(Q2H)+" homes reported"));
+  o.innerHTML=st.join("");
+  $("pulse-obs-note").textContent=notes.join(" ");
+  /* realized economics on homes with both prices */
+  (function(){
+    var rb=$("pulse-real-band"); if(!rb) return;
+    var pp=L.filter(function(v){return v.venta_p&&v.compra_p;});
+    if(pp.length<10){ rb.hidden=true; return; }
+    rb.hidden=false;
+    var SELL=29/883, HOLD=11e6/2339;
+    var sg=function(x,d){ return (x>0?"+":x<0?"−":"")+Math.abs(x).toFixed(d==null?1:d)+"%"; }, k$=function(x){ return (x<0?"−":"")+"$"+(Math.abs(x)/1000).toFixed(1)+"K"; };
+    var sp=pp.map(function(v){return (v.venta_p/v.compra_p-1)*100;});
+    var cc=pp.map(function(v){ var c=v.venta_p-v.compra_p-SELL*v.venta_p-HOLD; return {c:c,m:c/v.venta_p*100}; });
+    var mean=function(a){ return a.reduce(function(x,y){return x+y;},0)/a.length; };
+    var fast=pp.filter(function(v){return v.dias!=null&&v.dias<=90;}).map(function(v){return (v.venta_p/v.compra_p-1)*100;});
+    var slow=pp.filter(function(v){return v.dias!=null&&v.dias>90;}).map(function(v){return (v.venta_p/v.compra_p-1)*100;});
+    var below=sp.filter(function(x){return x<0;}).length, pos=cc.filter(function(x){return x.c>0;}).length;
+    var f=pp.map(function(v){return v.venta_f;}).sort(), tot=cc.reduce(function(a,x){return a+x.c;},0);
+    var out=[
+      stat(sg(med(sp)),"Median sale vs purchase price","average "+sg(mean(sp))+" · "+nf(below)+" of "+nf(pp.length)+" sold below what they paid"),
+      stat("≈ "+sg(med(cc.map(function(x){return x.m;}))),"Contribution margin, realized","before renovation · company Q2: +5.8% reported"),
+      stat("≈ "+k$(med(cc.map(function(x){return x.c;}))),"Contribution per home","before renovation · company Q2: +$22K · "+nf(pos)+" of "+nf(pp.length)+" above zero"),
+      stat("≈ "+(tot<0?"−":"")+fmM(Math.abs(tot)/1e6),"Total on these homes",nf(pp.length)+" homes sold "+dfmt(f[0])+" to "+dfmt(f[f.length-1],{year:"numeric"}))];
+    if(fast.length>=3&&slow.length>=3) out.push(stat(sg(med(fast))+" / "+sg(med(slow)),"Sold within 90 days / after","median spread · "+nf(fast.length)+" homes / "+nf(slow.length)+" homes"));
+    var paidMed=med(pp.map(function(v){return v.compra_p;}));
+    var rows=[0,5000,10000,15000,20000].map(function(rn){
+      var cs=pp.map(function(v){ var c=v.venta_p-v.compra_p-SELL*v.venta_p-HOLD-rn; return {c:c,m:c/v.venta_p*100}; });
+      var be=((paidMed+HOLD+rn)/(1-SELL)/paidMed-1)*100, tt=cs.reduce(function(a,x){return a+x.c;},0);
+      return '<tr'+(rn===10000?' class="tot"':'')+'><td class="t">'+(rn?money(rn)+(rn===10000?" (my central guess)":""):"None (as above)")+'</td><td>'+sg(med(cs.map(function(x){return x.m;})))+'</td><td>'+k$(med(cs.map(function(x){return x.c;})))+'</td><td>'+(tt<0?"−":"")+fmM(Math.abs(tt)/1e6)+'</td><td>'+nf(cs.filter(function(x){return x.c>0;}).length)+' of '+nf(pp.length)+'</td><td>'+sg(be)+'</td></tr>'; });
+    $("pulse-real-tbl").innerHTML='<table class="wide"><thead><tr><th>Renovation per home</th><th>Median margin</th><th>Median per home</th><th>Total</th><th>Homes above zero</th><th>Sale must beat purchase by</th></tr></thead><tbody>'+rows.join("")+'</tbody></table>';
+    $("pulse-real").innerHTML=out.join("");
+    $("pulse-real-note").textContent="Selling costs "+(SELL*100).toFixed(1)+"% of the sale price and holding costs "+money(Math.round(HOLD))+" per home are Opendoor's own Q2 2026 figures ($29M and $11M over 2,339 homes); Phoenix's real costs could differ. No concession is subtracted: the deed price is what the buyer paid on paper. "+nf(L.length-pp.length)+" more sold homes are waiting for the assessor to record a price, and they are the most recent sales, so the picture can move.";
+  })();
+}
+
+function renderModel(M){
+  mdVals=mdDefaults(M);
+  if(!mdBuilt){
+    $("md-scen").addEventListener("click",function(ev){ var b=ev.target.closest&&ev.target.closest("button[data-s]"); if(!b) return; var s=b.getAttribute("data-s");
+      if(((mdM||{}).escenarios||{})[s]==null) return; mdScen=s; renderModel(mdM); });
+    $("md-out").addEventListener("click",function(ev){ var b=ev.target.closest&&ev.target.closest("button[data-m]"); if(!b) return; var k=b.getAttribute("data-m");
+      if(k==="0") mdMargin=null; else mdMargin=Math.max(-5,Math.min(15,Math.round((mdVals.margin+(+k)*0.25)*100)/100));
+      renderModel(mdM); var nb=$("md-out").querySelector('button[data-m="'+k+'"]'); if(nb) nb.focus(); });
+    mdBuilt=true;
+  }
+  var sc=M.escenarios||{};
+  $("md-scen").innerHTML=[["low","Last 7 days",sc.low],["base","Average so far",sc.base],["high","Best 7 days",sc.high]].filter(function(s){return s[2]!=null;}).map(function(s){
+    return '<button type="button" class="btn'+(mdScen===s[0]?' on':'')+'" data-s="'+s[0]+'" title="'+s[2]+' homes sold a day">'+s[1]+' · '+s[2]+'/day</button>'; }).join("");
+  var fv=function(f){ var x=mdVals[f.k], r=Math.round(x*100)/100; var s=r.toLocaleString("en-US",{maximumFractionDigits:2});
+    return f.u==="$"?"$"+s:f.u==="$M"?"$"+s+"M":f.u==="%"?s+"%":s; };
+  $("md-assume").innerHTML='<table class="wide"><tbody>'+MD_FIELDS.map(function(f){
+    if(f.g) return '<tr><td class="t grp" colspan="3">'+f.g+'</td></tr>';
+    return '<tr><td class="t">'+esc(f.l)+'<div class="fine" style="white-space:normal">'+esc(f.h)+'</div></td><td>'+fv(f)+'</td><td class="t"><span class="tag">'+f.t+'</span></td></tr>'; }).join("")+'</tbody></table>';
+  paintModel();
+}
+function paintModel(){
+  var M=mdM, v=mdVals, c=mdCalc(v);
+  $("md-out").innerHTML=
+    stat(nf(Math.round(c.homes)),"Closings in the quarter",(c.homes/v.days).toFixed(1)+" a day · "+nf(Math.round(c.homes/v.days*7))+" a week")+
+    stat(fmM(c.rev),"Total revenue","home sales "+fmM(c.sales)+" · other "+fmM(c.other)+" ("+(c.other/c.rev*100).toFixed(1)+"%)")+
+    stat(fmM(c.contr),"Contribution profit","home sales × margin + fee lines × their margin")+
+    stat(String(Math.round(v.margin*100)/100)+"%","Contribution margin","on home sales · fee revenue ("+(c.rev?(c.other/c.rev*100).toFixed(1):"0")+"% of the total) at "+v.omargin+"%"+
+        '<span class="mstep"><span class="mrow"><button type="button" data-m="-1" aria-label="Lower the contribution margin by 0.25 points">−</button><button type="button" data-m="1" aria-label="Raise the contribution margin by 0.25 points">+</button>'+(mdMargin!=null?'<button type="button" class="rs" data-m="0" aria-label="Back to the guide midpoint">↺ '+MD_GUIDE+'%</button>':"")+'</span></span>')+
+    stat(fmM(c.ebitda),"Adjusted EBITDA","after "+fmM(v.fixed,0)+" of fixed costs")+
+    stat(fmM(c.adjnet),"Adjusted net income","after "+fmM(v.interest,0)+" of interest")+
+    stat(fmM(c.net),"After stock comp, approx.","company's own net loss also carries other items")+
+    stat(c.be?nf(Math.round(c.be)):"—","Homes for adjusted EBITDA = 0","a quarter · "+(c.be?(c.be/v.days).toFixed(1):"—")+" a day");
+  var row=function(l,x,b,cls){ return '<tr'+(cls?' class="'+cls+'"':'')+'><td class="t">'+l+'</td><td>'+fmM(x)+'</td><td>'+(c.rev?(x<0?"−":"")+Math.abs(x/c.rev*100).toFixed(1)+"%":"—")+'</td><td class="t" style="color:var(--muted)">'+b+'</td></tr>'; };
+  $("md-break").innerHTML='<table class="wide"><thead><tr><th>Revenue line</th><th>$M</th><th>% of total</th><th>Basis</th></tr></thead><tbody>'+
+    row("Home sales",c.sales,"homes sold × price × "+v.ratio+"% of last ask")+row("Mortgage concessions",c.conc,"average concession × homes sold, contra-revenue")+
+    row("Opendoor Home Loans",c.ohl,v.attach+"% financed × "+money(v.loanrev)+" a loan · assumption")+row("Title and escrow",c.title,v.titleshare+"% handled × "+money(v.titlefee)+" · assumption")+
+    row("Third party",c.tp,nf(v.tpn)+" transactions · assumption")+row("Total revenue",c.rev,"","tot")+'</tbody></table>';
+  var q3e=915*1.2*0.0425, rep=(((senales||{}).margen_contribucion||{}).puntos||[]).filter(function(p){return p.contribucion_musd!=null;});
+  var pts=rep.map(function(p){return [p.f,p.contribucion_musd];});
+  lineChart("md-chart",[{n:"Reported",c:cssv("--s-a"),pts:pts},{n:"Estimate",c:cssv("--s-b"),dash:true,pts:[["2026-06-30",51],["2026-09-30",Math.round(q3e*10)/10],["2026-12-31",Math.round(c.contr*10)/10]]}],
+    {h:190,monthly:true,zero:true,yfmt:function(v2){return "$"+Math.round(v2)+"M";},label:"Contribution profit by quarter"});
+  $("md-ref").innerHTML='<table class="wide"><thead><tr><th>Quarter</th><th>Homes</th><th>Revenue</th><th>Contribution</th><th>Adj. EBITDA</th></tr></thead><tbody>'+
+    '<tr><td class="t">Q2 2026 reported</td><td>2,339</td><td>$883M</td><td>$51M · 5.8%</td><td>−$4M</td></tr>'+
+    '<tr><td class="t">Q3 2025 reported</td><td>—</td><td>$915M</td><td>$20M · 2.2%</td><td>—</td></tr>'+
+    '<tr><td class="t">Q3 2026 guide</td><td>—</td><td>≥ $1,098M*</td><td>&gt; $40M* · 4–4.5%</td><td>—</td></tr>'+
+    '<tr class="tot"><td class="t">This estimate, Q4</td><td>'+nf(Math.round(c.homes))+'</td><td>'+fmM(c.rev,0)+'</td><td>'+fmM(c.contr)+' · '+(c.contr/c.rev*100).toFixed(1)+'%</td><td>'+fmM(c.ebitda)+'</td></tr>'+
+    '</tbody></table>';
+  $("md-fine").textContent="Reported figures are from Opendoor's Q2 2026 results and Q3 outlook (investor.opendoor.com, Aug 4 2026). *Derived here: +20% on Q3 2025's $915M; contribution more than double $20M. The $55M of fixed costs is a subtraction (51 − (−4)), not a reported line, and the company does not break out revenue by source, so Home Loans, title and third-party lines are assumptions. "+
+    "Homes sold are departures from the sitemap minus relists. Cancelled contracts tend to relist and are netted out, so only a small further haircut (5%) is applied for sales that never close. A contract signed today closes weeks later, so this quarter's revenue also reflects contracts signed before our counter started on Sep 27. Treat the output as a calibrated what-if, not a forecast.";
+}
+
+/* ================= v8: quarter helpers, daily list, sales model rebuilt from the daily counts ================= */
+var diasFull=[];
+var pad2=function(n){return (n<10?"0":"")+n;};
+function qOf(f){ var y=+f.slice(0,4), m=+f.slice(5,7), q=Math.floor((m-1)/3), em=q*3+3;
+  var start=y+"-"+pad2(q*3+1)+"-01", end=new Date(Date.UTC(y,em,0)).toISOString().slice(0,10);
+  return {n:q+1,y:y,start:start,end:end,label:"Q"+(q+1),days:Math.round((Date.parse(end)-Date.parse(start))/864e5)+1}; }
+function weekStart(f){ var d=new Date(f+"T12:00:00Z"); return addDays(f,-((d.getUTCDay()+6)%7)); }
+/* One record per day: the panel's series, completed with the daily documents (they carry the departure price base). */
+function dayList(P){
+  var by={};
+  (P.serie||[]).forEach(function(d){ by[d.f]={f:d.f,total:d.total,altas:d.altas||0,bajas:d.bajas||0,reap:d.reap||0,primera:!!d.primera,vs:d.valor_salido,rec:d.recortes}; });
+  diasFull.forEach(function(d){ var o=by[d.f]||(by[d.f]={f:d.f}); Object.keys(d).forEach(function(k){ if(d[k]!=null) o[k]=d[k]; }); });
+  return Object.keys(by).sort().map(function(k){return by[k];});
+}
+/* Sales per day = homes that left the listing minus homes that came back that day. Built here from the daily counts,
+   so it never lags behind them. supervivencia / precios come from the panel's own model. */
+var SALES_START="2026-10-01"; /* sales are counted from this day, included; the week it falls in is shorter */
+function buildSales(P,base){
+  var D=dayList(P).filter(function(d){return !d.primera&&d.total&&d.f>=SALES_START;});
+  if(D.length<2) return base;
+  /* A home that left on day D and later came back is subtracted from day D, not from the day it reappears (senales/ventas_salida,
+     rebuilt every night from the per-home file). Without that document the old rule is used: returns netted on the day they happen. */
+  var VS={}, vsd=(senales||{}).ventas_salida, byExit=!!(vsd&&vsd.puntos&&vsd.puntos.length);
+  if(byExit) vsd.puntos.forEach(function(p){ VS[p.f]=p; });
+  var lastF=D[D.length-1].f;
+  var S=D.map(function(d){ var off=d.bajas||0, on=d.altas||0, rd=d.reap||0, v=VS[d.f], ret=rd;
+    if(byExit) ret=(v&&v.off===off)?v.ret:0;
+    return {f:d.f,off:off,on:on,tot:d.total,ret:ret,net:off-ret,nuevas:on-rd,reap_dia:rd,prov:byExit&&Math.round((Date.parse(lastF)-Date.parse(d.f))/864e5)<7}; });
+  /* Share of departures that came back, taken from days at least 7 days old (shown on the Sales tab only; no adjustment is applied to the pace). */
+  var mOff=0, mRet=0; S.forEach(function(d){ if(!d.prov){ mOff+=d.off; mRet+=d.ret; } });
+  var rM=(byExit&&mOff>=100)?mRet/mOff:0;
+  S.forEach(function(d){ d.est=d.net; });
+  S.forEach(function(d,i){ var a=Math.max(0,i-6), s=0, e=0; for(var k=a;k<=i;k++){ s+=S[k].net; e+=S[k].est; } d.mm7=Math.round(s/(i-a+1)*10)/10; d.mm7e=Math.round(e/(i-a+1)*10)/10; });
+  var wk={}, order=[];
+  S.forEach(function(d){ var s=weekStart(d.f); if(!wk[s]){ wk[s]={s:s,off:0,ret:0,net:0,est:0,dias:0,prov:false}; order.push(s); } var w=wk[s]; w.off+=d.off; w.ret+=d.ret; w.net+=d.net; w.est+=d.est; w.dias++; if(d.prov) w.prov=true; });
+  var sum=function(k,arr){ return arr.reduce(function(a,d){return a+d[k];},0); };
+  var n=S.length, last7=S.slice(-7), netas=sum("net",S), brutas=sum("off",S), vueltas=sum("ret",S), high=0;
+  S.forEach(function(d,i){ if(i>=6&&d.mm7e>high) high=d.mm7e; }); if(!high) high=S[n-1].mm7e;
+  return Object.assign({},base,{serie:S,semanas:order.map(function(s){return wk[s];}),vendidas_netas:netas,salidas_brutas:brutas,vueltas:vueltas,
+    retorno_pct:brutas?Math.round(vueltas/brutas*1000)/10:0,retorno_7d_pct:sum("off",last7)?Math.round(sum("ret",last7)/sum("off",last7)*1000)/10:0,
+    retorno_maduro_pct:byExit?Math.round(rM*1000)/10:null,por_salida:byExit,generado_vs:byExit?vsd.generado:null,
+    escenarios:{low:S[n-1].mm7e,base:Math.round(sum("est",S)/n*10)/10,high:high},ventana:[S[0].f,S[n-1].f]});
+}
+function pickModelo(P){
+  var base=(P&&P.ventas&&P.ventas.supervivencia)?P.ventas:(modeloDoc&&modeloDoc.supervivencia?modeloDoc:SEED_MODELO);
+  return buildSales(P||{},base);
+}
+/* Quarter to date: homes sold and the revenue they imply at their last asking price (contract signing, not closing). */
+function salesQ(M,P){
+  var S=M.serie||[]; if(!S.length) return null;
+  var q=qOf(S[S.length-1].f), by={}; dayList(P).forEach(function(d){ by[d.f]=d; });
+  var fb=((M.precios||{}).salidas_total||{}).media||0, n=0, rev=0;
+  S.forEach(function(d){ if(d.f<q.start) return; n+=d.net; var x=by[d.f]||{}, avg=(x.vs&&x.vsb)?x.vs/x.vsb:fb; rev+=d.net*avg; });
+  return {q:q,n:n,rev:rev};
+}
+function q4Model(M,qdays){ var v=mdDefaults(M), sc=M.escenarios||{}; if(sc.base!=null) v.exits=sc.base; if(qdays) v.days=qdays; return {v:v,c:mdCalc(v)}; }
+function ownCuts(P,q){ var doc=(senales||{}).recortes_propios, n=0, usd=0, since=null, last=null;
+  if(doc&&doc.puntos&&doc.puntos.length){ doc.puntos.forEach(function(p){ if(p.f>=q.start){ n+=p.n; usd+=p.usd||0; if(!since) since=p.f; last=p.f; } }); return {n:n,usd:usd,since:since,last:last}; }
+  dayList(P).forEach(function(d){ if(d.f>=q.start&&d.rec>0){ n+=d.rec; if(!since) since=d.f; last=d.f; } }); return {n:n,usd:0,since:since,last:last}; }
+function lastPt(k){ var a=((senales||{})[k]||{}).puntos||[]; return a.length?a[a.length-1]:null; }
+/* Acquisition contracts: Opendoor prints only the % change vs. the previous week. Anchored on one real count
+   (senales/contratos_ancla), every other week is chained from those percentages (rounded, so approximate). */
+function contrLevels(){
+  var co=((senales||{}).contratos_adquisicion||{}).puntos||[], AN=(senales||{}).contratos_ancla, out={rows:[],prev:null,anchor:null,anchors:[]};
+  if(!co.length) return out;
+  /* A week is "anchored" when the owner supplied its real count: field n on the point (preferred), or the legacy contratos_ancla doc. */
+  var n=[], an=[], i, first=-1;
+  co.forEach(function(p,k){ if(p.n!=null&&isFinite(p.n)){ n[k]=+p.n; an[k]=true; } });
+  if(AN&&AN.f&&AN.n!=null) co.forEach(function(p,k){ if(p.f===AN.f&&n[k]==null){ n[k]=+AN.n; an[k]=true; } });
+  for(i=0;i<co.length;i++){ if(n[i]!=null){ first=i; break; } }
+  if(first<0) return out;
+  for(i=first+1;i<co.length;i++){ if(n[i]==null) n[i]=n[i-1]*(1+co[i].v/100); }
+  for(i=first-1;i>=0;i--){ n[i]=n[i+1]/(1+co[i+1].v/100); }
+  out.rows=co.map(function(p,k){ return {f:p.f,v:p.v,n:Math.round(n[k]),anchor:!!an[k]}; });
+  out.anchors=out.rows.filter(function(r){return r.anchor;});
+  out.anchor={f:out.anchors[0].f,n:out.anchors[0].n};
+  out.prev={f:addDays(co[0].f,-7),n:Math.round(n[0]/(1+co[0].v/100))};
+  return out;
+}
+
+/* ================= v8: main dashboard ================= */
+function renderKpis(P,M){
+  var inv=P.inventario||{}, K=inv.clasificacion||{}, pr=inv.precios||{}, S=M.serie||[], n=S.length, W=weekInfo(M);
+  var D=dayList(P).filter(function(d){return !d.primera&&d.total;});
+  if(!n){ ["dash-inv","dash-sales","dash-money","dash-pipe"].forEach(function(id){ $(id).innerHTML=""; });
+    $("dash-note").textContent="Needs the second daily count."; return; }
+  var L=S[n-1], q=qOf(L.f), SQ=salesQ(M,P)||{n:0,rev:0}, Mo=q4Model(M,q.days), c=Mo.c;
+  $("dash-note").textContent=q.label+" to date: "+dfmt(q.start)+" to "+dfmt(L.f)+" ("+q.days+"-day quarter). Every figure is counted from Opendoor's public listings; each tab has the detail and the method.";
+  /* inventory */
+  var over=null, base120=null;
+  if(M.edad&&M.edad.base){ over=0; M.edad.bins.forEach(function(b,i){ if(b[0]>120) over+=M.edad.n[i]; }); base120=M.edad.base; }
+  else if(inv.edad_real_listadas&&inv.edad_real_base){ over=inv.edad_real_listadas["120+"]; base120=inv.edad_real_base; }
+  var reapT=inv.reapariciones;
+  $("dash-inv").innerHTML=[
+    stat(nf(inv.total),"Homes listed","+"+nf(inv.nuevos)+" added"+(reapT?" ("+nf(reapT)+" relisted)":"")+" · −"+nf(inv.retirados)+" removed, "+dfmt(inv.fecha)+
+      (K.en_venta!=null?"<br>"+nf(K.en_venta)+" for sale · "+nf(K.proximamente)+" available soon · "+nf(K.pendiente||0)+" pending":"")),
+    stat(over!=null&&base120?pct(over/base120*100):"—","Active homes listed more than 120 days",over!=null?nf(over)+" of "+nf(base120)+" homes for sale today with a visible list date<br>active listings only, not the ones that left":""),
+    stat(pr.precio_medio?money(pr.precio_medio):"—","Average inventory price","median "+money(pr.precio_mediana)+" · "+nf(K.en_venta!=null?K.en_venta:pr.cobertura)+" priced homes")
+  ].join("");
+  /* sales */
+  var ch=W.a&&W.b&&W.b.net?Math.round((W.a.net/W.b.net-1)*100):null;
+  $("dash-sales").innerHTML=[
+    stat(nf(L.net),"Homes sold yesterday","count of "+dfmt(L.f)+" · left "+nf(L.off)+", "+nf(L.ret)+" of them already back"+(L.prov?" <span class=\"tag review\">provisional</span>":"")+"<br>7-day average "+L.mm7.toFixed(1)+" a day"),
+    W.a?stat(nf(W.a.net),'Homes sold, last full week <span class="tag review">under review</span>',"week "+dfmt(W.a.s)+" to "+dfmt(addDays(W.a.s,6))+(ch!=null?" · "+sgn(ch)+Math.abs(ch)+"% vs. the week before":"")+"<br>provisional: a home that comes back to the listing was not a sale"):"",
+    stat(nf(SQ.n),"Homes sold, total","since "+dfmt(q.start)+" · "+q.label+" to date<br>left the listing and did not come back")
+  ].join("");
+  /* money */
+  var oc=ownCuts(P,q);
+  $("dash-money").innerHTML=[
+    stat(fmM(c.rev,0),"Estimated revenue, "+q.label,"model, "+Mo.v.exits+" homes a day · see Profit tab"),
+    stat(money(SQ.rev),"Revenue realized, "+q.label+" to date","estimate: "+nf(SQ.n)+" homes × last asking price<br>contracts signed, not closings"),
+    stat(oc.n?nf(oc.n):"—","Price cuts, "+q.label+" to date","counted by us on listing pages, "+dfmt(oc.since)+" to "+dfmt(oc.last)),
+    stat(oc.usd?"$"+(oc.usd/1e6).toFixed(2)+"M":"—","Money cut, "+q.label+" to date",oc.n?"average "+money(oc.usd/oc.n)+" per cut":"")
+  ].join("");
+  /* pipeline and market */
+  var last7=D.slice(-7), prev7=D.slice(-14,-7), nw=function(a){ return a.reduce(function(s,d){return s+Math.max(0,(d.altas||0)-(d.reap||0));},0); };
+  var cl=lastPt("clearance_relativo"), co=lastPt("contratos_adquisicion");
+  var CL=contrLevels(), cn=CL.rows.length?CL.rows[CL.rows.length-1]:null, cpv=CL.rows.length>1?CL.rows[CL.rows.length-2]:CL.prev;
+  $("dash-pipe").innerHTML=[
+    cn?stat((cn.anchor?"":"≈")+nf(cn.n),"Acquisition contracts, last week","week to "+dfmt(cn.f)+" · "+sgn(cn.v)+Math.abs(cn.v)+"% vs. previous week"+(cpv?" (≈"+nf(cpv.n)+")":"")+"<br>"+(cn.anchor?"figure supplied by the owner":"derived from the % change, anchored on "+nf(CL.anchor.n)+" for the week to "+dfmt(CL.anchor.f))):"",
+    stat(nf(nw(last7)),"New homes in the listing set, last 7 days","homes added to Opendoor's listing set"+(prev7.length===7?" · "+nf(nw(prev7))+" the 7 days before":"")+(!cn&&co?"<br>its own contracts trend: "+sgn(co.v)+Math.abs(co.v)+"% vs. previous week, to "+dfmt(co.f):"")),
+    cl?stat(cl.v+"%","Better than MLS at clearing","week ending "+dfmt(cl.f)+" · Opendoor's accountable page"):""
+  ].join("");
+  $("dash-fine").textContent="Sold = homes that left Opendoor's listing page minus homes that came back (a relisted home was not a sale; the latest days and the last week stay provisional). Revenue realized multiplies those homes by their last asking price, so it is contract-signing revenue, not reported revenue. Opendoor's page prints only the % change in acquisition contracts, never a count: the count shown is the figure the owner supplied for that week or, where there is none, a count chained from the nearest supplied week and the printed percentages, so it is approximate (rounded percentages compound)."+" Price cuts are the ones our counter finds when it re-reads a listing page and sees a lower price than before (each home is re-read about every 9 days and detection began on Oct 10), so the quarter figure is a floor."+" Opendoor's page was last updated on its side with data as of "+(co?dfmt(co.f,{year:"numeric"}):"—")+".";
+}
+
+/* ================= v8: trading ================= */
+function sma(a,n){ return a.map(function(_,i){ if(i<n-1) return null; var s=0; for(var k=i-n+1;k<=i;k++) s+=a[k]; return s/n; }); }
+function ema(a,n){ var out=a.map(function(){return null;}); if(a.length<n) return out; var s=0; for(var i=0;i<n;i++) s+=a[i]; var e=s/n, k=2/(n+1); out[n-1]=e; for(var j=n;j<a.length;j++){ e=a[j]*k+e*(1-k); out[j]=e; } return out; }
+function rsiW(c,n){ var out=c.map(function(){return null;}); if(c.length<=n) return out; var g=0,l=0,i,d;
+  for(i=1;i<=n;i++){ d=c[i]-c[i-1]; if(d>=0) g+=d; else l-=d; } g/=n; l/=n; out[n]=l===0?100:100-100/(1+g/l);
+  for(i=n+1;i<c.length;i++){ d=c[i]-c[i-1]; g=(g*(n-1)+(d>0?d:0))/n; l=(l*(n-1)+(d<0?-d:0))/n; out[i]=l===0?100:100-100/(1+g/l); } return out; }
+function atrW(P,n){ var out=P.map(function(){return null;}); if(P.length<=n) return out;
+  var tr=P.map(function(p,i){ return i?Math.max(p.h-p.l,Math.abs(p.h-P[i-1].c),Math.abs(p.l-P[i-1].c)):p.h-p.l; }); var a=0,i;
+  for(i=1;i<=n;i++) a+=tr[i]; a/=n; out[n]=a; for(i=n+1;i<P.length;i++){ a=(a*(n-1)+tr[i])/n; out[i]=a; } return out; }
+function stdev(a){ var m=a.reduce(function(s,x){return s+x;},0)/a.length; return Math.sqrt(a.reduce(function(s,x){return s+(x-m)*(x-m);},0)/a.length); }
+function usd(v){ return "$"+v.toFixed(2); }
+function xlabels(P,X,H,xw){ var g="", step=Math.max(1,Math.round(7/1)); for(var i=0;i<P.length;i+=step){ g+='<text x="'+X(i)+'" y="'+(H-6)+'" text-anchor="'+(i===0?"start":"middle")+'">'+dfmt(P[i].f)+'</text>'; } return g; }
+
+function candleChart(id,P,ind,tipFn){
+  var host=$(id); if(!host) return;
+  var W=Math.max(300,Math.round(host.clientWidth||560)), H=340, pl=48, pr=10, pt=10, pb=22, vh=62, gp=10, ph=H-pt-pb-vh-gp, n=P.length;
+  var xw=(W-pl-pr)/n, X=function(i){return pl+xw*(i+.5);};
+  var lo=Infinity, hi=-Infinity;
+  P.forEach(function(p,i){ lo=Math.min(lo,p.l,ind.bl[i]!=null?ind.bl[i]:p.l); hi=Math.max(hi,p.h,ind.bu[i]!=null?ind.bu[i]:p.h); });
+  var pad=(hi-lo)*.04; lo-=pad; hi+=pad;
+  var Y=function(v){return pt+ph*(1-(v-lo)/(hi-lo));};
+  var g='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="$OPEN daily candles with moving averages, Bollinger bands and volume">', t, i;
+  for(t=0;t<=4;t++){ var v=lo+(hi-lo)*t/4, y=Y(v); g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="var(--grid)"/><text x="'+(pl-6)+'" y="'+(y+3).toFixed(1)+'" text-anchor="end">'+usd(v)+'</text>'; }
+  var bi=[]; ind.bu.forEach(function(x,k){ if(x!=null) bi.push(k); });
+  if(bi.length>1){ g+='<polygon points="'+bi.map(function(k){return X(k).toFixed(1)+","+Y(ind.bu[k]).toFixed(1);}).join(" ")+" "+bi.slice().reverse().map(function(k){return X(k).toFixed(1)+","+Y(ind.bl[k]).toFixed(1);}).join(" ")+'" fill="var(--s-a)" fill-opacity=".10" stroke="none"/>'; }
+  var bw=Math.max(2,Math.min(11,xw*.6));
+  P.forEach(function(p,k){ var up=p.c>=p.o, col=up?"var(--good)":"var(--bad)", x=X(k), y1=Y(Math.max(p.o,p.c)), y2=Y(Math.min(p.o,p.c));
+    g+='<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+Y(p.h).toFixed(1)+'" y2="'+Y(p.l).toFixed(1)+'" stroke="'+col+'" stroke-width="1.2"/>'+
+       '<rect x="'+(x-bw/2).toFixed(1)+'" y="'+y1.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1,y2-y1).toFixed(1)+'" fill="'+col+'" rx="1"/>'; });
+  [[ind.s10,"var(--s-b)"],[ind.s20,"var(--ink-2)"]].forEach(function(s){ var d="", on=false;
+    s[0].forEach(function(x,k){ if(x==null){ on=false; return; } d+=(on?"L":"M")+X(k).toFixed(1)+","+Y(x).toFixed(1); on=true; });
+    if(d) g+='<path d="'+d+'" fill="none" stroke="'+s[1]+'" stroke-width="1.8" stroke-linejoin="round"/>'; });
+  var vTop=pt+ph+gp, vmax=Math.max.apply(null,P.map(function(p){return p.v;}).concat([1]));
+  P.forEach(function(p,k){ var hh=p.v/vmax*vh, up=p.c>=p.o;
+    g+='<rect x="'+(X(k)-bw/2).toFixed(1)+'" y="'+(vTop+vh-hh).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1,hh).toFixed(1)+'" fill="'+(up?"var(--good)":"var(--bad)")+'" opacity=".55"/>'; });
+  var vd="", von=false; ind.v20.forEach(function(x,k){ if(x==null){ von=false; return; } vd+=(von?"L":"M")+X(k).toFixed(1)+","+(vTop+vh-x/vmax*vh).toFixed(1); von=true; });
+  if(vd) g+='<path d="'+vd+'" fill="none" stroke="var(--ink-2)" stroke-width="1.4" stroke-dasharray="3 2"/>';
+  g+='<text x="'+(pl-6)+'" y="'+(vTop+9)+'" text-anchor="end">vol</text>';
+  for(i=0;i<n;i+=Math.max(7,Math.ceil(n/5))) g+='<text x="'+X(i).toFixed(1)+'" y="'+(H-6)+'" text-anchor="'+(i===0?"start":"middle")+'">'+dfmt(P[i].f)+'</text>';
+  g+='<rect class="hit" x="'+pl+'" y="'+pt+'" width="'+(W-pl-pr)+'" height="'+(H-pt-pb)+'" fill="transparent"/></svg>';
+  host.innerHTML=g;
+  var hit=host.querySelector(".hit");
+  var fn=function(ev){ var r=host.getBoundingClientRect(), px=(ev.clientX-r.left)/r.width*W, k=Math.max(0,Math.min(n-1,Math.floor((px-pl)/xw)));
+    tipShow(host,X(k)/W*r.width,14,tipFn(k)); };
+  hit.addEventListener("mousemove",fn); hit.addEventListener("click",fn); hit.addEventListener("mouseleave",tipHide);
+}
+/* RSI (lines on a fixed scale) and MACD (bars plus lines on a symmetric scale). */
+function subChart(id,P,sp){
+  var host=$(id); if(!host) return;
+  var W=Math.max(300,Math.round(host.clientWidth||560)), H=sp.h||130, pl=48, pr=10, pt=8, pb=22, n=P.length, xw=(W-pl-pr)/n, X=function(i){return pl+xw*(i+.5);};
+  var vals=[]; (sp.lines||[]).forEach(function(l){ l.arr.forEach(function(v){ if(v!=null) vals.push(v); }); }); (sp.bars||[]).forEach(function(v){ if(v!=null) vals.push(v); });
+  var lo=sp.ymin!=null?sp.ymin:Math.min.apply(null,vals.concat([0])), hi=sp.ymax!=null?sp.ymax:Math.max.apply(null,vals.concat([0]));
+  if(sp.sym){ var m=Math.max(Math.abs(lo),Math.abs(hi))*1.08; lo=-m; hi=m; }
+  var Y=function(v){return pt+(H-pt-pb)*(1-(v-lo)/(hi-lo));};
+  var g='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(sp.label||"")+'">';
+  (sp.guides||[]).forEach(function(v){ g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(v).toFixed(1)+'" y2="'+Y(v).toFixed(1)+'" stroke="var(--tick)" stroke-dasharray="3 3"/><text x="'+(pl-6)+'" y="'+(Y(v)+3).toFixed(1)+'" text-anchor="end">'+sp.fmt(v)+'</text>'; });
+  if(lo<0&&hi>0) g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(0).toFixed(1)+'" y2="'+Y(0).toFixed(1)+'" stroke="var(--tick)"/>'+(sp.guides&&sp.guides.indexOf(0)>=0?"":'<text x="'+(pl-6)+'" y="'+(Y(0)+3).toFixed(1)+'" text-anchor="end">0</text>');
+  var bw=Math.max(2,Math.min(10,xw*.6));
+  (sp.bars||[]).forEach(function(v,k){ if(v==null) return; var y0=Y(0), y1=Y(v);
+    g+='<rect x="'+(X(k)-bw/2).toFixed(1)+'" y="'+Math.min(y0,y1).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1,Math.abs(y1-y0)).toFixed(1)+'" fill="'+(v>=0?"var(--good)":"var(--bad)")+'" opacity=".55"/>'; });
+  (sp.lines||[]).forEach(function(l){ var d="", on=false; l.arr.forEach(function(x,k){ if(x==null){ on=false; return; } d+=(on?"L":"M")+X(k).toFixed(1)+","+Y(x).toFixed(1); on=true; });
+    if(d) g+='<path d="'+d+'" fill="none" stroke="'+l.c+'" stroke-width="1.9" stroke-linejoin="round"'+(l.dash?' stroke-dasharray="4 3"':'')+'/>'; });
+  for(var i=0;i<n;i+=Math.max(7,Math.ceil(n/5))) g+='<text x="'+X(i).toFixed(1)+'" y="'+(H-6)+'" text-anchor="'+(i===0?"start":"middle")+'">'+dfmt(P[i].f)+'</text>';
+  g+='<rect class="hit" x="'+pl+'" y="'+pt+'" width="'+(W-pl-pr)+'" height="'+(H-pt-pb)+'" fill="transparent"/></svg>';
+  host.innerHTML=g;
+  var hit=host.querySelector(".hit");
+  var fn=function(ev){ var r=host.getBoundingClientRect(), px=(ev.clientX-r.left)/r.width*W, k=Math.max(0,Math.min(n-1,Math.floor((px-pl)/xw))); tipShow(host,X(k)/W*r.width,12,sp.tip(k)); };
+  hit.addEventListener("mousemove",fn); hit.addEventListener("click",fn); hit.addEventListener("mouseleave",tipHide);
+}
+function renderTrading(P){
+  var raw=(((senales||{}).open_cierre||{}).puntos||[]).map(function(p){ /* accept hi/lo/op as aliases of max/min/o */ return Object.assign({},p,{max:p.max!=null?p.max:p.hi,min:p.min!=null?p.min:p.lo,o:p.o!=null?p.o:p.op}); }).filter(function(p){return p.v!=null&&p.max!=null&&p.min!=null&&p.o!=null;}).sort(function(a,b){return a.f<b.f?-1:1;});
+  if(raw.length<30){ $("tr-body").hidden=true; $("tr-empty").hidden=false; return; } $("tr-body").hidden=false; $("tr-empty").hidden=true;
+  var B=raw.map(function(p){ return {f:p.f,o:p.o,h:p.max,l:p.min,c:p.v,v:p.vol||0}; }), n=B.length, i=n-1;
+  var C=B.map(function(p){return p.c;}), V=B.map(function(p){return p.v;});
+  var s10=sma(C,10), s20=sma(C,20), e12=ema(C,12), e26=ema(C,26), rsi=rsiW(C,14), atr=atrW(B,14), v20=sma(V,20);
+  var macd=C.map(function(_,k){ return e12[k]!=null&&e26[k]!=null?e12[k]-e26[k]:null; });
+  var first=macd.findIndex(function(x){return x!=null;}), sg9=first>=0?ema(macd.slice(first),9):[];
+  var sig=macd.map(function(_,k){ return first>=0&&k>=first?sg9[k-first]:null; });
+  var hist=macd.map(function(x,k){ return x!=null&&sig[k]!=null?x-sig[k]:null; });
+  var bu=C.map(function(){return null;}), bl=bu.slice(), bm=bu.slice();
+  for(var k=19;k<n;k++){ var w=C.slice(k-19,k+1), m=s20[k], sd=stdev(w); bm[k]=m; bu[k]=m+2*sd; bl[k]=m-2*sd; }
+  var bw=bu.map(function(x,k){ return x!=null&&bm[k]?(x-bl[k])/bm[k]*100:null; });
+  var L=B[i], pv=B[i-1], chg=(L.c/pv.c-1)*100, hiB=B.reduce(function(a,p){return p.h>a.h?p:a;},B[0]), loB=B.reduce(function(a,p){return p.l<a.l?p:a;},B[0]);
+  var va=v20[i], vr=va?L.v/va:null, ret5=(C[i]/C[i-5]-1)*100, ret20=(C[i]/C[i-20]-1)*100, retAll=(C[i]/C[0]-1)*100;
+  var lr=[]; for(k=Math.max(1,n-20);k<n;k++) lr.push(Math.log(C[k]/C[k-1])); var rv=stdev(lr)*Math.sqrt(252)*100;
+  var atrP=atr[i]/L.c*100, pB=(L.c-bl[i])/(bu[i]-bl[i]);
+  var vol=function(x){ return (x/1e6).toFixed(1)+"M"; };
+  $("tr-note").textContent="Daily bars for $OPEN from "+dfmt(B[0].f,{year:"numeric"})+" to "+dfmt(L.f,{year:"numeric"})+" ("+n+" sessions), indicators computed in the page with their standard definitions (RSI and ATR use Wilder smoothing). This reads the chart; it is not investment advice and it sets no price targets.";
+  $("tr-stats").innerHTML=[
+    stat(usd(L.c),"Last close",dfmt(L.f)+" · "+sgn(chg)+Math.abs(chg).toFixed(1)+"% on the day"),
+    stat(rsi[i].toFixed(0),"RSI (14)",rsi[i]<30?"oversold zone":rsi[i]<45?"weak, below the midline":rsi[i]<55?"neutral":rsi[i]<70?"firm, above the midline":"overbought zone"),
+    stat(usd(atr[i]),"ATR (14)",atrP.toFixed(1)+"% of the price, a typical day's range"),
+    stat(vr?vr.toFixed(1)+"×":"—","Volume vs. 20-day average",vol(L.v)+" shares"),
+    stat(sgn(ret20)+Math.abs(ret20).toFixed(0)+"%","Last 20 sessions","5 sessions: "+sgn(ret5)+Math.abs(ret5).toFixed(0)+"%"),
+    stat(sgn((L.c/hiB.h-1)*100)+Math.abs((L.c/hiB.h-1)*100).toFixed(0)+"%","From the high in this window","high "+usd(hiB.h)+" on "+dfmt(hiB.f)+" · low "+usd(loB.l)+" on "+dfmt(loB.f)),
+    stat(rv.toFixed(0)+"%","Realized volatility, annualized","20 sessions of close-to-close moves")
+  ].join("");
+  $("tr-legend").innerHTML='<span><i style="background:var(--good)"></i>Up day</span><span><i style="background:var(--bad)"></i>Down day</span><span><i style="background:var(--s-b)"></i>SMA 10</span><span><i style="background:var(--ink-2)"></i>SMA 20</span><span><i style="background:var(--s-a);opacity:.3"></i>Bollinger band (20, 2)</span><span><i style="background:var(--ink-2)"></i>Dashed: 20-day average volume</span>';
+  var pc=function(k){ return k?(C[k]/C[k-1]-1)*100:0; };
+  candleChart("tr-candle",B,{s10:s10,s20:s20,bu:bu,bl:bl,v20:v20},function(k){ var p=B[k];
+    return '<b>'+dfmt(p.f,{year:"numeric"})+'</b><br>O '+usd(p.o)+' · H '+usd(p.h)+' · L '+usd(p.l)+' · C <b>'+usd(p.c)+'</b> ('+sgn(pc(k))+Math.abs(pc(k)).toFixed(1)+'%)<br>Volume '+vol(p.v)+(v20[k]?' ('+(p.v/v20[k]).toFixed(1)+'× avg)':'')+
+      (s10[k]!=null?'<br>SMA10 '+usd(s10[k]):'')+(s20[k]!=null?' · SMA20 '+usd(s20[k]):'')+(rsi[k]!=null?'<br>RSI '+rsi[k].toFixed(0):''); });
+  subChart("tr-rsi",B,{h:130,ymin:10,ymax:90,guides:[30,50,70],fmt:function(v){return ""+v;},label:"RSI 14",lines:[{arr:rsi,c:cssv("--s-a")}],
+    tip:function(k){ return '<b>'+dfmt(B[k].f,{year:"numeric"})+'</b><br>RSI '+(rsi[k]!=null?rsi[k].toFixed(1):"—"); }});
+  subChart("tr-macd",B,{h:150,sym:true,guides:[],fmt:function(v){return v.toFixed(2);},label:"MACD 12 26 9",bars:hist,lines:[{arr:macd,c:cssv("--s-a")},{arr:sig,c:cssv("--s-b"),dash:true}],
+    tip:function(k){ return '<b>'+dfmt(B[k].f,{year:"numeric"})+'</b><br>MACD '+(macd[k]!=null?macd[k].toFixed(3):"—")+' · signal '+(sig[k]!=null?sig[k].toFixed(3):"—")+'<br>histogram '+(hist[k]!=null?hist[k].toFixed(3):"—"); }});
+  /* swing points */
+  var wv=3, hiP=[], loP=[];
+  for(k=wv;k<n-wv;k++){ var ih=true, il=true; for(var j=k-wv;j<=k+wv;j++){ if(B[j].h>B[k].h) ih=false; if(B[j].l<B[k].l) il=false; } if(ih) hiP.push({f:B[k].f,p:B[k].h,t:"Swing high"}); if(il) loP.push({f:B[k].f,p:B[k].l,t:"Swing low"}); }
+  var lv=hiP.concat(loP); lv.push({f:hiB.f,p:hiB.h,t:"High of the window"},{f:loB.f,p:loB.l,t:"Low of the window"});
+  var h20=Math.max.apply(null,B.slice(-20).map(function(p){return p.h;})), l20=Math.min.apply(null,B.slice(-20).map(function(p){return p.l;}));
+  lv.push({f:null,p:h20,t:"20-session high"},{f:null,p:l20,t:"20-session low"});
+  var seen={}, uq=lv.filter(function(x){ var key=x.p.toFixed(2); if(seen[key]) return false; seen[key]=1; return true; });
+  var above=uq.filter(function(x){return x.p>L.c*1.005;}).sort(function(a,b){return a.p-b.p;}).slice(0,3), below=uq.filter(function(x){return x.p<L.c*.995;}).sort(function(a,b){return b.p-a.p;}).slice(0,3);
+  var lvRow=function(x,side){ var d=(x.p/L.c-1)*100; return '<tr><td class="t">'+side+'</td><td>'+usd(x.p)+' <span class="src">'+sgn(d)+Math.abs(d).toFixed(1)+'%</span></td><td class="t">'+x.t+(x.f?' <span class="src">'+dfmt(x.f)+'</span>':'')+'</td></tr>'; };
+  $("tr-levels").innerHTML='<table class="wide"><thead><tr><th>Side</th><th>Level · from close</th><th>What it is</th></tr></thead><tbody>'+
+    above.slice().reverse().map(function(x){return lvRow(x,"Above");}).join("")+'<tr class="tot"><td class="t">Last close</td><td>'+usd(L.c)+'</td><td class="t">'+dfmt(L.f)+'</td></tr>'+below.map(function(x){return lvRow(x,"Below");}).join("")+'</tbody></table>';
+  /* reads */
+  var d10=s10[i], d20=s20[i], tr1=L.c<d10&&L.c<d20?"Close below both averages: short-term trend is down":L.c>d10&&L.c>d20?"Close above both averages: short-term trend is up":"Close between the two averages: trend is mixed";
+  var mh=hist[i], mh3=hist[i-3];
+  var macdTxt=(macd[i]>sig[i]?"MACD above its signal line":"MACD below its signal line")+(mh!=null&&mh3!=null?(Math.abs(mh)>Math.abs(mh3)?", gap widening":", gap narrowing"):"");
+  var bwNow=bw[i], bwAll=bw.filter(function(x){return x!=null;}), bwMin=Math.min.apply(null,bwAll), bwMax=Math.max.apply(null,bwAll), bwPos=(bwNow-bwMin)/((bwMax-bwMin)||1)*100;
+  var rows=[
+    ["Trend","SMA 10 "+usd(d10)+" · SMA 20 "+usd(d20),tr1+(d10<d20?"; the 10-day is under the 20-day.":"; the 10-day is over the 20-day.")],
+    ["Momentum","RSI "+rsi[i].toFixed(0),rsi[i]<30?"Oversold by the usual 30 line; oversold can persist in a falling stock.":rsi[i]>70?"Overbought by the usual 70 line.":rsi[i]<50?"Below the 50 midline: sellers have the upper hand, short of oversold.":"Above the 50 midline: buyers have the upper hand, short of overbought."],
+    ["MACD",macd[i].toFixed(3)+" vs "+sig[i].toFixed(3),macdTxt+"."],
+    ["Bollinger","%B "+(pB*100).toFixed(0)+"%",pB<0?"Close below the lower band.":pB>1?"Close above the upper band.":pB<.2?"Close in the lower fifth of the band.":pB>.8?"Close in the upper fifth of the band.":"Close inside the middle of the band."],
+    ["Band width",bwNow.toFixed(0)+"% of the 20-day average","At "+bwPos.toFixed(0)+"% of its own range in this window ("+(bwPos<25?"squeezed":bwPos>75?"stretched":"mid")+"). Width says how big the moves are, not which way."],
+    ["Volume",vol(L.v)+" ("+(vr?vr.toFixed(1):"—")+"×)",vr>1.5?"Heavy: the day's move had real participation.":vr<.7?"Light: the day's move had little behind it.":"Around the 20-day average."],
+    ["Range position",((L.c-loB.l)/(hiB.h-loB.l)*100).toFixed(0)+"% of the window's range","Window is only "+n+" sessions, so the 50- and 200-day averages and 52-week range are not shown."]
+  ];
+  $("tr-reads").innerHTML=rows.map(function(r){ return '<div class="rd"><div class="rh"><span>'+r[0]+'</span><b class="num">'+r[1]+'</b></div><p>'+r[2]+'</p></div>'; }).join("");
+  /* setups: conditions to watch, never instructions */
+  var sup=below[0], res=above[0], idea=[];
+  var dist20=(L.c/d20-1)*100;
+  idea.push(['Short-term trend test', L.c<d20
+    ?'The close sits '+Math.abs(dist20).toFixed(1)+'% under the 20-day average ('+usd(d20)+'). By chart convention the trend stays down until a daily close back above it, ideally on volume above the 20-day average ('+vol(va)+' shares). Without that, rallies into the average are the usual place for the move to fail.'
+    :'The close sits '+dist20.toFixed(1)+'% over the 20-day average ('+usd(d20)+'). A daily close back under it would be the first crack in the short-term trend; holding above it on average volume keeps the trend intact.']);
+  if(sup) idea.push(['Support and breakdown','Nearest support is '+usd(sup.p)+' ('+sup.t.toLowerCase()+(sup.f?', '+dfmt(sup.f):'')+'), '+Math.abs((sup.p/L.c-1)*100).toFixed(1)+'% below. A daily close under it on volume above 1.5× average is what chartists call a breakdown'+(below[1]?' and brings '+usd(below[1].p)+' into view':'')+'. A bounce that holds it on rising volume is a successful test.']);
+  if(res) idea.push(['Resistance and breakout','Nearest resistance is '+usd(res.p)+' ('+res.t.toLowerCase()+(res.f?', '+dfmt(res.f):'')+'), '+((res.p/L.c-1)*100).toFixed(1)+'% above'+(above[1]?', then '+usd(above[1].p):'')+'. A close through it on heavy volume is a breakout by definition; a move through on light volume is the kind that tends to be given back.']);
+  var big=B.slice(-10).reduce(function(a,p,kk,arr){ var idx=n-arr.length+kk, r=Math.abs(C[idx]/C[idx-1]-1); return r>a.r?{r:r,idx:idx}:a; },{r:0,idx:n-1});
+  if(big.r>=.06){ var bi2=big.idx, bp=B[bi2], mv=C[bi2]-C[bi2-1], given=mv!==0?(C[bi2]-L.c)/mv*100:0;
+    idea.push(['The big day','On '+dfmt(bp.f)+' the stock moved '+sgn(mv)+Math.abs(pc(bi2)).toFixed(1)+'% to '+usd(bp.c)+' on '+vol(bp.v)+' shares ('+(v20[bi2]?(bp.v/v20[bi2]).toFixed(1)+'× average':'')+'). Since then it has closed at '+usd(L.c)+', '+(bi2===i?'the same session.':(given>0?'giving back '+Math.round(Math.min(given,999))+'% of that move':'adding '+Math.round(Math.abs(given))+'% to that move'))+'. A big-volume move that is mostly given back is a classic failed push; one that holds is the base for the next leg.']); }
+  idea.push(['Volatility and sizing arithmetic','ATR (14) is '+usd(atr[i])+', '+atrP.toFixed(1)+'% of the price. A stop 2 ATR away sits about '+(2*atrP).toFixed(0)+'% from entry, so risking 1% of an account on one trade means a position near '+(100/(2*atrP)).toFixed(1)+'% of it. It only shows why a stock this volatile needs small sizing. It is arithmetic, not a signal.']);
+  $("tr-ideas").innerHTML=idea.map(function(x){ return '<div class="idea"><b>'+x[0]+'</b><p>'+x[1]+'</p></div>'; }).join("");
+  /* fundamentals next to price */
+  var S=(P.serie||[]).filter(function(d){return !d.primera&&d.total;}), fnd="";
+  if(S.length>1){ var f0=S[0], f1=S[S.length-1], pA=B.filter(function(p){return p.f>=f0.f;})[0], pB2=B[i];
+    if(pA){ fnd="Since "+dfmt(f0.f)+" the stock went from "+usd(pA.c)+" to "+usd(pB2.c)+" ("+sgn((pB2.c/pA.c-1)*100)+Math.abs((pB2.c/pA.c-1)*100).toFixed(0)+"%), while Opendoor's listings went from "+nf(f0.total)+" to "+nf(f1.total)+" homes ("+sgn((f1.total/f0.total-1)*100)+Math.abs((f1.total/f0.total-1)*100).toFixed(1)+"%) and the sales pace is "+(mdM&&mdM.serie&&mdM.serie.length?mdM.serie[mdM.serie.length-1].mm7.toFixed(0)+" homes a day (7-day average)":"in the Sales tab")+". A few weeks is too short to say either drives the other; this only keeps the chart next to the numbers behind it."; } }
+  $("tr-fund").textContent=fnd; $("tr-fund-wrap").hidden=!fnd;
+  try{ renderOptions(B,rv); }catch(e){ console.error(e); }
+}
+/* ---------- short interest and options: dated third-party snapshot (senales/opciones_open) ---------- */
+function renderOptions(B,rv){
+  var O=(senales||{}).opciones_open, sec=$("trade3"); if(!O||!O.short_interest||!O.short_interest.hist||O.short_interest.hist.length<2){ sec.hidden=true; return; } sec.hidden=false;
+  var si=O.short_interest, op=O.opciones||{}, sv=O.short_volume_ratio, h=si.hist, a=h[h.length-1], b=h[h.length-2], f0=h[0];
+  var vols=B.slice(-20).map(function(p){return p.v;}).filter(function(x){return x>0;}), av20=vols.length?vols.reduce(function(x,y){return x+y;},0)/vols.length:null;
+  var dtcOwn=av20?si.acciones/av20:null, chgP=(a.a/b.a-1)*100, run=0, k;
+  for(k=h.length-1;k>0;k--){ if(h[k].a>h[k-1].a) run++; else break; }
+  var imp=function(x){ return x.a/x.dtc; };
+  $("op-note").textContent="Short interest as of the "+dfmt(si.liquidacion,{year:"numeric"})+" settlement (FINRA) and options as read on "+dfmt(op.f||O.leido,{year:"numeric"})+". Both come from third-party sites, are dated, and say nothing on their own about direction. Educational, not advice, no price targets.";
+  $("op-stats").innerHTML=[
+    stat((si.acciones/1e6).toFixed(1)+"M","Shares sold short","settled "+dfmt(si.liquidacion)+" · "+sgn(chgP)+Math.abs(chgP).toFixed(1)+"% vs. "+dfmt(b.f)+(si.pct_float?"<br>"+si.pct_float.toFixed(1)+"% of float":"")),
+    stat(si.dias_cubrir.toFixed(1),"Days to cover","reported: shares short ÷ average daily volume"+(dtcOwn?"<br>at the last 20 sessions' volume: "+dtcOwn.toFixed(1):"")),
+    stat(op.iv_30d_atm!=null?op.iv_30d_atm.toFixed(0)+"%":"—","Implied volatility, 30 days","annualized, what options price in<br>realized, last 20 sessions: "+rv.toFixed(0)+"%"),
+    stat(op.mov_esperado!=null?"±"+usd(op.mov_esperado):"—","Expected move to "+dfmt(op.mov_esperado_venc),"about ±"+(op.mov_esperado/O.precio_ref*100).toFixed(0)+"% of "+usd(O.precio_ref)+"<br>price of the at-the-money straddle"),
+    stat(op.putcall_oi!=null?op.putcall_oi.toFixed(2):"—","Put/call, open interest",nf(op.oi_puts)+" puts · "+nf(op.oi_calls)+" calls<br>by volume that day: "+(op.putcall_vol!=null?op.putcall_vol.toFixed(2):"—")),
+    sv?stat(sv.v.toFixed(0)+"%","Short sales share of volume","one day, "+dfmt(sv.f)+" · not the same as short interest"):""
+  ].join("");
+  lineChart("op-si",[{n:"Shares short (M)",c:cssv("--s-b"),pts:h.map(function(x){return [x.f,x.a/1e6];})}],{h:150,yfmt:function(v){return v.toFixed(0)+"M";},label:"Shares sold short"});
+  lineChart("op-dtc",[{n:"Days to cover",c:cssv("--s-a"),pts:h.map(function(x){return [x.f,x.dtc];})}],{h:140,zero:true,yfmt:function(v){return v.toFixed(1);},label:"Days to cover"});
+  var rows=[];
+  rows.push(["Short interest",(si.acciones/1e6).toFixed(1)+"M shares","Up "+Math.round((a.a/f0.a-1)*100)+"% since "+dfmt(f0.f)+" ("+(f0.a/1e6).toFixed(1)+"M)"+(run>=2?", and higher in each of the last "+run+" reports":"")+". More shares short means more people betting on a fall, and also more buying that must happen to close those bets."]);
+  rows.push(["Days to cover",si.dias_cubrir.toFixed(1)+" vs. "+f0.dtc.toFixed(1),"The reported figure divides shares short by average volume; backing out the volume implied by each report gives about "+(imp(a)/1e6).toFixed(0)+"M shares a day now against "+(imp(f0)/1e6).toFixed(0)+"M on "+dfmt(f0.f)+". So the jump in days to cover is part more shorts ("+(a.a/f0.a>=1?"+":"")+Math.round((a.a/f0.a-1)*100)+"%) and part thinner trading ("+Math.round((imp(a)/imp(f0)-1)*100)+"%). The site does not state its volume basis, so this is arithmetic, not a finding."]);
+  if(op.iv_30d_atm!=null) rows.push(["Implied vs. realized",op.iv_30d_atm.toFixed(0)+"% vs. "+rv.toFixed(0)+"%","Options price a "+(op.iv_30d_atm>rv?"higher":"lower")+" annualized swing than the stock has actually delivered over the last 20 sessions."+(op.iv_rank_30d!=null?" The source puts the 30-day IV rank at "+op.iv_rank_30d.toFixed(0)+" out of 100: that is where today's IV sits inside its own past-year range, so "+(op.iv_rank_30d<33?"in the lower third":op.iv_rank_30d>66?"in the upper third":"mid-range")+".":"")]);
+  if(op.mov_esperado!=null) rows.push(["Expected move","$"+(O.precio_ref-op.mov_esperado).toFixed(2)+" to $"+(O.precio_ref+op.mov_esperado).toFixed(2),"The at-the-money straddle for "+dfmt(op.mov_esperado_venc)+" costs about "+usd(op.straddle_30d||op.mov_esperado)+". Around "+usd(O.precio_ref)+", that is the market's one-standard-deviation range, roughly two chances in three by the usual model assumptions. It is a price of uncertainty, not a forecast and not a target."]);
+  if(op.putcall_oi!=null) rows.push(["Put/call ratio",op.putcall_oi.toFixed(2)+" open interest","More puts than calls are open"+(op.putcall_oi>1?"":" (below 1: more calls)")+", which can mean hedging by holders as much as bearish bets. The day's volume ratio ("+(op.putcall_vol!=null?op.putcall_vol.toFixed(2):"—")+") rests on only "+nf((op.calls_vol||0)+(op.puts_vol||0))+" contracts, so it is a thin sample."]);
+  rows.push(["Reading it together","","High short interest with a high days-to-cover is a crowded short side: a good run can force covering and speed it up, a bad one gives shorts room to press. It describes fuel, not direction, and these figures are weeks old by the time they are published."]);
+  $("op-reads").innerHTML=rows.map(function(r){ return '<div class="rd"><div class="rh"><span>'+r[0]+'</span><b class="num">'+r[1]+'</b></div><p>'+r[2]+'</p></div>'; }).join("");
+  $("op-fine").innerHTML="<strong>What these numbers are.</strong> Short interest is a FINRA count taken twice a month and published about a week later; the next one (settlement "+dfmt("2026-10-15")+") is due "+dfmt("2026-10-26")+(si.estimacion_modelo?". A site's own model guesses "+(si.estimacion_modelo.acciones/1e6).toFixed(1)+"M ("+(si.estimacion_modelo.rango[0]/1e6).toFixed(1)+"M to "+(si.estimacion_modelo.rango[1]/1e6).toFixed(1)+"M): that is an estimate, not data":"")+". Options come from a single site"+". "+(op.aviso_en||"")+" Read as context, not as a signal.";
+}
+
+/* ================= RENDER ================= */
+function render(P){
+  var inv=P.inventario||{}, serie=P.serie||[], reg=P.registros||{}, mar=(reg.maricopa)||{};
+  var pr=inv.precios||null;
+  var live=!P.semilla;
+
+  var asof=inv.obtenido_utc?new Date(inv.obtenido_utc):null;
+  $("asof").textContent="Listings as of "+(asof?asof.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric",timeZone:"UTC"}):"—")+
+    (reg.fecha?" · county records "+dfmt(reg.fecha,{year:"numeric"}):"");
+  $("foot-gen").textContent=(live?"Compiled by the daily job at ":"Snapshot compiled ")+(P.generado?new Date(P.generado).toUTCString().replace(" GMT"," UTC"):"")+
+    (inv.urls_sin_patron?" · "+nf(inv.urls_sin_patron)+" sitemap URLs didn't match the parser and were left out.":"");
+
+  /* KPIs */
+  var net=(inv.nuevos||0)-(inv.retirados||0);
+  var cart=(mar.cartera||{});
+  /* KPIs: renderKpis (below) */
+
+  /* flow */
+  flowChart(serie);
+  var fs=[], DL=dayList(P).filter(function(d){return !d.primera&&d.total;});
+  if(DL.length){
+    var LD=DL[DL.length-1], qq=qOf(LD.f), ws=weekStart(LD.f);
+    var per=function(from){ var a=0,b=0,r=0; DL.forEach(function(d){ if(d.f>=from){ a+=Math.max(0,(d.altas||0)-(d.reap||0)); b+=d.bajas||0; r+=d.reap||0; } }); return {a:a,b:b,r:r}; };
+    var pd=per(LD.f), pw=per(ws), pq=per(qq.start);
+    var has=inv.lastmod_hoy!=null, cell=function(r,c,h,span){ return h.replace('<div class="stat">','<div class="stat" style="grid-area:'+r+'/'+c+(span?'/'+(r+span)+'/'+(c+1):'')+'">'); };
+    var hd=function(c,t,sm){ return '<div class="fh" style="grid-area:1/'+c+'">'+t+'<small>'+sm+'</small></div>'; };
+    fs.push('<div class="fg'+(has?'':' n3')+'">'+hd(1,"Day",dfmt(LD.f))+hd(2,"This week","since Mon "+dfmt(ws))+hd(3,qq.label+" to date","since "+dfmt(qq.start))+(has?hd(4,"Pages","sitemap lastmod"):"")+
+      cell(2,1,stat(nf(pd.a),"Listed",""))+cell(2,2,stat(nf(pw.a),"Listed",""))+cell(2,3,stat(nf(pq.a),"Listed",""))+
+      cell(3,1,stat(nf(pd.b),"Delisted",nf(pd.r)+" relisted"))+cell(3,2,stat(nf(pw.b),"Delisted",nf(pw.r)+" relisted"))+cell(3,3,stat(nf(pq.b),"Delisted",nf(pq.r)+" relisted"))+
+      (has?cell(2,4,stat(nf(inv.lastmod_hoy),"Updated today","listing pages with a new lastmod date"),2):"")+
+      '<p class="fine">Listed = new homes on the sitemap (relisted homes are not counted). Delisted = homes that left it; "relisted" says how many of those came back.</p></div>');
+  }
+  $("flow-stats").innerHTML=fs.join(""); $("flow-stats").hidden=!fs.length;
+
+  /* states */
+  var pe=inv.por_estado||{}, ent=Object.keys(pe).map(function(k){return [k,pe[k]];}).sort(function(a,b){return b[1]-a[1];});
+  var altas=inv.altas_por_estado||{}, bajas=inv.bajas_por_estado||{};
+  var rows=ent.slice(0,12).map(function(e){ var a=altas[e[0]]||0,b=bajas[e[0]]||0;
+    return {l:e[0],title:STATE_NAMES[e[0]]||e[0],v:e[1],extra:(inv.primera_pasada||(!a&&!b))?"":'<span class="chip up">+'+a+'</span><span class="chip dn">−'+b+'</span>'}; });
+  var rest=ent.slice(12); if(rest.length) rows.push({l:"Other",title:rest.length+" more states",v:rest.reduce(function(s,e){return s+e[1];},0),other:true});
+  hbars("state-bars",rows,{fmt:function(r){return nf(r.v)+" · "+(r.v/inv.total*100).toFixed(1)+"%";}});
+  if(ent.length>=3){ var t3=ent.slice(0,3), s3=t3.reduce(function(s,e){return s+e[1];},0);
+    $("conc").hidden=false; $("conc-t").innerHTML="<strong>"+t3.map(function(e){return STATE_NAMES[e[0]]||e[0];}).join(", ").replace(/, ([^,]*)$/," and $1")+
+      "</strong> hold "+(s3/inv.total*100).toFixed(1)+"% of every home $OPEN has listed today."; }
+
+  /* available soon */
+  var K=inv.clasificacion;
+  if(K&&K.clasificadas){ $("soon").hidden=false;
+    $("soon-stats").innerHTML=stat("≈"+nf(K.en_venta_estimadas),"For sale, priced","estimate for all "+nf(inv.total)+" sitemap homes")+
+      stat("≈"+nf(K.proximamente_estimadas),"Available soon","owned, not yet priced · "+pct(K.proximamente_pct)+" of pages read")+
+      stat(nf(K.pendiente),"Showing pending","under contract, still on the sitemap")+
+      stat(pct(K.cobertura_pct,0),"Pages classified",nf(K.clasificadas)+" of "+nf(inv.total));
+    var t=K.clasificadas||1;
+    $("soon-stack").innerHTML='<div class="stack" role="img" aria-label="For sale versus available soon"><span style="width:'+(K.en_venta/t*100)+'%;background:var(--s-a)"></span><span style="width:'+(K.proximamente/t*100)+'%;background:var(--s-b)"></span><span style="width:'+(K.pendiente/t*100)+'%;background:var(--s-n)"></span></div>'+
+      '<div class="legend" style="margin-top:8px"><span class="pill"><i style="background:var(--s-a)"></i>For sale <b class="num">'+nf(K.en_venta)+'</b></span><span class="pill"><i style="background:var(--s-b)"></i>Available soon <b class="num">'+nf(K.proximamente)+'</b></span><span class="pill"><i style="background:var(--s-n)"></i>Pending <b class="num">'+nf(K.pendiente)+'</b></span></div>';
+    var ps2=K.proximamente_por_estado||{}; hbars("soon-states",Object.keys(ps2).slice(0,10).map(function(k){return {l:k,title:STATE_NAMES[k],v:ps2[k],color:"var(--s-b)"};}));
+    $("soon-flow").innerHTML=stat(nf(K.a_venta_30d),"Went on sale, 30 days","seen as available soon first")+
+      stat(K.dias_proximamente_mediana!=null?nf(K.dias_proximamente_mediana)+" d":"—","Median time as available soon","until priced and listed")+
+      stat(K.precio_previsto_mediana?money(K.precio_previsto_mediana):"—","Median planned price","the page's own \"coming soon\" entry");
+    $("soon-note").textContent="Estimates scale the share seen on listing pages read so far to the whole sitemap. Pages are read up to 600 a day, so coverage and precision grow daily.";
+  } else $("soon").hidden=true;
+
+  /* pricing */
+  if(pr){
+    $("pricing-body").hidden=false; $("pricing-empty").hidden=true;
+    $("pricing-note").textContent="Based on "+nf(pr.cobertura)+" of "+nf(inv.total)+" listed homes ("+pct(pr.cobertura_pct)+") whose listing page we've read. Up to 300 are read a day, so early figures are a growing sample."+
+      (pr.bloqueado?" Today the pages refused our requests, so nothing new was read.":"");
+    var ps=[stat(pr.precio_por_sqft_medio!=null?"$"+nf(pr.precio_por_sqft_medio):"—","Per sq ft",pr.sqft_mediana?"median "+nf(pr.sqft_mediana)+" sq ft":""),
+      stat(pr.pago_estimado_medio!=null?"$"+nf(pr.pago_estimado_medio):"—","Est. monthly payment","as shown on the listing"),
+      stat(pct(pr.con_concesion_pct),"Offer a mortgage concession",pr.concesion_media?"average "+money(pr.concesion_media):"")];
+    if(pr.retirada_previa_pct!=null) ps.push(stat(pct(pr.retirada_previa_pct),"Were pulled from market before","prior owner's listing withdrawn, 3 yrs · n="+nf(pr.retirada_previa_base)));
+    if(pr.estado_ficha&&pr.estado_ficha.pendiente) ps.push(stat(nf(pr.estado_ficha.pendiente),"Pages showing pending","still on the sitemap"));
+    if(pr.ano_construccion_mediana) ps.push(stat(pr.ano_construccion_mediana,"Median year built",pr.habitaciones_mediana?pr.habitaciones_mediana+" bedrooms median":""));
+    $("price-stats").innerHTML=ps.join("");
+    var rp=pr.reparto_precio||{}; hbars("price-bars",["<200k","200-300k","300-400k","400-500k","500-750k","750k+"].map(function(k){return {l:k,v:rp[k]||0};}));
+    var pm=pr.precio_mediana_por_estado||{}; var pk=Object.keys(pm).slice(0,10);
+    if(pk.length) hbars("price-state",pk.map(function(k){return {l:k,title:STATE_NAMES[k],v:pm[k]};}),{fmt:function(r){return money(r.v);}});
+    else $("price-state").innerHTML='<p class="fine">Needs at least 10 priced homes in a state.</p>';
+  } else { $("pricing-body").hidden=true; $("pricing-empty").hidden=false; }
+
+  /* ===== records: Maricopa ===== */
+  var dcart=cart.reparto_dias_en_cartera||null;
+  $("rec-kpis").innerHTML=
+    stat(nf(cart.casas),"Homes Opendoor owns","parcels titled to Opendoor entities")+
+    stat(cart.precio_compra_mediana?(cart.precio_aprox?"≈":"")+money(cart.precio_compra_mediana):"—","Median purchase price",cart.precio_compra_sqft_mediana?"$"+nf(cart.precio_compra_sqft_mediana)+" per sq ft":"from sale affidavits")+
+    stat(pct(cart.mas_de_90_dias_pct),"Owned over 90 days",cart.dias_en_cartera_mediana!=null?"median "+nf(cart.dias_en_cartera_mediana)+" days":"since purchase deed")+
+    stat(cart.coste_total?money(cart.coste_total):"—","Total paid, homes held",cart.coste_base?nf(cart.coste_base)+" with a recorded price":"");
+  if(dcart){ var hc=["0-30","31-60","61-90","91-180","181-365","365+"];
+    var colsA=hc.map(function(c,i){return i>=3?cssv("--s-b"):cssv("--s-a");});
+    columns("hold-age",hc,[{n:"Homes",v:hc.map(function(c){return dcart[c]||0;}),c:cssv("--s-a")}],{valLabels:true,label:"Days owned"});
+    // color the >90 day bars with the second series to mark the threshold
+    var rects=$("hold-age").querySelectorAll("rect:not(.hit)"); rects.forEach(function(r,i){ if(i>=3) r.setAttribute("fill",cssv("--s-b")); });
+  }
+  var rpc=cart.reparto_precio||null;
+  if(rpc) hbars("buy-price",["<250k","250-300k","300-400k","400-500k","500-750k","750k+"].map(function(k){return {l:k,v:rpc[k]||0};}));
+  $("lag-note").textContent=cart.ultima_escritura_catastro?
+    "The assessor roll reflects deeds up to "+dfmt(cart.ultima_escritura_catastro,{year:"numeric"})+" ("+nf(cart.retraso_catastro_dias)+" days behind), so the newest purchases are missing from the 0–30 bar. Orange bars: owned more than 90 days.":"";
+
+  var R=mar.registro||null;
+  weeklyChart(R&&R.semanas);
+  if(R&&R.ultimos_90d){ var u=R.ultimos_90d;
+    $("deed-stats").innerHTML=stat(nf(u.compra||0),"Bought, 90 days","deeds matched to parcels")+stat(nf(u.venta||0),"Sold, 90 days","deeds matched to parcels")+
+      stat(nf(u.traspaso||0),"Pending match","assessor not caught up")+stat(nf(R.documentos),"Documents read","since "+dfmt(R.desde,{year:"numeric"}));
+  } else $("deed-stats").innerHTML="";
+
+  var VP=mar.ventas_emparejadas||{n:0,lista:[]};
+  if(VP.n){ showEmpty("pairs-empty",false);
+    $("pair-stats").innerHTML=stat(nf(VP.n),"Resales paired","since tracking began")+stat(VP.margen_bruto_pct_mediana!=null?(VP.margen_bruto_pct_mediana>0?"+":"")+pct(VP.margen_bruto_pct_mediana):"—","Median gross spread","sale ÷ purchase − 1")+
+      stat(nf(VP.dias_mediana),"Median days owned","purchase deed to sale deed")+stat(nf(VP.con_perdida),"Sold below purchase price","before any costs");
+    $("pairs").innerHTML='<table class="wide"><thead><tr><th>City</th><th>Bought</th><th>Paid</th><th>Sold</th><th>Price</th><th>Days</th><th>Spread</th></tr></thead><tbody>'+
+      VP.lista.slice(0,25).map(function(v){ var m=v.margen_bruto_pct;
+        return '<tr><td class="t">'+esc(v.ciudad||"—")+' <span class="src">'+esc(v.cp||"")+'</span></td><td>'+dfmt(v.compra_f)+'</td><td>'+money(v.compra_p)+'</td><td>'+dfmt(v.venta_f)+'</td><td>'+money(v.venta_p)+'</td><td>'+nf(v.dias)+'</td><td>'+
+          (m==null?"—":'<span class="'+(m>=0?"pos":"neg")+'">'+(m>0?"+":"")+m.toFixed(1)+'%</span>')+'</td></tr>'; }).join("")+'</tbody></table>';
+  } else { $("pair-stats").innerHTML=""; $("pairs").innerHTML=""; showEmpty("pairs-empty",true); }
+  pulseRender(cart,R,VP);
+
+  var X=mar.anuncios_vs_titulo;
+  if(X&&X.comprobados){ showEmpty("xwalk-empty",false);
+    var c=X.clases||{}, tot=X.comprobados||1;
+    var parts=[["en_cartera","Titled to Opendoor","var(--s-a)"],["comprada_reciente","Bought, deed not yet on roll","color-mix(in srgb, var(--s-a) 55%, var(--surface))"],
+               ["sin_titulo_od","Not titled to Opendoor","var(--s-b)"],["sin_parcela","Parcel not found","var(--s-n)"]];
+    $("xwalk").innerHTML='<div class="stats" style="margin-bottom:10px">'+stat(pct(X.pct_titulo_od),"Listings Opendoor holds title to",nf(X.comprobados)+" of "+nf(X.anuncios_maricopa)+" Phoenix-area listings checked")+
+      stat(nf(X.cartera_sin_anunciar),"Owned but not listed","of "+nf(X.cartera_total)+" homes it owns: renovating, under contract or held")+'</div>'+
+      '<div class="stack" role="img" aria-label="Listings by title status">'+parts.map(function(p){ var v=c[p[0]]||0; return v?'<span style="width:'+(v/tot*100)+'%;background:'+p[2]+'" title="'+p[1]+': '+v+'"></span>':''; }).join("")+'</div>'+
+      '<div class="legend" style="margin-top:8px">'+parts.map(function(p){return '<span class="pill"><i style="background:'+p[2]+'"></i>'+p[1]+' <b class="num">'+nf(c[p[0]]||0)+'</b></span>';}).join("")+'</div>'+
+      '<p class="fine" style="margin-top:8px">"Not titled" can mean a listing Opendoor markets on an owner\'s behalf, or a purchase whose deed isn\'t indexed yet. Owned-but-not-listed uses the assessor roll, which lags about two weeks, so recent sales can still count as owned.</p>';
+  } else { $("xwalk").innerHTML=""; showEmpty("xwalk-empty",true); }
+
+  /* ===== Home Loans ===== */
+  var O=mar.hipotecas_ohl||{};
+  $("ohl-kpis").innerHTML=
+    stat(nf(O.total_desde_relanzamiento),"New Home Loans mortgages recorded",O.primera?"Maricopa · first of 2026 on "+dfmt(O.primera,{year:"numeric"}):"Maricopa, 2026")+
+    stat(nf(O.ultimos_30d),"Last 30 days","recording lag: 1–3 weeks")+
+    stat(O.attach_pct!=null?pct(O.attach_pct):"—","Of Opendoor's home sales, financed by it",O.attach_pct!=null?nf(O.ventas_od_con_ohl)+" of "+nf(O.ventas_od_desde_primera)+" sales since the first loan":"needs 10+ matched sales")+
+    stat(nf(O.liberaciones_cartera_antigua),"Old loans released, 2026","2019–22 book still running off");
+  var meses=O.meses;
+  if(!meses&&R&&R.meses&&R.meses.length){
+    var bym={}; R.meses.forEach(function(r){bym[r.m]=r;});
+    meses=[]; var cur=(R.desde&&R.desde.slice(0,7)>R.meses[0].m)?R.desde.slice(0,7):R.meses[0].m, fin=R.meses[R.meses.length-1].m, guard=0;
+    while(cur<=fin&&guard++<60){ var r0=bym[cur]||{}; meses.push({m:cur,n:r0.hipotecas_ohl||0,r:r0.liberaciones_ohl||0});
+      var y=+cur.slice(0,4), mo=+cur.slice(5,7)+1; if(mo>12){mo=1;y++;} cur=y+"-"+(mo<10?"0":"")+mo; }
+  }
+  if(meses&&O.lista&&O.lista.length&&!meses.some(function(r){return r.n;})){ var cm={}; O.lista.forEach(function(v){var k=(v.f||'').slice(0,7); cm[k]=(cm[k]||0)+1;}); meses=meses.map(function(r){return {m:r.m,n:cm[r.m]||0,r:r.r};}); }
+  if(meses&&meses.length){ var ml=meses.map(function(r){return new Date(r.m+"-15T12:00:00Z").toLocaleDateString("en-US",{month:"short",timeZone:"UTC"});});
+    lineChart("ohl-monthly",[{n:"New loans",c:cssv("--s-a"),pts:meses.map(function(r){return [r.m+"-15",r.n];})},{n:"Releases",c:cssv("--s-n"),pts:meses.map(function(r){return [r.m+"-15",r.r];})}],
+      {h:160,zero:true,monthly:true,label:"Opendoor Home Loans monthly recordings"}); }
+  var L=O.lista||[];
+  $("ohl-list").innerHTML=L.length?'<table><thead><tr><th>Recorded</th><th>Recording no.</th><th>Opendoor home</th></tr></thead><tbody>'+
+    L.slice(0,30).map(function(v){return '<tr><td class="t">'+dfmt(v.f,{year:"numeric"})+'</td><td>'+esc(v.rn)+'</td><td>'+(v.od==null?"—":v.od?"yes":"no")+'</td></tr>';}).join("")+'</tbody></table>':
+    '<p class="fine">None recorded yet.</p>';
+  var S=mar.osn||{};
+  $("osn-stats").innerHTML=S.semilla_12m?
+    stat(nf(S.semilla_12m.fiduciario),"New deeds of trust naming it","last 12 months")+stat(nf(S.semilla_12m.sustitucion),"Substitutions of trustee","last 12 months")+stat(nf(S.semilla_12m.fiduciario+S.semilla_12m.sustitucion+S.semilla_12m.otros),"All documents naming it","last 12 months"):
+    stat(nf(S.fiduciario_90d),"New deeds of trust naming it","last 90 days")+stat(nf(S.otros_90d),"Other filings naming it","substitutions, releases · 90 days");
+
+  /* ===== counties ===== */
+  var C=reg.condados||[];
+  $("county-table").innerHTML='<table class="wide"><thead><tr><th>County</th><th>Homes owned</th><th>Change today</th><th>Median days owned</th><th>Latest deed on roll</th></tr></thead><tbody>'+
+    C.slice().sort(function(a,b){return (b.casas||0)-(a.casas||0);}).map(function(c){
+      var ch=(c.altas==null&&c.bajas==null)?"—":'<span class="pos">+'+nf(c.altas)+'</span> / <span class="neg">−'+nf(c.bajas)+'</span>';
+      return '<tr><td class="t">'+esc(c.nombre)+', '+esc(c.estado)+' <span class="src">'+esc(CITY_EN[c.ciudad]||c.ciudad)+'</span>'+(c.ok===false?' <span class="tag">stale</span>':'')+'</td><td>'+nf(c.casas)+'</td><td>'+ch+'</td><td>'+nf(c.dias_en_cartera_mediana)+'</td><td>'+(c.ultima_fecha?dfmt(c.ultima_fecha,{year:"numeric"}):"—")+'</td></tr>';
+    }).join("")+'</tbody></table>';
+
+  /* ===== signals ===== */
+  var S2=senales||{}; var P2=function(k){return (S2[k]&&S2[k].puntos)||[];};
+  var cl=P2("clearance_relativo"), co=P2("contratos_adquisicion"), dr=P2("drop_semanal"), pa=P2("propietarios_atendidos");
+  var lastp=function(a){return a.length?a[a.length-1]:null;};
+  var st=[];
+  if(lastp(cl)) st.push(stat(lastp(cl).v+"%","Better than MLS at clearing","relative clearance, week ending "+dfmt(lastp(cl).f)));
+  var CLv=contrLevels(), cnl=CLv.rows.length?CLv.rows[CLv.rows.length-1]:null;
+  if(cnl) st.push(stat((cnl.anchor?"":"≈")+nf(cnl.n),"Acquisition contracts, last week","week to "+dfmt(cnl.f)+(cnl.anchor?" · figure supplied by the owner":" · derived from the % change")));
+  if(lastp(co)) st.push(stat((lastp(co).v>0?"+":"")+lastp(co).v+"%","Acquisition contracts, w/w","week to "+dfmt(lastp(co).f)));
+  if(lastp(dr)){ var d0=lastp(dr), tp=d0.tipo!=null?d0.tipo:d0.v;
+    st.push(stat(tp.toFixed(3)+"%","The weekly Drop rate",(d0.producto?d0.producto+" · ":"")+(d0.apr!=null?"APR "+d0.apr.toFixed(3)+"% · ":"")+"benchmark (APOR) "+d0.apor.toFixed(3)+"%"+(d0.descuento_pp!=null?", "+d0.descuento_pp.toFixed(2)+" pp below it":"")+"<br>~"+nf(d0.casas)+" homes"+(d0.leido?" · read "+dfmt(String(d0.leido).slice(0,10)):""))); }
+  if(pa.length){ var a0=pa[0],a1=lastp(pa), dd=(Date.parse(a1.f)-Date.parse(a0.f))/864e5;
+    st.push(stat(nf(a1.v),"Customers served","homepage counter, "+dfmt(a1.f)+" (the page used to say homeowners)"+(dd>0?" · ~"+Math.round((a1.v-a0.v)/dd)+"/day since "+dfmt(a0.f):""))); }
+  $("sig-stats").innerHTML=st.join("");
+  $("sig-fine").textContent="Opendoor's accountable page prints percentages only: its weekly sales appear as a chart (\"Resale COEs\") with no numbers, and acquisition contracts as a % change, never a count"+(lastp(co)?". Data as of "+dfmt(lastp(co).f,{year:"numeric"})+".":".");
+  lineChart("sig-clear",[{n:"Better than MLS",c:cssv("--s-a"),pts:cl.map(function(p){return [p.f,p.v];})}],{h:150,yfmt:function(v){return Math.round(v)+"%";},label:"Relative clearance"});
+  var cok=co.length>0; for(var ci=1;ci<co.length;ci++){ if((Date.parse(co[ci].f)-Date.parse(co[ci-1].f))/864e5!==7) cok=false; }
+  if(CLv.rows.length){
+    var c0=addDays(CLv.anchor.f,-7), crow=CLv.rows.filter(function(r){return r.f>=c0;});
+    var cpts=crow.map(function(r){ return [r.f,r.n,sgn(r.v)+Math.abs(r.v)+"% vs. previous week · "+(r.anchor?"figure supplied by the owner":"derived")]; });
+    $("sig-contr-tag").textContent="contracts a week · from "+dfmt(c0);
+    $("sig-contr-fine").textContent="Opendoor prints only the % change versus the previous week, never a count. Counts supplied by the owner: "+
+      CLv.anchors.map(function(r){ return nf(r.n)+" for the week to "+dfmt(r.f); }).join(" and ")+". "+
+      crow.filter(function(r){return !r.anchor;}).map(function(r){ return "The week to "+dfmt(r.f)+" (≈"+nf(r.n)+") is worked out from the "+sgn(r.v)+Math.abs(r.v)+"% printed for it or the week after"; }).join("; ")+
+      (crow.some(function(r){return !r.anchor;})?", so it is approximate (the printed % is rounded). ":"")+
+      "Direction: the module prints a plus sign only when the change is positive, so a percentage printed with no sign is a fall (the 18% of the week to Oct 17 is −18%). "+"Includes Cash Now, More Later; excludes later cancellations (company's own caveat).";
+    lineChart("sig-contr",[{n:"Contracts",c:cssv("--s-a"),pts:cpts}],{h:150,yfmt:function(v){return nf(Math.round(v));},label:"Acquisition contracts per week"});
+  } else if(cok){ var lv=100, idx=[[addDays(co[0].f,-7),100,"first week = 100"]];
+    co.forEach(function(p){ lv=lv*(1+p.v/100); idx.push([p.f,Math.round(lv*10)/10,(p.v>0?"+":"")+p.v+"% vs. previous week"]); });
+    $("sig-contr-tag").textContent="index, "+dfmt(idx[0][0])+" = 100";
+    $("sig-contr-fine").textContent="Opendoor prints only the % change versus the previous week, never a count. Chained week after week, those changes give the level of contracts relative to "+dfmt(idx[0][0])+". Includes Cash Now, More Later; excludes later cancellations (company's own caveat).";
+    lineChart("sig-contr",[{n:"Contracts index",c:cssv("--s-a"),pts:idx}],{h:150,yfmt:function(v){return ""+Math.round(v);},label:"Acquisition contracts, indexed"});
+  } else {
+    $("sig-contr-tag").textContent="vs previous week";
+    lineChart("sig-contr",[{n:"Contracts, w/w",c:cssv("--s-a"),pts:co.map(function(p){return [p.f,p.v];})}],{h:150,yfmt:function(v){return (v>0?"+":v<0?"−":"")+Math.abs(Math.round(v))+"%";},label:"Acquisition contracts"});
+  }
+  (function(){ var pts=dr.filter(function(x){return x.apor!=null&&(x.tipo!=null||x.v!=null)&&!x.dudoso;}).sort(function(a,b){return a.f<b.f?-1:a.f>b.f?1:0;});
+    if(!pts.length){ $("sig-drop").innerHTML=""; return; }
+    var sr=[{n:"Opendoor incentive rate",c:cssv("--s-a"),pts:pts.map(function(x){ var t=x.tipo!=null?x.tipo:x.v; return [x.f,t,(x.producto||"product not noted")+(x.apr!=null?" · APR "+x.apr.toFixed(3)+"%":"")+" · ~"+nf(x.casas)+" homes"]; })},
+      {n:"Market benchmark (APOR)",c:cssv("--s-b"),dash:true,pts:pts.map(function(x){return [x.f,x.apor];})}];
+    $("sig-drop-leg").innerHTML=sr.map(function(x){return '<span><i style="background:'+x.c+'"></i>'+x.n+'</span>';}).join("");
+    lineChart("sig-drop",sr,{h:170,yfmt:function(v){return v.toFixed(2)+"%";},label:"Weekly Drop rate and benchmark"});
+    $("sig-drop-fine").textContent="Since Sep 29 the headline rate and its benchmark are for a 5/6 adjustable-rate mortgage (rate fixed for five years, then adjustable), so the discount is measured against an ARM benchmark and is not comparable to Freddie Mac's 30-year fixed average. The page's loan-type filter also lists a 30-year fixed, but only the ARM figures are printed, so the fixed rate cannot be tracked. Opendoor Home Loans also offers 30-, 20- and 15-year fixed and 7/6 and 10/6 ARMs (press release of Sep 4); the Drop advertises one rate. Windows run Thursday to Wednesday and the date shown is the expected Wednesday expiry: the page no longer prints it."+(dr.some(function(x){return x.dudoso;})?" One reading is left off the line because it does not fit the windows read afterwards.":"");
+  })();
+  var mg=P2("margen_contribucion");
+  var mrep=mg.filter(function(p){return !/guiad/.test(p.t||"");}), mgd=mg.filter(function(p){return /guiad/.test(p.t||"");});
+  lineChart("sig-margin",[{n:"Reported",c:cssv("--s-a"),pts:mrep.map(function(p){return [p.f,p.v];})},
+    {n:"Guidance midpoint",c:cssv("--s-b"),dash:true,pts:(mrep.length&&mgd.length?[[mrep[mrep.length-1].f,mrep[mrep.length-1].v]]:[]).concat(mgd.map(function(p){return [p.f,p.v];}))}],
+    {h:170,monthly:true,yticks:[-5,0,5],yfmt:function(v){return v.toFixed(1)+"%";},label:"Contribution margin"});
+  var pc=P2("open_cierre");
+  lineChart("sig-price",[{n:"$OPEN close",c:cssv("--ink-2"),pts:pc.map(function(p){return [p.f,p.v];})}],{h:170,yfmt:function(v){return "$"+v.toFixed(2);},label:"OPEN close"});
+
+  /* ===== gap ===== */
+  var ol=P2("open_listados");
+  var ours=serie.filter(function(d){return d.total;}).map(function(d){return [d.f,d.total];});
+  var est=(P.serieProx||[]).map(function(d){return [d.f,d.en_venta_est];}).filter(function(p){return p[1];});
+  lineChart("gap-chart",[{n:"Our sitemap count",c:cssv("--ink-2"),pts:ours},{n:"Our estimate, for sale",c:cssv("--s-a"),pts:est,dash:true}],{h:210,label:"Listing counts compared"});
+
+  /* ===== markets ===== */
+  var M=reg.mercado;
+  if(M&&M.metros&&M.metros.length){ $("markets").hidden=false;
+    var cA=cssv("--s-a");
+    $("mkt-table").innerHTML='<table class="wide"><thead><tr><th>Metro</th><th>Active listings</th><th>YoY</th><th>Trend</th><th>Days on market</th><th>With a price cut</th><th>Median list</th></tr></thead><tbody>'+
+      M.metros.map(function(m){ var y=m.activos_yoy_pct;
+        return '<tr><td class="t">'+esc(m.nombre)+' <span class="src">'+esc(m.estado)+'</span></td><td>'+nf(m.activos)+'</td><td>'+(y==null?"—":'<span class="'+(y>0?"neg":"pos")+'">'+(y>0?"+":"")+y.toFixed(0)+'%</span>')+'</td><td>'+spark(m.activos_serie,70,18,cA)+'</td><td>'+nf(m.dom)+(m.dom_hace_1a!=null?' <span class="src">('+nf(m.dom_hace_1a)+')</span>':'')+'</td><td>'+(m.con_rebaja_pct!=null?pct(m.con_rebaja_pct,0):"—")+'</td><td>'+money(m.precio)+'</td></tr>'; }).join("")+'</tbody></table>';
+    lineChart("mkt-rate",[{n:"30-year fixed",c:cssv("--s-a"),pts:M.hipoteca30||[]}],{h:170,yfmt:function(v){return v.toFixed(2)+"%";},label:"30-year mortgage rate"});
+    $("mkt-src").textContent=(M.metros[0]?"Month: "+M.metros[0].mes+". ":"")+"Days on market in brackets: a year earlier. YoY in red means more supply than a year ago. Source: "+M.fuente+".";
+  } else $("markets").hidden=true;
+
+  /* ===== hiring ===== */
+  var E=inv.empleo;
+  if(E&&E.total){ $("hiring").hidden=false;
+    $("hiring-note").textContent="Open roles on opendoor.com/careers today"+(E.metodo==="enlaces"?" (read from the page's job links).":".");
+    var k=E.claves||{};
+    $("hiring-stats").innerHTML=stat(nf(E.total),"Open roles","")+stat(nf(k.hipoteca||0),"Mortgage roles","")+stat(nf(k.escrow_title||0),"Title & escrow roles","")+stat(nf(k.pricing||0),"Pricing roles","");
+    var dp=E.por_departamento||{}; hbars("hiring-dept",Object.keys(dp).slice(0,10).map(function(d){return {l:d.length>22?d.slice(0,21)+"…":d,title:d,v:dp[d]};}));
+    var roles=(E.puestos||[]).filter(function(p){ var t=(p.t+" "+(p.d||"")).toLowerCase(); return /mortgage|loan|escrow|title|os national|closing/.test(t); });
+    $("hiring-roles").innerHTML=roles.length?roles.slice(0,14).map(function(p){return '<li>'+esc(p.t)+(p.l?' <span class="src">'+esc(p.l)+'</span>':'')+'</li>';}).join(""):'<li>None open today.</li>';
+  } else $("hiring").hidden=true;
+  renderV6(P);
+  try{ renderTrading(P); }catch(e){ console.error(e); }
+}
+function addDays(iso,n){ var d=new Date(iso+"T12:00:00Z"); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10); }
+
+/* ================= data ================= */
+var current=SEED, fromDias=null, serieProx=[];
+function draw(){ try{ render(Object.assign({},current,{serieProx:serieProx})); }catch(e){ console.error(e); } }
+/* ---------- tabs ---------- */
+var TABNAMES=["dashboard","sales","inventory","prices","profit","company","records","trading","method"];
+function setTab(t,user){
+  if(TABNAMES.indexOf(t)<0) t="dashboard";
+  TABNAMES.forEach(function(k){ var on=k===t, p=$("p-"+k), b=$("tab-"+k);
+    if(p) p.hidden=!on; if(b){ b.setAttribute("aria-selected",on?"true":"false"); b.tabIndex=on?0:-1; } });
+  try{ localStorage.setItem("iw_tab",t); }catch(e){}
+  try{ history.replaceState(null,"","#"+t); }catch(e){}
+  if(user){ draw(); try{ var tb=$("tab-"+t); tb&&tb.scrollIntoView&&tb.scrollIntoView({block:"nearest",inline:"center"}); window.scrollTo(0,0); }catch(e){} }
+}
+(function(){
+  var first="dashboard", h=""; try{ h=(location.hash||"").replace("#",""); }catch(e){}
+  if(TABNAMES.indexOf(h)>=0) first=h;
+  setTab(first,false);
+  document.querySelector(".tabs").addEventListener("click",function(ev){ var b=ev.target.closest&&ev.target.closest("button[data-t]"); if(b) setTab(b.getAttribute("data-t"),true); });
+  document.querySelector(".tabs").addEventListener("keydown",function(ev){
+    var i=TABNAMES.indexOf((document.activeElement&&document.activeElement.getAttribute("data-t"))||"");
+    if(i<0||(ev.key!=="ArrowRight"&&ev.key!=="ArrowLeft")) return;
+    var j=(i+(ev.key==="ArrowRight"?1:TABNAMES.length-1))%TABNAMES.length; setTab(TABNAMES[j],true); $("tab-"+TABNAMES[j]).focus(); ev.preventDefault(); });
+})();
+draw();
+var rs; window.addEventListener("resize",function(){ clearTimeout(rs); rs=setTimeout(draw,160); });
+try{ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",draw); }catch(e){}
+new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+
+function merge(panel){
+  // Seed county data stays until the job's own pass exists.
+  var p=Object.assign({},panel);
+  if(!p.registros) p.registros=SEED.registros;
+  else if(!p.registros.maricopa) p.registros=Object.assign({},p.registros,{maricopa:SEED.registros.maricopa});
+  if(!p.serie||!p.serie.length) p.serie=SEED.serie;
+  return p;
+}
+
+/* Public site: the same four data sources the dashboard always read, now plain JSON files. */
+(function(){
+  var havePanel=false;
+  function applyPanel(d){
+    if(!d||!d.inventario) return;
+    havePanel=true;
+    if(fromDias&&fromDias.inventario.fecha>d.inventario.fecha){ d=Object.assign({},d,{inventario:fromDias.inventario}); }
+    current=merge(d);
+  }
+  function applyDias(list){
+    var days=(list||[]).filter(function(d){return d&&d.fecha&&d.total;});
+    days.sort(function(a,b){return a.fecha<b.fecha?-1:1;});
+    if(!days.length) return;
+    var lastDay=days[days.length-1];
+    diasFull=days.map(function(d){ var p=d.precios||{}; return {f:d.fecha,total:d.total,altas:d.nuevos,bajas:d.retirados,reap:d.reapariciones||0,primera:!!d.primera_pasada,vs:d.valor_salido_hoy,vsb:d.valor_salido_hoy_base,rec:p.recortes_hoy,recpct:p.recorte_medio_hoy_pct}; });
+    serieProx=days.filter(function(d){return d.clasificacion&&d.clasificacion.en_venta_estimadas;}).map(function(d){return {f:d.fecha,en_venta_est:d.clasificacion.en_venta_estimadas};});
+    fromDias={inventario:lastDay,serie:days.map(function(d){ var p=d.precios||{};
+      return {f:d.fecha,total:d.total,altas:d.nuevos,bajas:d.retirados,reap:d.reapariciones||0,primera:d.primera_pasada,valor_salido:d.valor_salido_hoy,
+              p_med:p.precio_mediana,cob:p.cobertura_pct}; })};
+    if(!havePanel||current.inventario.fecha<lastDay.fecha){
+      var base=havePanel?current:SEED;
+      current=merge(Object.assign({},base,{semilla:base.semilla,inventario:lastDay,serie:fromDias.serie}));
+    }
+  }
+  function get(u){
+    return fetch(u,{cache:"no-cache"}).then(function(r){ if(!r.ok) throw new Error(u+" "+r.status); return r.json(); });
+  }
+  function soft(u){ return get(u).catch(function(e){ console.error(e); return null; }); }
+  Promise.all([soft("data/panel.json"),soft("data/dias.json"),soft("data/senales.json"),soft("data/modelo.json")]).then(function(r){
+    var panel=r[0],dias=r[1],sen=r[2],mod=r[3];
+    if(sen) senales=Object.assign({},SENALES_SEED,sen);
+    if(mod&&mod.serie) modeloDoc=mod;
+    if(panel) applyPanel(panel);
+    if(dias) applyDias(dias);
+    if(!panel||!dias){ var e=$("loaderr"); if(e) e.hidden=false; }
+    draw();
+  });
+})();
+})();
+</script>
+</body>
+</html>
