@@ -518,10 +518,13 @@
   "cp": "85295",
   "detectada": "2026-10-19",
   "dias": 161,
+  "margen_bruto": -19600,
+  "margen_bruto_pct": -3.53,
+  "precio_visto": "2026-11-04",
   "sqft": 1788,
   "venta_escritura": "20260578545",
   "venta_f": "2026-10-05",
-  "venta_p": null
+  "venta_p": 535000
  },
  {
   "apn": "20017381",
@@ -557,10 +560,13 @@
   "cp": "85027",
   "detectada": "2026-10-23",
   "dias": 69,
+  "margen_bruto": 27300,
+  "margen_bruto_pct": 7.04,
+  "precio_visto": "2026-11-04",
   "sqft": 1591,
   "venta_escritura": "20260580206",
   "venta_f": "2026-10-06",
-  "venta_p": null
+  "venta_p": 415000
  },
  {
   "apn": "22073031",
@@ -780,6 +786,58 @@
   "dias": 202,
   "sqft": 1943,
   "venta_escritura": "20260606818",
+  "venta_f": "2026-10-20",
+  "venta_p": null
+ },
+ {
+  "apn": "12611120B",
+  "ciudad": "Phoenix",
+  "compra_f": "2026-08-27",
+  "compra_p": 339100,
+  "cp": "85008",
+  "detectada": "2026-11-04",
+  "dias": 48,
+  "sqft": 1198,
+  "venta_escritura": "20260595335",
+  "venta_f": "2026-10-14",
+  "venta_p": null
+ },
+ {
+  "apn": "14160104",
+  "ciudad": "Mesa",
+  "compra_f": "2026-06-17",
+  "compra_p": 329100,
+  "cp": "85205",
+  "detectada": "2026-11-04",
+  "dias": 126,
+  "sqft": 1524,
+  "venta_escritura": "20260609701",
+  "venta_f": "2026-10-21",
+  "venta_p": null
+ },
+ {
+  "apn": "14719124",
+  "ciudad": "Glendale",
+  "compra_f": "2026-07-24",
+  "compra_p": 357300,
+  "cp": "85301",
+  "detectada": "2026-11-04",
+  "dias": 89,
+  "sqft": 1799,
+  "venta_escritura": "20260610010",
+  "venta_f": "2026-10-21",
+  "venta_p": null
+ },
+ {
+  "apn": "20038210",
+  "ciudad": "Peoria",
+  "compra_f": "2026-04-27",
+  "compra_p": 326100,
+  "cp": "85382",
+  "detectada": "2026-11-04",
+  "dias": 176,
+  "sqft": 1304,
+  "venta_escritura": "20260607678",
   "venta_f": "2026-10-20",
   "venta_p": null
  }
