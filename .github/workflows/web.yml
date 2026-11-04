@@ -1,10 +1,16 @@
 name: Publicar web (Inventory Watch)
 
-# Repositorio nuevo, solo para la web. Los datos los escribe el contador del repositorio
-# feralvro/Projects (público); aquí se leen cada día y se publica la web.
+# La web vive en el mismo repo que el contador (feralvro/Projects). Se publica sola en cuanto
+# el contador diario termina (acaba entre las 19:00 y las 23:00 UTC), y ademas:
+#  - cada madrugada (03:30 UTC) como red de seguridad,
+#  - cuando cambia algo en web/ o en este fichero,
+#  - a mano desde Actions.
 on:
+  workflow_run:
+    workflows: ["Contador diario de inventario $OPEN"]
+    types: [completed]
   schedule:
-    - cron: "55 14 * * *"   # el contador corre a las 14:37 UTC; esto va justo después
+    - cron: "30 3 * * *"
   push:
     branches: [main]
     paths: ["web/**", "scripts/exportar_web.py", ".github/workflows/web.yml"]
