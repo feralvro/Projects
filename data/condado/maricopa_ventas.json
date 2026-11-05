@@ -576,10 +576,13 @@
   "cp": "85208",
   "detectada": "2026-10-23",
   "dias": 133,
+  "margen_bruto": 2900,
+  "margen_bruto_pct": 0.71,
+  "precio_visto": "2026-11-05",
   "sqft": 1647,
   "venta_escritura": "20260584804",
   "venta_f": "2026-10-08",
-  "venta_p": null
+  "venta_p": 410000
  },
  {
   "apn": "30238598",
@@ -589,10 +592,13 @@
   "cp": "85225",
   "detectada": "2026-10-23",
   "dias": 72,
+  "margen_bruto": -8000,
+  "margen_bruto_pct": -2.66,
+  "precio_visto": "2026-11-05",
   "sqft": 1200,
   "venta_escritura": "20260583229",
   "venta_f": "2026-10-07",
-  "venta_p": null
+  "venta_p": 293000
  },
  {
   "apn": "10581947",
