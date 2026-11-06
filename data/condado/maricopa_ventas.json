@@ -534,10 +534,13 @@
   "cp": "85382",
   "detectada": "2026-10-23",
   "dias": 129,
+  "margen_bruto": -58000,
+  "margen_bruto_pct": -10.09,
+  "precio_visto": "2026-11-06",
   "sqft": 2764,
   "venta_escritura": "20260585789",
   "venta_f": "2026-10-08",
-  "venta_p": null
+  "venta_p": 517000
  },
  {
   "apn": "20020033",
@@ -845,6 +848,84 @@
   "sqft": 1304,
   "venta_escritura": "20260607678",
   "venta_f": "2026-10-20",
+  "venta_p": null
+ },
+ {
+  "apn": "14320288",
+  "ciudad": "Peoria",
+  "compra_f": "2025-12-05",
+  "compra_p": 249000,
+  "cp": "85345",
+  "detectada": "2026-11-06",
+  "dias": 322,
+  "sqft": 1435,
+  "venta_escritura": "20260614609",
+  "venta_f": "2026-10-23",
+  "venta_p": null
+ },
+ {
+  "apn": "20018212",
+  "ciudad": "Peoria",
+  "compra_f": "2026-08-20",
+  "compra_p": 471900,
+  "cp": "85382",
+  "detectada": "2026-11-06",
+  "dias": 64,
+  "sqft": 1852,
+  "venta_escritura": "20260615212",
+  "venta_f": "2026-10-23",
+  "venta_p": null
+ },
+ {
+  "apn": "23243176",
+  "ciudad": "Surprise",
+  "compra_f": "2026-08-17",
+  "compra_p": 358300,
+  "cp": "85387",
+  "detectada": "2026-11-06",
+  "dias": 70,
+  "sqft": 1706,
+  "venta_escritura": "20260616908",
+  "venta_f": "2026-10-26",
+  "venta_p": null
+ },
+ {
+  "apn": "50089224",
+  "ciudad": "Goodyear",
+  "compra_f": "2026-08-21",
+  "compra_p": 415000,
+  "cp": "85338",
+  "detectada": "2026-11-06",
+  "dias": 63,
+  "sqft": 2334,
+  "venta_escritura": "20260614539",
+  "venta_f": "2026-10-23",
+  "venta_p": null
+ },
+ {
+  "apn": "50234896",
+  "ciudad": "Litchfield Park",
+  "compra_f": "2026-08-31",
+  "compra_p": 538400,
+  "cp": "85340",
+  "detectada": "2026-11-06",
+  "dias": 53,
+  "sqft": 1862,
+  "venta_escritura": "20260613832",
+  "venta_f": "2026-10-23",
+  "venta_p": null
+ },
+ {
+  "apn": "50378482",
+  "ciudad": "Surprise",
+  "compra_f": "2026-08-14",
+  "compra_p": 381700,
+  "cp": "85387",
+  "detectada": "2026-11-06",
+  "dias": 70,
+  "sqft": 1460,
+  "venta_escritura": "20260614988",
+  "venta_f": "2026-10-23",
   "venta_p": null
  }
 ]
