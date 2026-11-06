@@ -4,7 +4,7 @@ La web está apagada desde 2026-11-06. Nada de esta carpeta se ejecuta: GitHub A
 solo lee workflows de `.github/workflows/`, y la tarea nocturna ya no publica.
 El contador diario (`contador.yml`) y el artefacto personal siguen funcionando igual.
 
-El estado exacto en el que se archivó está también en el tag `web-v1`.
+El estado exacto antes de archivarla es el commit `a982ec4` (`git checkout a982ec4` para verlo).
 
 ## Qué hay aquí
 - `web/`: la página (`index.html`) y sus datos (`web/data/*.json`).
