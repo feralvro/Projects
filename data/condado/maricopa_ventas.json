@@ -927,5 +927,31 @@
   "venta_escritura": "20260614988",
   "venta_f": "2026-10-23",
   "venta_p": null
+ },
+ {
+  "apn": "14812065",
+  "ciudad": "Glendale",
+  "compra_f": "2026-08-21",
+  "compra_p": 321100,
+  "cp": "85302",
+  "detectada": "2026-11-07",
+  "dias": 67,
+  "sqft": 2051,
+  "venta_escritura": "20260620282",
+  "venta_f": "2026-10-27",
+  "venta_p": null
+ },
+ {
+  "apn": "30280176",
+  "ciudad": "Chandler",
+  "compra_f": "2026-09-08",
+  "compra_p": null,
+  "cp": "85224",
+  "detectada": "2026-11-07",
+  "dias": 48,
+  "sqft": 1160,
+  "venta_escritura": "20260618073",
+  "venta_f": "2026-10-26",
+  "venta_p": null
  }
 ]
