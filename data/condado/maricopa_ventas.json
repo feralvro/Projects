@@ -550,10 +550,13 @@
   "cp": "85378",
   "detectada": "2026-10-23",
   "dias": 39,
+  "margen_bruto": -6500,
+  "margen_bruto_pct": -1.62,
+  "precio_visto": "2026-11-10",
   "sqft": 2156,
   "venta_escritura": "20260587997",
   "venta_f": "2026-10-09",
-  "venta_p": null
+  "venta_p": 395000
  },
  {
   "apn": "20910468",
@@ -952,6 +955,19 @@
   "sqft": 1160,
   "venta_escritura": "20260618073",
   "venta_f": "2026-10-26",
+  "venta_p": null
+ },
+ {
+  "apn": "50374724",
+  "ciudad": "Surprise",
+  "compra_f": "2026-07-01",
+  "compra_p": 450000,
+  "cp": "85387",
+  "detectada": "2026-11-10",
+  "dias": 118,
+  "sqft": 3123,
+  "venta_escritura": "20260621469",
+  "venta_f": "2026-10-27",
   "venta_p": null
  }
 ]
