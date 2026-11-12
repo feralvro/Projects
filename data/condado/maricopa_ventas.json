@@ -614,10 +614,13 @@
   "cp": "85041",
   "detectada": "2026-10-27",
   "dias": 113,
+  "margen_bruto": 800,
+  "margen_bruto_pct": 0.23,
+  "precio_visto": "2026-11-12",
   "sqft": 1128,
   "venta_escritura": "20260593586",
   "venta_f": "2026-10-13",
-  "venta_p": null
+  "venta_p": 354000
  },
  {
   "apn": "31404758",
@@ -627,10 +630,13 @@
   "cp": "85142",
   "detectada": "2026-10-27",
   "dias": 88,
+  "margen_bruto": -23000,
+  "margen_bruto_pct": -4.95,
+  "precio_visto": "2026-11-12",
   "sqft": 2083,
   "venta_escritura": "20260592085",
   "venta_f": "2026-10-13",
-  "venta_p": null
+  "venta_p": 442000
  },
  {
   "apn": "10458377",
@@ -640,10 +646,13 @@
   "cp": "85043",
   "detectada": "2026-10-28",
   "dias": 163,
+  "margen_bruto": -17700,
+  "margen_bruto_pct": -5.16,
+  "precio_visto": "2026-11-12",
   "sqft": 1605,
   "venta_escritura": "20260596059",
   "venta_f": "2026-10-14",
-  "venta_p": null
+  "venta_p": 325500
  },
  {
   "apn": "23107550",
@@ -653,10 +662,13 @@
   "cp": "85306",
   "detectada": "2026-10-28",
   "dias": 125,
+  "margen_bruto": 37700,
+  "margen_bruto_pct": 8.74,
+  "precio_visto": "2026-11-12",
   "sqft": 2025,
   "venta_escritura": "20260596380",
   "venta_f": "2026-10-14",
-  "venta_p": null
+  "venta_p": 469000
  },
  {
   "apn": "20307673",
@@ -666,10 +678,13 @@
   "cp": "85086",
   "detectada": "2026-10-29",
   "dias": 167,
+  "margen_bruto": -70600,
+  "margen_bruto_pct": -7.19,
+  "precio_visto": "2026-11-12",
   "sqft": 4453,
   "venta_escritura": "20260596533",
   "venta_f": "2026-10-14",
-  "venta_p": null
+  "venta_p": 910800
  },
  {
   "apn": "21459116",
@@ -809,10 +824,13 @@
   "cp": "85008",
   "detectada": "2026-11-04",
   "dias": 48,
+  "margen_bruto": 33400,
+  "margen_bruto_pct": 9.85,
+  "precio_visto": "2026-11-12",
   "sqft": 1198,
   "venta_escritura": "20260595335",
   "venta_f": "2026-10-14",
-  "venta_p": null
+  "venta_p": 372500
  },
  {
   "apn": "14160104",
@@ -990,6 +1008,19 @@
   "dias": 72,
   "sqft": 2645,
   "venta_escritura": "20260624206",
+  "venta_f": "2026-10-28",
+  "venta_p": null
+ },
+ {
+  "apn": "12358371",
+  "ciudad": "Phoenix",
+  "compra_f": "2026-08-14",
+  "compra_p": 345800,
+  "cp": "85042",
+  "detectada": "2026-11-12",
+  "dias": 75,
+  "sqft": 1608,
+  "venta_escritura": "20260622252",
   "venta_f": "2026-10-28",
   "venta_p": null
  }
