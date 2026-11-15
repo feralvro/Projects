@@ -6,7 +6,7 @@
    "bajas": 0,
    "casas": 311,
    "ciudad": "Phoenix",
-   "dias_en_cartera_mediana": 99,
+   "dias_en_cartera_mediana": 100,
    "estado": "AZ",
    "historial": [
     [
@@ -196,6 +196,10 @@
     [
      "2026-11-14",
      311
+    ],
+    [
+     "2026-11-15",
+     311
     ]
    ],
    "id": "maricopa_az",
@@ -205,11 +209,9 @@
    "ultima_fecha": "2026-10-29"
   },
   {
-   "altas": 0,
-   "bajas": 0,
    "casas": 80,
    "ciudad": "Tucson",
-   "dias_en_cartera_mediana": null,
+   "error": "FuenteCaida: pima_az: FuenteCaida: error de ArcGIS: {'code': 400, 'message': 'Pagination is not supported.', 'details': []}",
    "estado": "AZ",
    "historial": [
     [
@@ -402,17 +404,15 @@
     ]
    ],
    "id": "pima_az",
-   "mas_de_90_dias_pct": null,
    "nombre": "Pima",
-   "ok": true,
-   "ultima_fecha": null
+   "ok": false
   },
   {
    "altas": 0,
    "bajas": 0,
    "casas": 167,
    "ciudad": "Houston",
-   "dias_en_cartera_mediana": 203,
+   "dias_en_cartera_mediana": 204,
    "estado": "TX",
    "historial": [
     [
@@ -602,6 +602,10 @@
     [
      "2026-11-14",
      167
+    ],
+    [
+     "2026-11-15",
+     167
     ]
    ],
    "id": "harris_tx",
@@ -615,7 +619,7 @@
    "bajas": 0,
    "casas": 101,
    "ciudad": "Dallas norte",
-   "dias_en_cartera_mediana": 106,
+   "dias_en_cartera_mediana": 107,
    "estado": "TX",
    "historial": [
     [
@@ -800,6 +804,10 @@
     ],
     [
      "2026-11-14",
+     101
+    ],
+    [
+     "2026-11-15",
      101
     ]
    ],
@@ -1004,6 +1012,10 @@
     [
      "2026-11-14",
      62
+    ],
+    [
+     "2026-11-15",
+     62
     ]
    ],
    "id": "denton_tx",
@@ -1206,6 +1218,10 @@
     ],
     [
      "2026-11-14",
+     53
+    ],
+    [
+     "2026-11-15",
      53
     ]
    ],
@@ -1410,6 +1426,10 @@
     [
      "2026-11-14",
      17
+    ],
+    [
+     "2026-11-15",
+     17
     ]
    ],
    "id": "fortbend_tx",
@@ -1420,7 +1440,7 @@
   }
  ],
  "errores": {},
- "fecha": "2026-11-14",
+ "fecha": "2026-11-15",
  "llamadas": {
   "collin_tx": 1,
   "denton_tx": 1,
@@ -1428,24 +1448,24 @@
   "fred": 14,
   "harris_tx": 1,
   "maricopa_az": 1,
-  "maricopa_catastro": 25,
+  "maricopa_catastro": 23,
   "maricopa_registro": 14,
   "pima_az": 1,
   "williamson_tx": 1
  },
  "maricopa": {
   "anuncios_vs_titulo": {
-   "anuncios_maricopa": 211,
-   "cartera_sin_anunciar": 125,
+   "anuncios_maricopa": 210,
+   "cartera_sin_anunciar": 126,
    "cartera_total": 311,
    "clases": {
     "comprada_reciente": 14,
-    "en_cartera": 186,
+    "en_cartera": 185,
     "sin_parcela": 1,
     "sin_titulo_od": 10
    },
-   "comprobados": 211,
-   "consultas_hoy": 2,
+   "comprobados": 210,
+   "consultas_hoy": 0,
    "nota": "Anuncios de Arizona con CP 850/852/853 (aprox. Maricopa). 'en_cartera': la parcela es de Opendoor en el catastro. 'comprada_reciente': el catastro aun no lo refleja pero hay una escritura reciente de Opendoor con el dueno anterior. 'sin_titulo_od': Opendoor la anuncia pero los registros no la ponen a su nombre (posible venta por cuenta del propietario, o escritura aun no indexada). Retraso del catastro: ~2 semanas.",
    "pct_titulo_od": 95.2
   },
@@ -1468,7 +1488,7 @@
    },
    "coste_base": 198,
    "coste_total": 96001630,
-   "dias_en_cartera_mediana": 99,
+   "dias_en_cartera_mediana": 100,
    "mas_de_90_dias_pct": 55.6,
    "por_entidad": {
     "OPENDOOR LLC": 1,
@@ -1481,12 +1501,12 @@
    "precio_compra_sqft_mediana": 240,
    "precio_sobre_valor_fiscal": 1.165,
    "reparto_dias_en_cartera": {
-    "0-30": 36,
-    "181-365": 38,
+    "0-30": 32,
+    "181-365": 39,
     "31-60": 57,
     "365+": 12,
-    "61-90": 45,
-    "91-180": 123
+    "61-90": 49,
+    "91-180": 122
    },
    "reparto_precio": {
     "250-300k": 12,
@@ -1496,7 +1516,7 @@
     "750k+": 16,
     "<250k": 7
    },
-   "retraso_catastro_dias": 16,
+   "retraso_catastro_dias": 17,
    "sqft_mediana": 1899.5,
    "ultima_escritura_catastro": "2026-10-29"
   },
@@ -1604,7 +1624,7 @@
    ],
    "primera": "2026-07-15",
    "total_desde_relanzamiento": 16,
-   "ultimos_30d": 2,
+   "ultimos_30d": 1,
    "ventas_od_con_ohl": 15,
    "ventas_od_desde_primera": 178
   },
@@ -3976,5 +3996,5 @@
    }
   ]
  },
- "obtenido_utc": "2026-11-14T19:32:44+00:00"
+ "obtenido_utc": "2026-11-15T19:59:36+00:00"
 }
