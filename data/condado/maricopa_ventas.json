@@ -694,10 +694,13 @@
   "cp": "85032",
   "detectada": "2026-10-29",
   "dias": 171,
+  "margen_bruto": -24900,
+  "margen_bruto_pct": -4.12,
+  "precio_visto": "2026-11-17",
   "sqft": 2015,
   "venta_escritura": "20260599520",
   "venta_f": "2026-10-15",
-  "venta_p": null
+  "venta_p": 580000
  },
  {
   "apn": "21532040A",
@@ -804,10 +807,13 @@
   "cp": "85248",
   "detectada": "2026-11-03",
   "dias": 207,
+  "margen_bruto": 14300,
+  "margen_bruto_pct": 5.19,
+  "precio_visto": "2026-11-17",
   "sqft": 970,
   "venta_escritura": "20260601938",
   "venta_f": "2026-10-16",
-  "venta_p": null
+  "venta_p": 290000
  },
  {
   "apn": "30504155",
@@ -1028,6 +1034,58 @@
   "sqft": 1608,
   "venta_escritura": "20260622252",
   "venta_f": "2026-10-28",
+  "venta_p": null
+ },
+ {
+  "apn": "10459516",
+  "ciudad": "Phoenix",
+  "compra_f": "2026-09-03",
+  "compra_p": null,
+  "cp": "85043",
+  "detectada": "2026-11-17",
+  "dias": 57,
+  "sqft": 1500,
+  "venta_escritura": "20260628705",
+  "venta_f": "2026-10-30",
+  "venta_p": null
+ },
+ {
+  "apn": "14485047",
+  "ciudad": "Phoenix",
+  "compra_f": "2026-08-24",
+  "compra_p": 335900,
+  "cp": "85033",
+  "detectada": "2026-11-17",
+  "dias": 67,
+  "sqft": 1717,
+  "venta_escritura": "20260629803",
+  "venta_f": "2026-10-30",
+  "venta_p": null
+ },
+ {
+  "apn": "31334547",
+  "ciudad": "Queen Creek",
+  "compra_f": "2026-07-06",
+  "compra_p": 477300,
+  "cp": "85142",
+  "detectada": "2026-11-17",
+  "dias": 116,
+  "sqft": 2542,
+  "venta_escritura": "20260629625",
+  "venta_f": "2026-10-30",
+  "venta_p": null
+ },
+ {
+  "apn": "50041245",
+  "ciudad": "Avondale",
+  "compra_f": "2026-06-24",
+  "compra_p": 331700,
+  "cp": "85323",
+  "detectada": "2026-11-17",
+  "dias": 139,
+  "sqft": 1601,
+  "venta_escritura": "20260647453",
+  "venta_f": "2026-11-10",
   "venta_p": null
  }
 ]
