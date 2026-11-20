@@ -2,11 +2,11 @@
  "aviso": "Registros publicos de los condados. El catastro va con ~2 semanas de retraso sobre el registro. Hipotecas de Opendoor Home Loans: solo Maricopa, no es el volumen nacional. Margen bruto = venta - compra, sin reformas, comisiones ni costes de tenencia. Texas no publica precios de venta.",
  "condados": [
   {
-   "altas": 6,
-   "bajas": 0,
-   "casas": 319,
+   "altas": 3,
+   "bajas": 2,
+   "casas": 320,
    "ciudad": "Phoenix",
-   "dias_en_cartera_mediana": 100,
+   "dias_en_cartera_mediana": 99.5,
    "estado": "AZ",
    "historial": [
     [
@@ -216,18 +216,22 @@
     [
      "2026-11-19",
      319
+    ],
+    [
+     "2026-11-20",
+     320
     ]
    ],
    "id": "maricopa_az",
-   "mas_de_90_dias_pct": 55.5,
+   "mas_de_90_dias_pct": 55.6,
    "nombre": "Maricopa",
    "ok": true,
-   "ultima_fecha": "2026-11-05"
+   "ultima_fecha": "2026-11-06"
   },
   {
-   "altas": 0,
-   "bajas": 2,
-   "casas": 80,
+   "altas": 2,
+   "bajas": 1,
+   "casas": 81,
    "ciudad": "Tucson",
    "dias_en_cartera_mediana": null,
    "estado": "AZ",
@@ -435,6 +439,10 @@
     [
      "2026-11-19",
      80
+    ],
+    [
+     "2026-11-20",
+     81
     ]
    ],
    "id": "pima_az",
@@ -448,7 +456,7 @@
    "bajas": 0,
    "casas": 167,
    "ciudad": "Houston",
-   "dias_en_cartera_mediana": 208,
+   "dias_en_cartera_mediana": 209,
    "estado": "TX",
    "historial": [
     [
@@ -658,6 +666,10 @@
     [
      "2026-11-19",
      167
+    ],
+    [
+     "2026-11-20",
+     167
     ]
    ],
    "id": "harris_tx",
@@ -667,11 +679,11 @@
    "ultima_fecha": "2026-08-18"
   },
   {
-   "altas": 0,
-   "bajas": 0,
-   "casas": 100,
+   "altas": 5,
+   "bajas": 2,
+   "casas": 103,
    "ciudad": "Dallas norte",
-   "dias_en_cartera_mediana": 111.0,
+   "dias_en_cartera_mediana": 105,
    "estado": "TX",
    "historial": [
     [
@@ -877,13 +889,17 @@
     [
      "2026-11-19",
      100
+    ],
+    [
+     "2026-11-20",
+     103
     ]
    ],
    "id": "collin_tx",
-   "mas_de_90_dias_pct": 63.0,
+   "mas_de_90_dias_pct": 59.2,
    "nombre": "Collin",
    "ok": true,
-   "ultima_fecha": "2026-10-30"
+   "ultima_fecha": "2026-11-10"
   },
   {
    "altas": 0,
@@ -1099,6 +1115,10 @@
     ],
     [
      "2026-11-19",
+     62
+    ],
+    [
+     "2026-11-20",
      62
     ]
    ],
@@ -1323,6 +1343,10 @@
     [
      "2026-11-19",
      53
+    ],
+    [
+     "2026-11-20",
+     53
     ]
    ],
    "id": "williamson_tx",
@@ -1546,6 +1570,10 @@
     [
      "2026-11-19",
      17
+    ],
+    [
+     "2026-11-20",
+     17
     ]
    ],
    "id": "fortbend_tx",
@@ -1556,7 +1584,7 @@
   }
  ],
  "errores": {},
- "fecha": "2026-11-19",
+ "fecha": "2026-11-20",
  "llamadas": {
   "collin_tx": 1,
   "denton_tx": 1,
@@ -1564,80 +1592,80 @@
   "fred": 14,
   "harris_tx": 1,
   "maricopa_az": 1,
-  "maricopa_catastro": 26,
-  "maricopa_registro": 21,
+  "maricopa_catastro": 28,
+  "maricopa_registro": 18,
   "pima_az": 1,
   "williamson_tx": 1
  },
  "maricopa": {
   "anuncios_vs_titulo": {
-   "anuncios_maricopa": 210,
-   "cartera_sin_anunciar": 130,
-   "cartera_total": 319,
+   "anuncios_maricopa": 216,
+   "cartera_sin_anunciar": 129,
+   "cartera_total": 320,
    "clases": {
-    "comprada_reciente": 11,
-    "en_cartera": 189,
+    "comprada_reciente": 10,
+    "en_cartera": 191,
     "sin_parcela": 1,
-    "sin_titulo_od": 9
+    "sin_titulo_od": 14
    },
-   "comprobados": 210,
-   "consultas_hoy": 6,
+   "comprobados": 216,
+   "consultas_hoy": 9,
    "nota": "Anuncios de Arizona con CP 850/852/853 (aprox. Maricopa). 'en_cartera': la parcela es de Opendoor en el catastro. 'comprada_reciente': el catastro aun no lo refleja pero hay una escritura reciente de Opendoor con el dueno anterior. 'sin_titulo_od': Opendoor la anuncia pero los registros no la ponen a su nombre (posible venta por cuenta del propietario, o escritura aun no indexada). Retraso del catastro: ~2 semanas.",
-   "pct_titulo_od": 95.7
+   "pct_titulo_od": 93.5
   },
   "cartera": {
-   "ano_mediana": 2003.0,
-   "casas": 319,
+   "ano_mediana": 2003,
+   "casas": 320,
    "ciudades": {
-    "Buckeye": 30,
+    "Buckeye": 31,
     "Cave Creek": 5,
     "Chandler": 13,
     "El Mirage": 10,
     "Gilbert": 29,
     "Glendale": 16,
-    "Goodyear": 16,
+    "Goodyear": 15,
     "Mesa": 35,
     "Peoria": 19,
     "Phoenix": 73,
     "Scottsdale": 15,
     "Surprise": 21
    },
-   "coste_base": 193,
-   "coste_total": 93618130,
-   "dias_en_cartera_mediana": 100,
-   "mas_de_90_dias_pct": 55.5,
+   "coste_base": 192,
+   "coste_total": 93128130,
+   "dias_en_cartera_mediana": 99.5,
+   "mas_de_90_dias_pct": 55.6,
    "por_entidad": {
     "OPENDOOR LLC": 1,
     "OPENDOOR PROPERTY C LLC": 3,
     "OPENDOOR PROPERTY D LLC": 1,
     "OPENDOOR PROPERTY J LLC": 58,
-    "OPENDOOR PROPERTY TRUST I": 256
+    "OPENDOOR PROPERTY TRUST I": 257
    },
-   "precio_compra_mediana": 433900,
+   "precio_compra_mediana": 433800,
    "precio_compra_sqft_mediana": 241,
-   "precio_sobre_valor_fiscal": 1.165,
+   "precio_sobre_valor_fiscal": 1.164,
    "reparto_dias_en_cartera": {
-    "0-30": 39,
-    "181-365": 44,
+    "0-30": 41,
+    "181-365": 43,
     "31-60": 55,
     "365+": 12,
-    "61-90": 48,
-    "91-180": 121
+    "61-90": 46,
+    "91-180": 123
    },
    "reparto_precio": {
     "250-300k": 12,
     "300-400k": 56,
-    "400-500k": 56,
+    "400-500k": 55,
     "500-750k": 46,
     "750k+": 16,
     "<250k": 7
    },
    "retraso_catastro_dias": 14,
-   "sqft_mediana": 1883.0,
-   "ultima_escritura_catastro": "2026-11-05"
+   "sqft_mediana": 1862,
+   "ultima_escritura_catastro": "2026-11-06"
   },
   "hipotecas_ohl": {
-   "attach_pct": 8.8,
+   "attach_pct": 8.7,
    "en_casas_de_opendoor": 16,
    "liberaciones_cartera_antigua": 14,
    "lista": [
@@ -1754,7 +1782,7 @@
    "total_desde_relanzamiento": 18,
    "ultimos_30d": 3,
    "ventas_od_con_ohl": 16,
-   "ventas_od_desde_primera": 182
+   "ventas_od_desde_primera": 184
   },
   "osn": {
    "fiduciario_90d": 2,
@@ -1762,7 +1790,7 @@
   },
   "registro": {
    "desde": "2026-01-01",
-   "documentos": 1151,
+   "documentos": 1155,
    "meses": [
     {
      "m": "2004-03",
@@ -1891,14 +1919,14 @@
      "ventas_ohl": 5
     },
     {
-     "compras": 7,
+     "compras": 10,
      "hipotecas_ohl": 2,
      "m": "2026-11",
      "osn_otros": 3,
      "p_compra": null,
      "p_venta": null,
-     "pendientes": 39,
-     "ventas": 1
+     "pendientes": 38,
+     "ventas": 3
     }
    ],
    "semanas": [
@@ -2069,11 +2097,11 @@
      "ventas_ohl": 1
     },
     {
-     "compras": 7,
+     "compras": 10,
      "osn_otros": 2,
-     "pendientes": 10,
+     "pendientes": 5,
      "s": "2026-11-02",
-     "ventas": 1
+     "ventas": 3
     },
     {
      "osn_otros": 1,
@@ -2082,13 +2110,13 @@
     },
     {
      "hipotecas_ohl": 2,
-     "pendientes": 12,
+     "pendientes": 16,
      "s": "2026-11-16"
     }
    ],
    "ultimos_90d": {
-    "compra": 151,
-    "hipoteca_ohl": 12,
+    "compra": 150,
+    "hipoteca_ohl": 11,
     "interna": 1,
     "liberacion_ohl": 6,
     "osn_fiduciario": 2,
@@ -2096,12 +2124,12 @@
     "osn_otro": 1,
     "osn_sustitucion": 5,
     "otro_od": 6,
-    "traspaso": 41,
-    "venta": 107
+    "traspaso": 40,
+    "venta": 105
    }
   },
   "ventas_emparejadas": {
-   "con_perdida": 29,
+   "con_perdida": 30,
    "dias_mediana": 98,
    "lista": [
     {
@@ -2115,6 +2143,32 @@
      "sqft": 1601,
      "venta_escritura": "20260647453",
      "venta_f": "2026-11-10",
+     "venta_p": null
+    },
+    {
+     "apn": "20141039",
+     "ciudad": "Phoenix",
+     "compra_f": "2026-10-29",
+     "compra_p": null,
+     "cp": "85083",
+     "detectada": "2026-11-20",
+     "dias": 7,
+     "sqft": 3153,
+     "venta_escritura": "20260639128",
+     "venta_f": "2026-11-05",
+     "venta_p": null
+    },
+    {
+     "apn": "50007260",
+     "ciudad": "Goodyear",
+     "compra_f": "2026-04-21",
+     "compra_p": 490000,
+     "cp": "85338",
+     "detectada": "2026-11-20",
+     "dias": 198,
+     "sqft": 2719,
+     "venta_escritura": "20260639159",
+     "venta_f": "2026-11-05",
      "venta_p": null
     },
     {
@@ -2304,10 +2358,13 @@
      "cp": "85340",
      "detectada": "2026-11-06",
      "dias": 53,
+     "margen_bruto": -68650,
+     "margen_bruto_pct": -12.75,
+     "precio_visto": "2026-11-20",
      "sqft": 1862,
      "venta_escritura": "20260613832",
      "venta_f": "2026-10-23",
-     "venta_p": null
+     "venta_p": 469750
     },
     {
      "apn": "50378482",
@@ -2993,42 +3050,10 @@
      "venta_escritura": "20260561485",
      "venta_f": "2026-09-25",
      "venta_p": 355000
-    },
-    {
-     "apn": "20136178",
-     "ciudad": "Peoria",
-     "compra_f": "2026-05-26",
-     "compra_p": 859400,
-     "cp": "85383",
-     "detectada": "2026-10-09",
-     "dias": 122,
-     "margen_bruto": -10400,
-     "margen_bruto_pct": -1.21,
-     "precio_visto": "2026-10-28",
-     "sqft": 4464,
-     "venta_escritura": "20260562396",
-     "venta_f": "2026-09-25",
-     "venta_p": 849000
-    },
-    {
-     "apn": "50365523",
-     "ciudad": "Surprise",
-     "compra_f": "2026-07-01",
-     "compra_p": 373100,
-     "cp": "85387",
-     "detectada": "2026-10-09",
-     "dias": 86,
-     "margen_bruto": 16900,
-     "margen_bruto_pct": 4.53,
-     "precio_visto": "2026-10-28",
-     "sqft": 2139,
-     "venta_escritura": "20260562707",
-     "venta_f": "2026-09-25",
-     "venta_p": 390000
     }
    ],
-   "margen_bruto_pct_mediana": 0.38,
-   "n": 73
+   "margen_bruto_pct_mediana": 0.23,
+   "n": 75
   }
  },
  "mercado": {
@@ -4149,5 +4174,5 @@
    }
   ]
  },
- "obtenido_utc": "2026-11-19T22:30:45+00:00"
+ "obtenido_utc": "2026-11-20T22:02:49+00:00"
 }

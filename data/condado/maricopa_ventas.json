@@ -973,10 +973,13 @@
   "cp": "85340",
   "detectada": "2026-11-06",
   "dias": 53,
+  "margen_bruto": -68650,
+  "margen_bruto_pct": -12.75,
+  "precio_visto": "2026-11-20",
   "sqft": 1862,
   "venta_escritura": "20260613832",
   "venta_f": "2026-10-23",
-  "venta_p": null
+  "venta_p": 469750
  },
  {
   "apn": "50378482",
@@ -1126,6 +1129,32 @@
   "sqft": 2039,
   "venta_escritura": "20260634455",
   "venta_f": "2026-11-03",
+  "venta_p": null
+ },
+ {
+  "apn": "20141039",
+  "ciudad": "Phoenix",
+  "compra_f": "2026-10-29",
+  "compra_p": null,
+  "cp": "85083",
+  "detectada": "2026-11-20",
+  "dias": 7,
+  "sqft": 3153,
+  "venta_escritura": "20260639128",
+  "venta_f": "2026-11-05",
+  "venta_p": null
+ },
+ {
+  "apn": "50007260",
+  "ciudad": "Goodyear",
+  "compra_f": "2026-04-21",
+  "compra_p": 490000,
+  "cp": "85338",
+  "detectada": "2026-11-20",
+  "dias": 198,
+  "sqft": 2719,
+  "venta_escritura": "20260639159",
+  "venta_f": "2026-11-05",
   "venta_p": null
  }
 ]
