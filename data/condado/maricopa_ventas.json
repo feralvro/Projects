@@ -918,10 +918,13 @@
   "cp": "85345",
   "detectada": "2026-11-06",
   "dias": 322,
+  "margen_bruto": 16000,
+  "margen_bruto_pct": 6.43,
+  "precio_visto": "2026-11-21",
   "sqft": 1435,
   "venta_escritura": "20260614609",
   "venta_f": "2026-10-23",
-  "venta_p": null
+  "venta_p": 265000
  },
  {
   "apn": "20018212",
@@ -931,10 +934,13 @@
   "cp": "85382",
   "detectada": "2026-11-06",
   "dias": 64,
+  "margen_bruto": -33900,
+  "margen_bruto_pct": -7.18,
+  "precio_visto": "2026-11-21",
   "sqft": 1852,
   "venta_escritura": "20260615212",
   "venta_f": "2026-10-23",
-  "venta_p": null
+  "venta_p": 438000
  },
  {
   "apn": "23243176",
@@ -989,10 +995,13 @@
   "cp": "85387",
   "detectada": "2026-11-06",
   "dias": 70,
+  "margen_bruto": -26700,
+  "margen_bruto_pct": -7.0,
+  "precio_visto": "2026-11-21",
   "sqft": 1460,
   "venta_escritura": "20260614988",
   "venta_f": "2026-10-23",
-  "venta_p": null
+  "venta_p": 355000
  },
  {
   "apn": "14812065",
@@ -1061,10 +1070,13 @@
   "cp": "85042",
   "detectada": "2026-11-12",
   "dias": 75,
+  "margen_bruto": 9200,
+  "margen_bruto_pct": 2.66,
+  "precio_visto": "2026-11-21",
   "sqft": 1608,
   "venta_escritura": "20260622252",
   "venta_f": "2026-10-28",
-  "venta_p": null
+  "venta_p": 355000
  },
  {
   "apn": "10459516",
@@ -1155,6 +1167,19 @@
   "sqft": 2719,
   "venta_escritura": "20260639159",
   "venta_f": "2026-11-05",
+  "venta_p": null
+ },
+ {
+  "apn": "50919562",
+  "ciudad": "Surprise",
+  "compra_f": "2026-08-07",
+  "compra_p": 455100,
+  "cp": "85379",
+  "detectada": "2026-11-21",
+  "dias": 91,
+  "sqft": 2066,
+  "venta_escritura": "20260641149",
+  "venta_f": "2026-11-06",
   "venta_p": null
  }
 ]
