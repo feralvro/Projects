@@ -966,10 +966,13 @@
   "cp": "85338",
   "detectada": "2026-11-06",
   "dias": 63,
+  "margen_bruto": -14000,
+  "margen_bruto_pct": -3.37,
+  "precio_visto": "2026-11-24",
   "sqft": 2334,
   "venta_escritura": "20260614539",
   "venta_f": "2026-10-23",
-  "venta_p": null
+  "venta_p": 401000
  },
  {
   "apn": "50234896",
@@ -1180,6 +1183,32 @@
   "sqft": 2066,
   "venta_escritura": "20260641149",
   "venta_f": "2026-11-06",
+  "venta_p": null
+ },
+ {
+  "apn": "30298141",
+  "ciudad": "Gilbert",
+  "compra_f": "2026-03-25",
+  "compra_p": 397800,
+  "cp": "85233",
+  "detectada": "2026-11-24",
+  "dias": 229,
+  "sqft": 1543,
+  "venta_escritura": "20260644084",
+  "venta_f": "2026-11-09",
+  "venta_p": null
+ },
+ {
+  "apn": "31204496",
+  "ciudad": "Mesa",
+  "compra_f": "2026-07-13",
+  "compra_p": 661200,
+  "cp": "85209",
+  "detectada": "2026-11-24",
+  "dias": 120,
+  "sqft": 3338,
+  "venta_escritura": "20260647480",
+  "venta_f": "2026-11-10",
   "venta_p": null
  }
 ]
