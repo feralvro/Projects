@@ -1060,10 +1060,13 @@
   "cp": "85379",
   "detectada": "2026-11-11",
   "dias": 72,
+  "margen_bruto": 31100,
+  "margen_bruto_pct": 7.78,
+  "precio_visto": "2026-11-25",
   "sqft": 2645,
   "venta_escritura": "20260624206",
   "venta_f": "2026-10-28",
-  "venta_p": null
+  "venta_p": 431000
  },
  {
   "apn": "12358371",
